@@ -1,6 +1,6 @@
-# manticoresearch-ts
+# Manticore TypeScript client
 
-Сlient for Manticore Search.
+Official client for Manticore Search.
 
 ❗ WARNING: this is a development version of the client. The latest release's readme is https://github.com/manticoresoftware/manticoresearch-typescript/tree/1.0.0
 
@@ -59,7 +59,7 @@ import { Configuration, IndexApi, SearchApi, ResponseError } from 'manticoresear
 
 ## Documentation
 
-Full documentation on the API Endpoints and Models used is available in  [docs](https://github.com/manticoresoftware/manticoresearch-typescript/tree/3.3.0/docs) folder as listed below.
+Full documentation on the API Endpoints and Models used is available in  [docs](https://github.com/manticoresoftware/manticoresearch-typescript/tree/master/docs) folder as listed below.
 
 Manticore Search server documentation: https://manual.manticoresearch.com.
 
