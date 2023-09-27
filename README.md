@@ -2,6 +2,7 @@
 
 Сlient for Manticore Search.
 
+❗ WARNING: this is a development version of the client. The latest release's readme is https://github.com/manticoresoftware/manticoresearch-typescript/tree/1.0.0
 
 ## Requirements
 
