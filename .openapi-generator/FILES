@@ -1,0 +1,13 @@
+.gitignore
+.npmignore
+.openapi-generator-ignore
+README.md
+package.json
+src/apis/IndexApi.ts
+src/apis/SearchApi.ts
+src/apis/UtilsApi.ts
+src/apis/index.ts
+src/index.ts
+src/models/index.ts
+src/runtime.ts
+tsconfig.json

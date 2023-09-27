@@ -1,0 +1,29 @@
+{
+  "name": "manticoresearch-ts",
+  "version": "3.3.0",
+  "description": "Typescript client for Manticore Search",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "browser": {
+    "fs": false
+  },
+  "keywords": [
+    "manticoresearch",
+    "typescript",
+    "REST",
+    "search",
+    "client",
+    "index"
+  ],  
+  "devDependencies": {
+    "typescript": "^4.0"
+  }
+}
