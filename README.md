@@ -4,6 +4,7 @@
 
 API version: 1.0.0
 
+
 ## Requirements
 
 Minimum Manticore Search version is 4.2.1 with HTTP protocol enabled.
