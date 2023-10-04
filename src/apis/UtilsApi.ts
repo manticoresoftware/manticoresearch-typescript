@@ -34,7 +34,7 @@ export class UtilsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.rawResponse === undefined || requestParameters.rawResponse) {
+        if (requestParameters.rawResponse) {
             queryParameters['mode'] = 'raw'
         }
 
