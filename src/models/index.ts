@@ -68,7 +68,13 @@ export interface BulkResponse {
      * @type {boolean}
      * @memberof BulkResponse
      */
-    error?: boolean;
+    errors?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof BulkResponse
+     */
+    error?: string;
 }
 /**
  * Payload for delete request.

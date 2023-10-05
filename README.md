@@ -1,8 +1,9 @@
 # Manticore TypeScript client
 
-Official client for Manticore Search.
+Сlient for Manticore Search.
 
-❗ WARNING: this is a development version of the client. The latest release's readme is https://github.com/manticoresoftware/manticoresearch-typescript/tree/1.0.0
+
+❗ WARNING: this is a development version of the client. The latest release's readme is https://github.com/manticoresoftware/manticoresearch-typescript/tree/3.3.1
 
 ## Requirements
 
@@ -10,7 +11,8 @@ Minimum Manticore Search version is 4.2.1 with HTTP protocol enabled.
 
 | Manticore Search  | manticoresearch-typescript   |     Node      |
 | ----------------- | ---------------------------- | ------------- |
-| >= 4.2.1          | 1.0.x                        | >= 12.20.0    |
+| >= 6.2.0          | 3.3.1                        | >= 18.0.0     |
+| >= 4.2.1          | 1.0.x                        | >= 18.0.0     |
 
 
 ## Installation
@@ -59,7 +61,7 @@ import { Configuration, IndexApi, SearchApi, ResponseError } from 'manticoresear
 
 ## Documentation
 
-Full documentation on the API Endpoints and Models used is available in  [docs](https://github.com/manticoresoftware/manticoresearch-typescript/tree/master/docs) folder as listed below.
+Full documentation on the API Endpoints and Models used is available in  [docs](https://github.com/manticoresoftware/manticoresearch-typescript/tree/3.3.1/docs) folder as listed below.
 
 Manticore Search server documentation: https://manual.manticoresearch.com.
 

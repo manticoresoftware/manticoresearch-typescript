@@ -1,6 +1,6 @@
 {
   "name": "manticoresearch-ts",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "description": "Typescript client for Manticore Search",
   "license": "MIT",
   "main": "./dist/index.js",
