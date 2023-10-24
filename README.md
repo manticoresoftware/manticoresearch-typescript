@@ -23,7 +23,6 @@ npm install manticoresearch-ts
 
 Please follow the [installation](#installation) instruction and execute the following typescript code:
 
-
 ```javascript
 import { Configuration, IndexApi, SearchApi, ResponseError } from 'manticoresearch-ts/dist/src'
 ;(async () => {
