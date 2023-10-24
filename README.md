@@ -27,7 +27,7 @@ Please follow the [installation](#installation) instruction and execute the foll
 
 
 ```javascript
-import { Configuration, IndexApi, SearchApi, ResponseError } from 'manticoresearch-ts'
+import { Configuration, IndexApi, SearchApi, ResponseError } from 'manticoresearch-ts/dist/src'
 ;(async () => {
   try {
     /*
