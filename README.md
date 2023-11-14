@@ -3,14 +3,13 @@
 Сlient for Manticore Search.
 
 
-❗ WARNING: this is a development version of the client. The latest release's readme is https://github.com/manticoresoftware/manticoresearch-typescript/tree/3.3.1
-
 ## Requirements
 
 Minimum Manticore Search version is 4.2.1 with HTTP protocol enabled.
 
 | Manticore Search | manticoresearch-typescript | Node      |
 | ---------------- | -------------------------- | --------- |
+| >= 6.2.0         | 4.0.0                      | >= 18.0.0 |
 | >= 6.2.0         | 3.3.1                      | >= 18.0.0 |
 | >= 4.2.1         | 1.0.x                      | >= 18.0.0 |
 
