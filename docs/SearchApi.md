@@ -2,31 +2,30 @@
 
 All URIs are relative to *http://127.0.0.1:9308*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**search**](SearchApi.md#search) | **POST** /search | Performs a search on an index.
-[**percolate**](SearchApi.md#percolate) | **POST** /pq/{index}/search | Perform a reverse search on a percolate index
-
+| Method                                  | HTTP request                | Description                                   |
+| --------------------------------------- | --------------------------- | --------------------------------------------- |
+| [**search**](SearchApi.md#search)       | **POST** /search            | Performs a search on an index.                |
+| [**percolate**](SearchApi.md#percolate) | **POST** /pq/{index}/search | Perform a reverse search on a percolate index |
 
 ## search
 
 > SearchResponse search(searchRequest)
 
-Performs a search on an index. 
+Performs a search on an index.
 
 The method expects a SearchRequest object with the following mandatory properties:
-        
-* the name of the index to search | string
-        
+
+- the name of the index to search | string
+
 For details, see the documentation on [**SearchRequest**](SearchRequest.md)
 
 The method returns an object with the following properties:
-        
+
 - hits: an object with the following properties:
   - hits: an array of hit objects, where each hit object represents a matched document. Each hit object has the following properties:
-    - _id: the ID of the matched document.
-    - _score: the score of the matched document.
-    - _source: the source data of the matched document.
+    - \_id: the ID of the matched document.
+    - \_score: the score of the matched document.
+    - \_source: the source data of the matched document.
   - total: the total number of hits found.
 - timed_out: a boolean indicating whether the query timed out.
 - took: the time taken to execute the search query.
@@ -34,6 +33,7 @@ The method returns an object with the following properties:
 In addition, if profiling is enabled, the response will include an additional array with profiling information attached.
 
 Here is an example search response:
+
 ```
 {
   "hits":
@@ -59,25 +59,24 @@ Here is an example search response:
 }
 ```
 
-For more information about the match query syntax and additional parameters that can be added to  request and response, please check: https://manual.manticoresearch.com/Searching/Full_text_matching/Basic_usage#HTTP-JSON.
-
+For more information about the match query syntax and additional parameters that can be added to request and response, please check: https://manual.manticoresearch.com/Searching/Full_text_matching/Basic_usage#HTTP-JSON.
 
 ### Example
+
 ```javascript
-import { searchApi } from 'manticoresearch-ts'
+import { searchApi } from "manticoresearch-ts";
 
-const searchApi = new SearchApi()
+const searchApi = new SearchApi();
 searchApi
-  .search({ index: 'test', query: { query_string: 'find smth' } })
-  .then((res) => console.log(JSON.stringify(res, null, 2)))
-
+  .search({ index: "test", query: { query_string: "find smth" } })
+  .then((res) => console.log(JSON.stringify(res, null, 2)));
 ```
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **searchRequest** | [**SearchRequest**](SearchRequest.md)|  | 
+| Name              | Type                                  | Description | Notes |
+| ----------------- | ------------------------------------- | ----------- | ----- |
+| **searchRequest** | [**SearchRequest**](SearchRequest.md) |             |
 
 ### Return type
 
@@ -91,7 +90,6 @@ No authorization required
 
 - **Content-Type**: application/json
 - **Accept**: application/json
-
 
 ## percolate
 
@@ -119,7 +117,7 @@ Here is an example of the object with a single document:
 }
 ```
 
-Responds with an object with matched stored queries: 
+Responds with an object with matched stored queries:
 
 ```
 {
@@ -170,27 +168,25 @@ And here is an example of the object with multiple documents:
 }
 ```
 
-
 ### Example
 
 ```javascript
-import { searchApi } from 'manticoresearch-ts'
+import { searchApi } from "manticoresearch-ts";
 
-const searchApi = new SearchApi()
+const searchApi = new SearchApi();
 searchApi
-  .percolate('products', { query: { percolate: { document: { title: 'What a nice bag' } } } })
-  .then((res) => console.log(JSON.stringify(res, null, 2)))
-
+  .percolate("products", {
+    query: { percolate: { document: { title: "What a nice bag" } } },
+  })
+  .then((res) => console.log(JSON.stringify(res, null, 2)));
 ```
 
 ### Parameters
 
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **index** | **String**| Name of the percolate index | 
- **percolateRequest** | [**PercolateRequest**](PercolateRequest.md)|  | 
+| Name                 | Type                                        | Description                 | Notes |
+| -------------------- | ------------------------------------------- | --------------------------- | ----- |
+| **index**            | **String**                                  | Name of the percolate index |
+| **percolateRequest** | [**PercolateRequest**](PercolateRequest.md) |                             |
 
 ### Return type
 
@@ -204,4 +200,3 @@ No authorization required
 
 - **Content-Type**: application/json
 - **Accept**: application/json
-

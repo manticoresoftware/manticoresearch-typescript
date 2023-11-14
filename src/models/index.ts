@@ -1,27 +1,53 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Query aggregation object
+ * Aggregation Alias
  * @export
  * @interface Aggregation
  */
 export interface Aggregation {
     /**
      * 
-     * @type {string}
+     * @type {AggregationTerms}
      * @memberof Aggregation
      */
-    name: string;
+    terms?: AggregationTerms;
+    /**
+     * 
+     * @type {Array<{ [key: string]: AggregationSortInnerValue; }>}
+     * @memberof Aggregation
+     */
+    sort?: Array<{ [key: string]: AggregationSortInnerValue; }>;
+}
+/**
+ * 
+ * @export
+ * @interface AggregationSortInnerValue
+ */
+export interface AggregationSortInnerValue {
     /**
      * 
      * @type {string}
-     * @memberof Aggregation
+     * @memberof AggregationSortInnerValue
      */
-    field: string;
+    order?: string;
+}
+/**
+ * 
+ * @export
+ * @interface AggregationTerms
+ */
+export interface AggregationTerms {
     /**
-     * 
+     * Attribute Name to Aggregate
+     * @type {string}
+     * @memberof AggregationTerms
+     */
+    field?: string;
+    /**
+     * Maximum Number of Buckets in the Result
      * @type {number}
-     * @memberof Aggregation
+     * @memberof AggregationTerms
      */
     size?: number;
 }
@@ -889,16 +915,16 @@ export interface SearchRequest {
     sort?: Array<object>;
     /**
      * 
-     * @type {Array<Aggregation>}
+     * @type {{ [key: string]: Aggregation; }}
      * @memberof SearchRequest
      */
-    aggs?: Array<Aggregation>;
+    aggs?: { [key: string]: Aggregation; };
     /**
      * 
-     * @type {Array<object>}
+     * @type {{ [key: string]: string; }}
      * @memberof SearchRequest
      */
-    expressions?: Array<object>;
+    expressions?: { [key: string]: string; };
     /**
      * 
      * @type {Highlight}
