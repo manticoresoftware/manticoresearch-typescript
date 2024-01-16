@@ -3,8 +3,8 @@
   "version": "4.0.0",
   "description": "Typescript client for Manticore Search",
   "license": "MIT",
-  "main": "./dist/index.js",
-  "typings": "./dist/index.d.ts",
+  "main": "./dist/src/index.js",
+  "typings": "./dist/src/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "cross-env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/**/*.test.ts'",
@@ -23,7 +23,7 @@
     "search",
     "client",
     "index"
-  ],  
+  ],
   "peerDependencies": {
     "typescript": ">=4.0"
   },
@@ -31,7 +31,7 @@
     "typescript": {
       "optional": true
     }
-  },  
+  },
   "devDependencies": {
     "@types/chai": "^4.3.9",
     "@types/mocha": "^10.0.3",
