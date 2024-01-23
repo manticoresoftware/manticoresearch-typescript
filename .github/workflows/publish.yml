@@ -21,7 +21,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: |
-        cp $NPMRC  ~/.npmrc
+        echo "$NPMRC" > ~/.npmrc
         npm install -g typescript
         npm install
         npm publish

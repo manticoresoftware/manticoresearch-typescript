@@ -106,6 +106,7 @@ export interface BulkResponse {
  * Payload for delete request.
  * Documents can be deleted either one by one by specifying the document id or by providing a query object.
  * For more information see  [Delete API](https://manual.manticoresearch.com/Deleting_documents)
+ * 
  * @export
  * @interface DeleteDocumentRequest
  */
@@ -592,6 +593,7 @@ export interface InFilter {
 }
 /**
  * Object with document data.
+ * 
  * @export
  * @interface InsertDocumentRequest
  */
@@ -610,12 +612,14 @@ export interface InsertDocumentRequest {
     cluster?: string;
     /**
      * Document ID.
+     * 
      * @type {number}
      * @memberof InsertDocumentRequest
      */
     id?: number;
     /**
      * Object with document data
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof InsertDocumentRequest
      */

@@ -19,8 +19,7 @@ Bulk index operations
 Sends multiple operatons like inserts, updates, replaces or deletes.
 For each operation it's object must have same format as in their dedicated method.
 The method expects a raw string as the batch in NDJSON.
-Each operation object needs to be serialized to
-JSON and separated by endline (\n).
+Each operation object needs to be serialized to JSON and separated by endline (\n).
 
 An example of raw input:
 
