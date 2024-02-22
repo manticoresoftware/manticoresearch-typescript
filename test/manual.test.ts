@@ -21,7 +21,7 @@ describe('Utils Api Tests', () => {
       let res = await utilsApi.sql('DROP TABLE IF EXISTS test');
       expect(res).to.deep.equal(expected);
       res = await utilsApi.sql(
-        'CREATE TABLE IF NOT EXISTS test (content text, name string, cat int)'
+        "CREATE TABLE IF NOT EXISTS test (content text, name string, cat int, type_vector float_vector knn_type='hnsw' knn_dims='3' hnsw_similarity='l2')"
       );
       expect(res).to.deep.equal(expected);
 
@@ -45,25 +45,25 @@ describe('Index API Tests', () => {
       let res = await indexApi.insert({
         index: 'test',
         id: 1,
-        doc: { content: 'Text 1', name: 'Doc 1', cat: 1 },
+        doc: { content: 'Text 1', name: 'Doc 1', cat: 1, type_vector: [0.2, 1.4, -2.3] },
       });
       expect(res).to.include({ _id: 1, result: 'created' });
 
       res = await indexApi.insert({
         index: 'test',
         id: 2,
-        doc: { content: 'Text 2', name: 'Doc 2', cat: 2 },
+        doc: { content: 'Text 2', name: 'Doc 2', cat: 2, type_vector: [0.8, 0.4, 1.3] },
       });
       res = await indexApi.insert({
         index: 'test',
         id: 3,
-        doc: { content: 'Text 3', name: 'Doc 3', cat: 7 },
+        doc: { content: 'Text 3', name: 'Doc 3', cat: 7, type_vector: [1.5, -1.0, 1.6] },
       });
 
       res = await indexApi.replace({
         index: 'test',
         id: 2,
-        doc: { content: 'Text21', cat: 3 },
+        doc: { content: 'Text21', cat: 3, type_vector: [0.8, 0.4, 1.3] },
       });
       expect(res).to.include({ _id: 2, result: 'updated' });
       let testRes = await utilsApi.sql('SELECT * FROM test WHERE id=2', false);
@@ -71,6 +71,7 @@ describe('Index API Tests', () => {
         content: 'Text21',
         cat: 3,
         name: '',
+        type_vector: [0.8, 0.4, 1.3],
       });
 
       let insertDocs = [
@@ -78,21 +79,21 @@ describe('Index API Tests', () => {
           insert: {
             index: 'test',
             id: 4,
-            doc: { content: 'Text 4', cat: 1, name: 'Doc 4' },
+            doc: { content: 'Text 4', cat: 1, name: 'Doc 4', type_vector: [0.2, 1.4, -2.3] },
           },
         },
         {
           insert: {
             index: 'test',
             id: 5,
-            doc: { content: 'Text 5', cat: 9, name: 'Doc 5' },
+            doc: { content: 'Text 5', cat: 9, name: 'Doc 5', type_vector: [0.8, 0.4, 1.3] },
           },
         },
         {
           insert: {
             index: 'test',
             id: 6,
-            doc: { content: 'Text 6', cat: 7, name: 'Doc 6' },
+            doc: { content: 'Text 6', cat: 7, name: 'Doc 6', type_vector: [1.5, -1.0, 1.6] },
           },
         },
       ];
@@ -159,44 +160,45 @@ describe('Search Api Tests', () => {
           insert: {
             index: 'test',
             id: 1,
-            doc: { content: 'Text 1', cat: 1, name: 'Doc 1' },
+            doc: { content: 'Text 1', cat: 1, name: 'Doc 1', type_vector: [0.2, 1.4, -2.3] },
           },
         },
         {
           insert: {
             index: 'test',
             id: 2,
-            doc: { content: 'Text 2', cat: 5, name: 'Doc 2' },
+            doc: { content: 'Text 2', cat: 5, name: 'Doc 2', type_vector: [0.8, 0.4, 1.3]  },
           },
         },
         {
           insert: {
             index: 'test',
             id: 3,
-            doc: { content: 'Text 3', cat: 10, name: 'Doc 3' },
+            doc: { content: 'Text 3', cat: 10, name: 'Doc 3', type_vector: [1.5, -1.0, 1.6] },
           },
         },
         {
           insert: {
             index: 'test',
             id: 4,
-            doc: { content: 'Text 4', cat: 7, name: 'Doc 4' },
+            doc: { content: 'Text 4', cat: 7, name: 'Doc 4', type_vector: [0.4, 2.4, 0.9] },
           },
         },
         {
           insert: {
             index: 'test',
             id: 5,
-            doc: { content: 'Text 5', cat: 8, name: 'Doc 5' },
+            doc: { content: 'Text 5', cat: 8, name: 'Doc 5', type_vector: [0.2, 1.4, -2.3] },
           },
         },
       ];
       await indexApi.bulk(insertDocs.map((e) => JSON.stringify(e)).join('\n'));
-
+      
       let res = await searchApi.search({
         index: 'test',
         query: { match_all: {} },
       });
+
       expect(res).to.deep.nested.property('hits.total', 5);
 
       res = await searchApi.search({
@@ -225,6 +227,52 @@ describe('Search Api Tests', () => {
         sort: [{ cat: 'desc' }],
       });
       expect(res).to.deep.nested.property('hits.total', 0);
+      console.log(res)
+
+      res = await searchApi.search({
+        index: 'test',
+        knn: {
+          field: "type_vector",
+          query_vector: [1.5, -1.0, 1.6],
+          k: 5,
+        },
+      });
+      expect(res).to.deep.nested.property('hits.hits[0]._id', '3');
+      
+      res = await searchApi.search({
+        index: 'test',
+        knn: {
+          field: "type_vector",
+          doc_id: 2,
+          k: 5,
+        },
+      });
+      expect(res).to.deep.nested.property('hits.hits[0]._id', '3');
+      
+      res = await searchApi.search({
+        index: 'test',
+        knn: {
+          field: "type_vector",
+          query_vector: [1.5, -1.0, 1.6],
+          k: 5,
+          filter: {"bool": {"must": {"equals": {"id": 2} } } },
+        },
+      });
+      expect(res).to.deep.nested.property('hits.total', 1);
+      expect(res).to.deep.nested.property('hits.hits[0]._id', '2');
+      
+      res = await searchApi.search({
+        index: 'test',
+        knn: {
+          field: "type_vector",
+          doc_id: 2,
+          k: 5,
+          filter: {"bool": {"must": {"equals": {"id": 3} } } },
+        },
+      });
+      expect(res).to.deep.nested.property('hits.total', 1);
+      expect(res).to.deep.nested.property('hits.hits[0]._id', '3');
+      
     } catch (e) {
       const errorResponse = e instanceof Manticoresearch.ResponseError ? await e.response.json() : e;
       console.error('Error response:', JSON.stringify(errorResponse, null, 2));

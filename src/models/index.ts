@@ -626,6 +626,68 @@ export interface InsertDocumentRequest {
     doc: { [key: string]: any; };
 }
 /**
+ * Request object for knn search operation
+ * @export
+ * @interface KnnQueryByDocId
+ */
+export interface KnnQueryByDocId {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnnQueryByDocId
+     */
+    field: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof KnnQueryByDocId
+     */
+    doc_id: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof KnnQueryByDocId
+     */
+    k: number;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof KnnQueryByDocId
+     */
+    filter?: { [key: string]: any; };
+}
+/**
+ * Request object for knn search operation
+ * @export
+ * @interface KnnQueryByVector
+ */
+export interface KnnQueryByVector {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnnQueryByVector
+     */
+    field: string;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof KnnQueryByVector
+     */
+    query_vector: Array<number>;
+    /**
+     * 
+     * @type {number}
+     * @memberof KnnQueryByVector
+     */
+    k: number;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof KnnQueryByVector
+     */
+    filter?: { [key: string]: any; };
+}
+/**
  * Query match filter
  * @export
  * @interface MatchFilter
@@ -877,6 +939,12 @@ export interface SearchRequest {
     index: string;
     /**
      * 
+     * @type {SearchRequestKnn}
+     * @memberof SearchRequest
+     */
+    knn?: SearchRequestKnn;
+    /**
+     * 
      * @type {object}
      * @memberof SearchRequest
      */
@@ -959,7 +1027,31 @@ export interface SearchRequest {
      * @memberof SearchRequest
      */
     track_scores?: boolean;
+    /**
+     * 
+     * @type {any}
+     * @memberof SearchRequest
+     */
+    query_vector?: any | null;
+    /**
+     * 
+     * @type {any}
+     * @memberof SearchRequest
+     */
+    doc_id?: any | null;
+    /**
+     * 
+     * @type {any}
+     * @memberof SearchRequest
+     */
+    k?: any | null;
 }
+/**
+ * @type SearchRequestKnn
+ * 
+ * @export
+ */
+export type SearchRequestKnn = KnnQueryByDocId | KnnQueryByVector;
 /**
  * Response object of a search request
  * @export
