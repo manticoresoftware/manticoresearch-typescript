@@ -1,6 +1,6 @@
 {
-  "name": "manticoresearch-ts",
-  "version": "4.1.0",
+  "name": "manticoresearch-ts-dev",
+  "version": "4.1.1",
   "description": "Typescript client for Manticore Search",
   "license": "MIT",
   "main": "dist/index.js",

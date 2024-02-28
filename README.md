@@ -19,7 +19,7 @@ Minimum Manticore Search version is 4.2.1 with HTTP protocol enabled.
 ## Installation
 
 ```shell
-npm install manticoresearch-ts 
+npm install manticoresearch-ts-dev 
 ```
 
 ## Getting Started
