@@ -89,6 +89,8 @@ All URIs are relative to *http://127.0.0.1:9308*
 
 | _Manticoresearch.IndexApi_ | [**update**](docs/IndexApi.md#update) | **POST** /update | Update a document in an index |
 
+| _Manticoresearch.IndexApi_ | [**update_0**](docs/IndexApi.md#update_0) | **POST** /{index}/_update/{id} | Partially replaces a document in an index |
+
 | _Manticoresearch.SearchApi_ | [**percolate**](docs/SearchApi.md#percolate) | **POST** /pq/{index}/search | Perform reverse search on a percolate index |
 
 | _Manticoresearch.SearchApi_ | [**search**](docs/SearchApi.md#search) | **POST** /search | Performs a search on an index |

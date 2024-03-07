@@ -15,6 +15,7 @@ import type {
   DeleteResponse,
   ErrorResponse,
   InsertDocumentRequest,
+  ReplaceDocumentRequest,
   SuccessResponse,
   UpdateDocumentRequest,
   UpdateResponse,
@@ -38,6 +39,12 @@ export interface ReplaceRequest {
 
 export interface UpdateRequest {
   updateDocumentRequest: UpdateDocumentRequest;
+}
+
+export interface Update0Request {
+  index: string;
+  id: number;
+  replaceDocumentRequest: ReplaceDocumentRequest;
 }
 
 /**
@@ -217,6 +224,49 @@ export class IndexApi extends runtime.BaseAPI {
    */
   async update(updateDocumentRequest: UpdateDocumentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UpdateResponse> {
     const response = await this.updateRaw({ updateDocumentRequest: updateDocumentRequest }, initOverrides);
+    return await response.value();
+  }
+
+  /**
+   * Partially replaces a document with given id in an index Responds with an object of the following format:     ```   {\'_index\':\'products\',\'updated\':1}   ``` 
+   * Partially replaces a document in an index
+   */
+  async update_1Raw(requestParameters: Update0Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UpdateResponse>> {
+    if (requestParameters.index === null || requestParameters.index === undefined) {
+      throw new runtime.RequiredError('index','Required parameter requestParameters.index was null or undefined when calling update_1.');
+    }
+
+    if (requestParameters.id === null || requestParameters.id === undefined) {
+      throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling update_1.');
+    }
+
+    if (requestParameters.replaceDocumentRequest === null || requestParameters.replaceDocumentRequest === undefined) {
+      throw new runtime.RequiredError('replaceDocumentRequest','Required parameter requestParameters.replaceDocumentRequest was null or undefined when calling update_1.');
+    }
+
+    const queryParameters: any = {};
+
+    const headerParameters: runtime.HTTPHeaders = {};
+
+    headerParameters['Content-Type'] = 'application/json';
+
+    const response = await this.request({
+      path: `/{index}/_update/{id}`.replace(`{${"index"}}`, encodeURIComponent(String(requestParameters.index))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+      method: 'POST',
+      headers: headerParameters,
+      query: queryParameters,
+      body: requestParameters.replaceDocumentRequest,
+    }, initOverrides);
+
+    return new runtime.JSONApiResponse(response);
+  }
+
+  /**
+   * Partially replaces a document with given id in an index Responds with an object of the following format:     ```   {\'_index\':\'products\',\'updated\':1}   ``` 
+   * Partially replaces a document in an index
+   */
+  async update_1(index: string, id: number, replaceDocumentRequest: ReplaceDocumentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UpdateResponse> {
+    const response = await this.update_1Raw({ index: index, id: id, replaceDocumentRequest: replaceDocumentRequest }, initOverrides);
     return await response.value();
   }
 

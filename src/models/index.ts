@@ -926,6 +926,21 @@ export interface RangeFilter {
     gt?: number | null;
 }
 /**
+ * Object with document data.
+ * 
+ * @export
+ * @interface ReplaceDocumentRequest
+ */
+export interface ReplaceDocumentRequest {
+    /**
+     * Object with document data
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof ReplaceDocumentRequest
+     */
+    doc: { [key: string]: any; };
+}
+/**
  * Request object for search operation
  * @export
  * @interface SearchRequest
