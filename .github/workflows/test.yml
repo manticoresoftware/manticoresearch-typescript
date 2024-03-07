@@ -25,6 +25,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: |
+        sleep 1m
         npm install -g typescript
         npm install
         npm test
