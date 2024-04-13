@@ -281,7 +281,7 @@ describe('Search Api Tests', () => {
   });
   it('Testing search aggregation', async function () {
     try {
-      const query: Manticoresearch.SearchRequest = {
+      let query: Manticoresearch.SearchRequest = {
         index: 'test',
         query: {
           match_all: {},
@@ -296,9 +296,44 @@ describe('Search Api Tests', () => {
         }
       };
 
-      const result = await searchApi.search(query);
+      let result = await searchApi.search(query);
       expect(result).to.have.nested.property('aggregations.categories.buckets');
       expect(result.aggregations!.categories.buckets).to.have.lengthOf(3)
+
+      query = {
+        index: 'test',
+        query: {
+          match_all: {},
+        },
+        aggs: {
+          categories_with_name: {
+            composite: {
+              size: 5,
+              sources: [
+                {
+                  agg1: {
+                    terms: {
+                      field: 'name'
+                    }
+                  }
+                },
+                {
+                  agg2: {
+                    terms: {
+                      field: 'cat'
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      };
+      result = await searchApi.search(query);
+      
+      expect(result).to.have.nested.property('aggregations.categories_with_name.buckets');
+      expect(result).to.have.nested.property('aggregations.categories_with_name.buckets');
+      expect(result.aggregations!.categories_with_name.buckets).to.have.lengthOf(5)
     } catch (err) {
       const errorResponse = err instanceof Manticoresearch.ResponseError ? await err.response.json() : err;
       console.error('Error response:', JSON.stringify(errorResponse, null, 2));

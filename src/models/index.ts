@@ -18,6 +18,57 @@ export interface Aggregation {
      * @memberof Aggregation
      */
     sort?: Array<{ [key: string]: AggregationSortInnerValue; }>;
+    /**
+     * 
+     * @type {AggregationComposite}
+     * @memberof Aggregation
+     */
+    composite?: AggregationComposite;
+}
+/**
+ * Composite aggregation
+ * @export
+ * @interface AggregationComposite
+ */
+export interface AggregationComposite {
+    /**
+     * Maximum number of composite buckets in the result
+     * @type {number}
+     * @memberof AggregationComposite
+     */
+    size?: number;
+    /**
+     * 
+     * @type {Array<{ [key: string]: AggregationCompositeSourcesInnerValue; }>}
+     * @memberof AggregationComposite
+     */
+    sources?: Array<{ [key: string]: AggregationCompositeSourcesInnerValue; }>;
+}
+/**
+ * 
+ * @export
+ * @interface AggregationCompositeSourcesInnerValue
+ */
+export interface AggregationCompositeSourcesInnerValue {
+    /**
+     * 
+     * @type {AggregationCompositeSourcesInnerValueTerms}
+     * @memberof AggregationCompositeSourcesInnerValue
+     */
+    terms?: AggregationCompositeSourcesInnerValueTerms;
+}
+/**
+ * 
+ * @export
+ * @interface AggregationCompositeSourcesInnerValueTerms
+ */
+export interface AggregationCompositeSourcesInnerValueTerms {
+    /**
+     * Name of attribute to aggregate by
+     * @type {string}
+     * @memberof AggregationCompositeSourcesInnerValueTerms
+     */
+    field?: string;
 }
 /**
  * 
