@@ -278,14 +278,12 @@ describe('Search Api Tests', () => {
         query: {
           range: { 
             "name": {
-              "gt": "E",
-              "lt": "G",
+              "lt": "E",
             },
           },
         },
       });
-      console.log(res)
-      expect(res).to.deep.nested.property('hits.total', 0);
+      expect(res).to.deep.nested.property('hits.total', 5);
 
     } catch (e) {
       const errorResponse = e instanceof Manticoresearch.ResponseError ? await e.response.json() : e;
