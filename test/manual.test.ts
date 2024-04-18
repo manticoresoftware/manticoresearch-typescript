@@ -273,6 +273,20 @@ describe('Search Api Tests', () => {
       expect(res).to.deep.nested.property('hits.total', 1);
       expect(res).to.deep.nested.property('hits.hits[0]._id', '3');
       
+      res = await searchApi.search({
+        index: 'test',
+        query: {
+          range: { 
+            "name": {
+              "gt": "E",
+              "lt": "G",
+            },
+          },
+        },
+      });
+      console.log(res)
+      expect(res).to.deep.nested.property('hits.total', 0);
+
     } catch (e) {
       const errorResponse = e instanceof Manticoresearch.ResponseError ? await e.response.json() : e;
       console.error('Error response:', JSON.stringify(errorResponse, null, 2));

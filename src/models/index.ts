@@ -953,29 +953,35 @@ export interface RangeFilter {
     field: string;
     /**
      * 
-     * @type {number}
+     * @type {RangeFilterLte}
      * @memberof RangeFilter
      */
-    lte?: number | null;
+    lte?: RangeFilterLte | null;
     /**
      * 
-     * @type {number}
+     * @type {RangeFilterLte}
      * @memberof RangeFilter
      */
-    gte?: number | null;
+    gte?: RangeFilterLte | null;
     /**
      * 
-     * @type {number}
+     * @type {RangeFilterLte}
      * @memberof RangeFilter
      */
-    lt?: number | null;
+    lt?: RangeFilterLte | null;
     /**
      * 
-     * @type {number}
+     * @type {RangeFilterLte}
      * @memberof RangeFilter
      */
-    gt?: number | null;
+    gt?: RangeFilterLte | null;
 }
+/**
+ * @type RangeFilterLte
+ * 
+ * @export
+ */
+export type RangeFilterLte = number | string;
 /**
  * Object with document data.
  * 
