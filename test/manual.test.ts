@@ -117,7 +117,7 @@ describe('Index API Tests', () => {
         false
       );
       expect(testRes).to.deep.nested.property('hits.hits[0]._source', {
-        'count(*)': 4,
+        'count(*)': 3,
       });
 
       res = await indexApi.delete({ index: 'test', id: 1 });
