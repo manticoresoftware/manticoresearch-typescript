@@ -40,6 +40,8 @@ describe('Utils Api Tests', () => {
 describe('Index API Tests', () => {
   it('Testing index api operations', async function () {
     try {
+      var JSONbig = require('json-bigint');
+		
       await utilsApi.sql('TRUNCATE TABLE test');
 
       let res = await indexApi.insert({
@@ -75,32 +77,15 @@ describe('Index API Tests', () => {
       });
 
       let insertDocs = [
-        {
-          insert: {
-            index: 'test',
-            id: 4,
-            doc: { content: 'Text 4', cat: 1, name: 'Doc 4', type_vector: [0.2, 1.4, -2.3] },
-          },
-        },
-        {
-          insert: {
-            index: 'test',
-            id: 5,
-            doc: { content: 'Text 5', cat: 9, name: 'Doc 5', type_vector: [0.8, 0.4, 1.3] },
-          },
-        },
-        {
-          insert: {
-            index: 'test',
-            id: 6,
-            doc: { content: 'Text 6', cat: 7, name: 'Doc 6', type_vector: [1.5, -1.0, 1.6] },
-          },
-        },
+        '{ "insert": { "index": "test", "id": 4, "doc": { "content": "Text 4", "cat": 1, "name": "Doc 4", "type_vector": [0.2, 1.4, -2.3] } } }',
+        '{ "insert": { "index": "test", "id": 5, "doc": { "content": "Text 5", "cat": 9, "name": "Doc 5", "type_vector": [0.8, 0.4, 1.3] } } }',
+        '{ "insert": { "index": "test", "id": 9223372036854775807, "doc": { "content": "Text 6", "cat": 15, "name": "Doc 6", "type_vector": [1.5, -1.0, 1.6] } } }',
       ];
 
       let bulkRes = await indexApi.bulk(
-        insertDocs.map((e) => JSON.stringify(e)).join("\n")
+        insertDocs.map((e) => JSONbig.stringify(JSONbig.parse(e))).join("\n")
       );
+
       expect(bulkRes).to.property("errors", false);
 
       res = await indexApi.update({ index: "test", id: 1, doc: { cat: 10 } });
@@ -237,7 +222,7 @@ describe('Search Api Tests', () => {
           k: 5,
         },
       });
-      expect(res).to.deep.nested.property('hits.hits[0]._id', '3');
+      expect(res).to.deep.nested.property('hits.hits[0]._id', 3);
       
       res = await searchApi.search({
         index: 'test',
@@ -247,7 +232,7 @@ describe('Search Api Tests', () => {
           k: 5,
         },
       });
-      expect(res).to.deep.nested.property('hits.hits[0]._id', '3');
+      expect(res).to.deep.nested.property('hits.hits[0]._id', 3);
       
       res = await searchApi.search({
         index: 'test',
@@ -259,7 +244,7 @@ describe('Search Api Tests', () => {
         },
       });
       expect(res).to.deep.nested.property('hits.total', 1);
-      expect(res).to.deep.nested.property('hits.hits[0]._id', '2');
+      expect(res).to.deep.nested.property('hits.hits[0]._id', 2);
       
       res = await searchApi.search({
         index: 'test',
@@ -271,7 +256,7 @@ describe('Search Api Tests', () => {
         },
       });
       expect(res).to.deep.nested.property('hits.total', 1);
-      expect(res).to.deep.nested.property('hits.hits[0]._id', '3');
+      expect(res).to.deep.nested.property('hits.hits[0]._id', 3);
       
       res = await searchApi.search({
         index: 'test',

@@ -74,6 +74,8 @@ export class SearchApi extends runtime.BaseAPI {
    * Performs a search on an index
    */
   async searchRaw(requestParameters: SearchOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResponse>> {
+	var JSONbig = require('json-bigint');
+	
 	if (requestParameters.searchRequest === null || requestParameters.searchRequest === undefined) {
       throw new runtime.RequiredError('searchRequest','Required parameter requestParameters.searchRequest was null or undefined when calling search.');
     }
@@ -84,7 +86,7 @@ export class SearchApi extends runtime.BaseAPI {
 
     headerParameters['Content-Type'] = 'application/json';
 
-    var postBody = JSON.parse(JSON.stringify(requestParameters.searchRequest));
+    var postBody = JSONbig.parse(JSONbig.stringify(requestParameters.searchRequest));
     
     if (postBody['source']) {
       postBody['_source'] = postBody['source']; 

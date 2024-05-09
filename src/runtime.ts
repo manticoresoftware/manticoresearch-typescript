@@ -81,6 +81,8 @@ export class Configuration {
 
 export const DefaultConfig = new Configuration();
 
+export const JSONbig = require('json-bigint');
+
 /**
  * This is the base class for all generated API classes.
  */
@@ -173,7 +175,7 @@ export class BaseAPI {
             || isBlob(overriddenInit.body)) {
           body = overriddenInit.body;
         } else if (this.isJsonMime(headers['Content-Type'])) {
-          body = JSON.stringify(overriddenInit.body);
+          body = JSONbig.stringify(overriddenInit.body);
         } else {
           body = overriddenInit.body;
         }
@@ -387,7 +389,8 @@ export class JSONApiResponse<T> {
     constructor(public raw: Response, private transformer: ResponseTransformer<T> = (jsonValue: any) => jsonValue) {}
 
     async value(): Promise<T> {
-        return this.transformer(await this.raw.json());
+		const textRes = await this.raw.text();
+        return this.transformer(JSONbig.parse(textRes));
     }
 }
 
