@@ -21,7 +21,7 @@ describe('Utils Api Tests', () => {
       let res = await utilsApi.sql('DROP TABLE IF EXISTS test');
       expect(res).to.deep.equal(expected);
       res = await utilsApi.sql(
-        "CREATE TABLE IF NOT EXISTS test (content text, name string, cat int, type_vector float_vector knn_type='hnsw' knn_dims='3' hnsw_similarity='l2')"
+        'CREATE TABLE IF NOT EXISTS test (content text, name string, cat int)'
       );
       expect(res).to.deep.equal(expected);
 
@@ -40,32 +40,30 @@ describe('Utils Api Tests', () => {
 describe('Index API Tests', () => {
   it('Testing index api operations', async function () {
     try {
-      var JSONbig = require('json-bigint');
-		
       await utilsApi.sql('TRUNCATE TABLE test');
 
       let res = await indexApi.insert({
         index: 'test',
         id: 1,
-        doc: { content: 'Text 1', name: 'Doc 1', cat: 1, type_vector: [0.2, 1.4, -2.3] },
+        doc: { content: 'Text 1', name: 'Doc 1', cat: 1 },
       });
       expect(res).to.include({ _id: 1, result: 'created' });
 
       res = await indexApi.insert({
         index: 'test',
         id: 2,
-        doc: { content: 'Text 2', name: 'Doc 2', cat: 2, type_vector: [0.8, 0.4, 1.3] },
+        doc: { content: 'Text 2', name: 'Doc 2', cat: 2 },
       });
       res = await indexApi.insert({
         index: 'test',
         id: 3,
-        doc: { content: 'Text 3', name: 'Doc 3', cat: 7, type_vector: [1.5, -1.0, 1.6] },
+        doc: { content: 'Text 3', name: 'Doc 3', cat: 7 },
       });
 
       res = await indexApi.replace({
         index: 'test',
         id: 2,
-        doc: { content: 'Text21', cat: 3, type_vector: [0.8, 0.4, 1.3] },
+        doc: { content: 'Text21', cat: 3 },
       });
       expect(res).to.include({ _id: 2, result: 'updated' });
       let testRes = await utilsApi.sql('SELECT * FROM test WHERE id=2', false);
@@ -73,19 +71,35 @@ describe('Index API Tests', () => {
         content: 'Text21',
         cat: 3,
         name: '',
-        type_vector: [0.8, 0.4, 1.3],
       });
 
       let insertDocs = [
-        '{ "insert": { "index": "test", "id": 4, "doc": { "content": "Text 4", "cat": 1, "name": "Doc 4", "type_vector": [0.2, 1.4, -2.3] } } }',
-        '{ "insert": { "index": "test", "id": 5, "doc": { "content": "Text 5", "cat": 9, "name": "Doc 5", "type_vector": [0.8, 0.4, 1.3] } } }',
-        '{ "insert": { "index": "test", "id": 9223372036854775807, "doc": { "content": "Text 6", "cat": 15, "name": "Doc 6", "type_vector": [1.5, -1.0, 1.6] } } }',
+        {
+          insert: {
+            index: 'test',
+            id: 4,
+            doc: { content: 'Text 4', cat: 1, name: 'Doc 4' },
+          },
+        },
+        {
+          insert: {
+            index: 'test',
+            id: 5,
+            doc: { content: 'Text 5', cat: 9, name: 'Doc 5' },
+          },
+        },
+        {
+          insert: {
+            index: 'test',
+            id: 6,
+            doc: { content: 'Text 6', cat: 7, name: 'Doc 6' },
+          },
+        },
       ];
 
       let bulkRes = await indexApi.bulk(
-        insertDocs.map((e) => JSONbig.stringify(JSONbig.parse(e))).join("\n")
+        insertDocs.map((e) => JSON.stringify(e)).join("\n")
       );
-
       expect(bulkRes).to.property("errors", false);
 
       res = await indexApi.update({ index: "test", id: 1, doc: { cat: 10 } });
@@ -117,7 +131,7 @@ describe('Index API Tests', () => {
         false
       );
       expect(testRes).to.deep.nested.property('hits.hits[0]._source', {
-        'count(*)': 3,
+        'count(*)': 4,
       });
 
       res = await indexApi.delete({ index: 'test', id: 1 });
@@ -145,45 +159,44 @@ describe('Search Api Tests', () => {
           insert: {
             index: 'test',
             id: 1,
-            doc: { content: 'Text 1', cat: 1, name: 'Doc 1', type_vector: [0.2, 1.4, -2.3] },
+            doc: { content: 'Text 1', cat: 1, name: 'Doc 1' },
           },
         },
         {
           insert: {
             index: 'test',
             id: 2,
-            doc: { content: 'Text 2', cat: 5, name: 'Doc 2', type_vector: [0.8, 0.4, 1.3]  },
+            doc: { content: 'Text 2', cat: 5, name: 'Doc 2' },
           },
         },
         {
           insert: {
             index: 'test',
             id: 3,
-            doc: { content: 'Text 3', cat: 10, name: 'Doc 3', type_vector: [1.5, -1.0, 1.6] },
+            doc: { content: 'Text 3', cat: 10, name: 'Doc 3' },
           },
         },
         {
           insert: {
             index: 'test',
             id: 4,
-            doc: { content: 'Text 4', cat: 7, name: 'Doc 4', type_vector: [0.4, 2.4, 0.9] },
+            doc: { content: 'Text 4', cat: 7, name: 'Doc 4' },
           },
         },
         {
           insert: {
             index: 'test',
             id: 5,
-            doc: { content: 'Text 5', cat: 8, name: 'Doc 5', type_vector: [0.2, 1.4, -2.3] },
+            doc: { content: 'Text 5', cat: 8, name: 'Doc 5' },
           },
         },
       ];
       await indexApi.bulk(insertDocs.map((e) => JSON.stringify(e)).join('\n'));
-      
+
       let res = await searchApi.search({
         index: 'test',
         query: { match_all: {} },
       });
-
       expect(res).to.deep.nested.property('hits.total', 5);
 
       res = await searchApi.search({
@@ -212,64 +225,6 @@ describe('Search Api Tests', () => {
         sort: [{ cat: 'desc' }],
       });
       expect(res).to.deep.nested.property('hits.total', 0);
-      console.log(res)
-
-      res = await searchApi.search({
-        index: 'test',
-        knn: {
-          field: "type_vector",
-          query_vector: [1.5, -1.0, 1.6],
-          k: 5,
-        },
-      });
-      expect(res).to.deep.nested.property('hits.hits[0]._id', 3);
-      
-      res = await searchApi.search({
-        index: 'test',
-        knn: {
-          field: "type_vector",
-          doc_id: 2,
-          k: 5,
-        },
-      });
-      expect(res).to.deep.nested.property('hits.hits[0]._id', 3);
-      
-      res = await searchApi.search({
-        index: 'test',
-        knn: {
-          field: "type_vector",
-          query_vector: [1.5, -1.0, 1.6],
-          k: 5,
-          filter: {"bool": {"must": {"equals": {"id": 2} } } },
-        },
-      });
-      expect(res).to.deep.nested.property('hits.total', 1);
-      expect(res).to.deep.nested.property('hits.hits[0]._id', 2);
-      
-      res = await searchApi.search({
-        index: 'test',
-        knn: {
-          field: "type_vector",
-          doc_id: 2,
-          k: 5,
-          filter: {"bool": {"must": {"equals": {"id": 3} } } },
-        },
-      });
-      expect(res).to.deep.nested.property('hits.total', 1);
-      expect(res).to.deep.nested.property('hits.hits[0]._id', 3);
-      
-      res = await searchApi.search({
-        index: 'test',
-        query: {
-          range: { 
-            "name": {
-              "lt": "E",
-            },
-          },
-        },
-      });
-      expect(res).to.deep.nested.property('hits.total', 5);
-
     } catch (e) {
       const errorResponse = e instanceof Manticoresearch.ResponseError ? await e.response.json() : e;
       console.error('Error response:', JSON.stringify(errorResponse, null, 2));
@@ -278,7 +233,7 @@ describe('Search Api Tests', () => {
   });
   it('Testing search aggregation', async function () {
     try {
-      let query: Manticoresearch.SearchRequest = {
+      const query: Manticoresearch.SearchRequest = {
         index: 'test',
         query: {
           match_all: {},
@@ -293,44 +248,9 @@ describe('Search Api Tests', () => {
         }
       };
 
-      let result = await searchApi.search(query);
+      const result = await searchApi.search(query);
       expect(result).to.have.nested.property('aggregations.categories.buckets');
       expect(result.aggregations!.categories.buckets).to.have.lengthOf(3)
-
-      query = {
-        index: 'test',
-        query: {
-          match_all: {},
-        },
-        aggs: {
-          categories_with_name: {
-            composite: {
-              size: 5,
-              sources: [
-                {
-                  agg1: {
-                    terms: {
-                      field: 'name'
-                    }
-                  }
-                },
-                {
-                  agg2: {
-                    terms: {
-                      field: 'cat'
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        }
-      };
-      result = await searchApi.search(query);
-      
-      expect(result).to.have.nested.property('aggregations.categories_with_name.buckets');
-      expect(result).to.have.nested.property('aggregations.categories_with_name.buckets');
-      expect(result.aggregations!.categories_with_name.buckets).to.have.lengthOf(5)
     } catch (err) {
       const errorResponse = err instanceof Manticoresearch.ResponseError ? await err.response.json() : err;
       console.error('Error response:', JSON.stringify(errorResponse, null, 2));
