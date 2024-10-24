@@ -180,7 +180,7 @@ const mimeTypeSimplePredicateFactory = (type: string, subtype?: string): MimeTyp
 // Creating a set of named predicates that will help us determine how to handle different mime-types
 const isTextLikeMimeType = mimeTypeSimplePredicateFactory('text');
 const isJsonMimeType = mimeTypeSimplePredicateFactory('application', 'json');
-const isJsonLikeMimeType = mimeTypePredicateFactory((descriptor) => descriptor.type === 'application' && descriptor.subtypeTokens.some((item) => item === 'json' || item === 'x-ndjson));
+const isJsonLikeMimeType = mimeTypePredicateFactory((descriptor) => descriptor.type === 'application' && descriptor.subtypeTokens.some((item) => item === 'json' || item === 'x-ndjson'));
 const isOctetStreamMimeType = mimeTypeSimplePredicateFactory('application', 'octet-stream');
 const isFormUrlencodedMimeType = mimeTypeSimplePredicateFactory('application', 'x-www-form-urlencoded');
 
