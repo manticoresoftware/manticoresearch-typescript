@@ -1,6 +1,6 @@
 # Manticore TypeScript client
 
-❗ WARNING: this is a development version of the client. The latest release's readme is https://github.com/manticoresoftware/manticoresearch-typescript/tree/5.0.0
+❗ WARNING: this is a development version of the client. The latest release's readme is https://github.com/manticoresoftware/manticoresearch-typescript/tree/4.0.0
 
 ## Requirements
 
@@ -24,41 +24,40 @@ npm install manticoresearch-ts
 Please follow the [installation](#installation) instruction and execute the following typescript code:
 
 ```javascript
-import {
-  Configuration,
-  IndexApi,
-  SearchApi,
-  ResponseError,
-} from "manticoresearch-ts";
+import * as Manticoresearch from "manticoresearch-ts";
 (async () => {
   try {
-    /*
-    const config = new Configuration({
-      basePath: 'http://localhost:9308',
-      // fetchApi: <your own fetch API> // use node-fetch with node version < 18
-    })
-    const indexApi = new IndexApi(config);
-    */
-    const indexApi = new IndexApi();
-    const docs = [
-      { insert: { index: "test", id: 1, doc: { title: "Title 1" } } },
-      { insert: { index: "test", id: 2, doc: { title: "Title 2" } } },
-    ];
-    const insertResponse = await indexApi.bulk(
-      docs.map((doc) => JSON.stringify(doc)).join("\n")
-    );
-    console.info("Insert response:", JSON.stringify(insertResponse, null, 2));
-
-    const searchApi = new SearchApi();
-    const searchResponse = await searchApi.search({
-      index: "test",
-      query: { query_string: "Title 1" },
+    const serverConfig = new Manticoresearch.ServerConfiguration("http://localhost:9308", {})
+    const config = Manticoresearch.createConfiguration({
+      baseServer: serverConfig,
     });
-    console.info("Search response:", JSON.stringify(searchResponse, null, 2));
+    indexApi = new Manticoresearch.IndexApi(config);
+    searchApi = new Manticoresearch.SearchApi(config);
+  
+    # Perform insert and search operations
+    await indexApi.insert({"index": "products", "doc" : {"title" : "Crossbody Bag with Tassel", "price" : 19.85}});
+    await indexApi.insert({"index": "products", "doc" : {"title" : "microfiber sheet set", "price" : 19.99}});
+
+    var search_query = new Manticoresearch.SearchQuery()
+    search_query.query_string = "@title bag"
+      
+    var search_request = new Manticoresearch.SearchRequest()
+    search_request.index = "products"
+    search_request.query = search_query
+    var query_highlight = new Manticoresearch.Highlight()
+    query_highlight.fields = {"title":{}}
+    search_request.highlight = query_highlight
+  
+    var search_response = await searchApi.search(search_request)
+    console.log("The response of SearchApi->search:\n")    
+    console.log(search_response)
+
+    # Alternatively, you can pass all request arguments as JSON strings
+    search_response = await searchApi.search({"index": "products", "query": {"query_string": "@title bag"}, "highlight": {"fields": ["title"]}});
+    console.log("The response of SearchApi->search:\n")    
+    console.log(search_response)
   } catch (error) {
-    const errorResponse =
-      error instanceof ResponseError ? await error.response.json() : error;
-    console.error("Error response:", JSON.stringify(errorResponse, null, 2));
+    console.error("Error response:", JSON.stringify(error));
   }
 })();
 ```

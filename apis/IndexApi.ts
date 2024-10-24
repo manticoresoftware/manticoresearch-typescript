@@ -50,11 +50,7 @@ export class IndexApiRequestFactory extends BaseAPIRequestFactory {
             "application/x-ndjson"
         ]);
         requestContext.setHeaderParam("Content-Type", contentType);
-        const serializedBody = ObjectSerializer.stringify(
-            ObjectSerializer.serialize(body, "string", ""),
-            contentType
-        );
-        requestContext.setBody(serializedBody);
+        requestContext.setBody(body);
 
         
         const defaultAuth: SecurityAuthentication | undefined = _options?.authMethods?.default || this.configuration?.authMethods?.default

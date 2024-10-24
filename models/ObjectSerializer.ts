@@ -291,12 +291,16 @@ export class ObjectSerializer {
             type = this.findCorrectType(data, type);
 
             // get the map for the correct type.
-            let attributeTypes = typeMap[type].getAttributeTypeMap();
-            let instance: {[index: string]: any} = {};
-            for (let attributeType of attributeTypes) {
-                instance[attributeType.baseName] = ObjectSerializer.serialize(data[attributeType.name], attributeType.type, attributeType.format);
+            try {
+	            let attributeTypes = typeMap[type].getAttributeTypeMap();
+	            let instance: {[index: string]: any} = {};
+	            for (let attributeType of attributeTypes) {
+	                instance[attributeType.baseName] = ObjectSerializer.serialize(data[attributeType.name], attributeType.type, attributeType.format);
+	            }
+	            return instance;
+	        } catch (e) {
+                return data;
             }
-            return instance;
         }
     }
 
@@ -342,14 +346,18 @@ export class ObjectSerializer {
                 return data;
             }
             let instance = new typeMap[type]();
-            let attributeTypes = typeMap[type].getAttributeTypeMap();
-            for (let attributeType of attributeTypes) {
-                let value = ObjectSerializer.deserialize(data[attributeType.baseName], attributeType.type, attributeType.format);
-                if (value !== undefined) {
-                    instance[attributeType.name] = value;
+            try {
+                let attributeTypes = typeMap[type].getAttributeTypeMap();
+                for (let attributeType of attributeTypes) {
+                    let value = ObjectSerializer.deserialize(data[attributeType.baseName], attributeType.type, attributeType.format);
+                    if (value !== undefined) {
+                        instance[attributeType.name] = value;
+                    }
                 }
+                return instance;
+            } catch (e) {
+                return data;
             }
-            return instance;
         }
     }
 

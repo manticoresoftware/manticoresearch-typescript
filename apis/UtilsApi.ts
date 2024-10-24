@@ -40,9 +40,10 @@ export class UtilsApiRequestFactory extends BaseAPIRequestFactory {
         requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
 
         // Query Params
-        if (rawResponse !== undefined) {
-            requestContext.setQueryParam("raw_response", ObjectSerializer.serialize(rawResponse, "boolean", ""));
-        }
+        if (rawResponse === undefined) {
+			rawResponse = true;
+		}
+        requestContext.setQueryParam("raw_response", ObjectSerializer.serialize(rawResponse, "boolean", ""));
 
 
         // Body Params
