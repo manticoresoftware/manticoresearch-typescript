@@ -6,7 +6,7 @@ var searchApi: Manticoresearch.SearchApi;
 var utilsApi: Manticoresearch.UtilsApi;
 
 beforeEach(function () {
-  const serverConfig = new Manticoresearch.ServerConfiguration("http://localhost:9418", {})
+  const serverConfig = new Manticoresearch.ServerConfiguration("http://localhost:9408", {})
   const config = Manticoresearch.createConfiguration({
     baseServer: serverConfig,
   });
