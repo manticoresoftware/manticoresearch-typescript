@@ -2,7 +2,6 @@
 
 ❗ WARNING: this is a development version of the client. The latest release's readme is https://github.com/manticoresoftware/manticoresearch-typescript/tree/6.0.0
 
-❗ WARNING: the current version has breaking changes compared to the previous release https://github.com/manticoresoftware/manticoresearch-typescript/tree/5.0.0
 
 ## Compatibility Table
 

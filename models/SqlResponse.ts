@@ -15,19 +15,21 @@ import { HttpFile } from '../http/http';
 /**
 * List of responses from executed SQL queries
 */
-export class SqlResponse {
+/**
+ * @type SqlResponse
+ * Type
+ * @export
+ */
+export type SqlResponse = Array<any> | any;
 
+/**
+* @type SqlResponseClass
+    * List of responses from executed SQL queries
+* @export
+*/
+export class SqlResponseClass {
     static readonly discriminator: string | undefined = undefined;
 
     static readonly mapping: {[index: string]: string} | undefined = undefined;
-
-    static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
-    ];
-
-    static getAttributeTypeMap() {
-        return SqlResponse.attributeTypeMap;
-    }
-
-    public constructor() {
-    }
 }
+
