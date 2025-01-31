@@ -26,8 +26,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: |
         sleep 3m
-        ls /home/runner/work/manticoresearch-typescript/manticoresearch-typescript
-        ls /home/runner/work/manticoresearch-typescript/manticoresearch-typescript/node_modules/
         rm -rf /home/runner/work/manticoresearch-typescript/manticoresearch-typescript/node_modules/
         npm install -g typescript
         npm install
