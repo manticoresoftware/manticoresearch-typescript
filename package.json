@@ -1,6 +1,6 @@
 {
-  "name": "manticoresearch-ts-dev",
-  "version": "6.0.0-dev",
+  "name": "manticoresearch-ts",
+  "version": "6.0.0",
   "description": "OpenAPI client for manticoresearch-ts",
   "author": "OpenAPI-Generator Contributors",
   "repository": {
@@ -27,23 +27,23 @@
   ],
   "typings": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc || ./node_modules/typescript/bin/tsc",
+    "build": "tsc",
     "test": "cross-env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/*.test.ts'",
     "prepare": "npm run build"
   },
   "dependencies": {
+    "whatwg-fetch": "^3.0.0",
     "es6-promise": "^4.2.4",
-    "url-parse": "^1.4.3",
-    "whatwg-fetch": "^3.0.0"
+    "url-parse": "^1.4.3"
   },
   "devDependencies": {
     "@types/chai": "^4.3.9",
     "@types/mocha": "^10.0.3",
     "@types/url-parse": "1.4.4",
-    "chai": "^4.3.10",
-    "cross-env": "^7.0.3",
     "mocha": "^10.7.3",
+    "chai": "^4.3.10",
     "ts-node": "^10.9.1",
+    "cross-env": "^7.0.3",
     "typescript": "^4.0"
   }
 }
