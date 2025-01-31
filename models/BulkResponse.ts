@@ -28,6 +28,14 @@ export class BulkResponse {
     * Error message describing an error if such occurred
     */
     'error'?: string;
+    /**
+    * Number of the row returned in the response
+    */
+    'current_line'?: number;
+    /**
+    * Number of rows skipped in the response
+    */
+    'skipped_lines'?: number;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -50,6 +58,18 @@ export class BulkResponse {
             "name": "error",
             "baseName": "error",
             "type": "string",
+            "format": ""
+        },
+        {
+            "name": "current_line",
+            "baseName": "current_line",
+            "type": "number",
+            "format": ""
+        },
+        {
+            "name": "skipped_lines",
+            "baseName": "skipped_lines",
+            "type": "number",
             "format": ""
         }    ];
 

@@ -71,7 +71,7 @@ import { SearchRequest } from '../models/SearchRequest';
 import { SearchResponse } from '../models/SearchResponse';
 import { SearchResponseHits } from '../models/SearchResponseHits';
 import { SourceRules } from '../models/SourceRules';
-import { SqlResponseClass } from '../models/SqlResponse';
+import { SqlResponse } from '../models/SqlResponse';
 import { SuccessResponse } from '../models/SuccessResponse';
 import { UpdateDocumentRequest } from '../models/UpdateDocumentRequest';
 import { UpdateResponse } from '../models/UpdateResponse';
@@ -135,7 +135,7 @@ let typeMap: {[index: string]: any} = {
     "SearchResponse": SearchResponse,
     "SearchResponseHits": SearchResponseHits,
     "SourceRules": SourceRules,
-    "SqlResponse": SqlResponseClass,
+    "SqlResponse": SqlResponse,
     "SuccessResponse": SuccessResponse,
     "UpdateDocumentRequest": UpdateDocumentRequest,
     "UpdateResponse": UpdateResponse,

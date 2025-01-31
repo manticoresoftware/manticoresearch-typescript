@@ -21,6 +21,10 @@ export class SuccessResponse {
     */
     '_index'?: string;
     /**
+    * Name of the document table (alias of index)
+    */
+    'table'?: string;
+    /**
     * ID of the document affected by the request operation
     */
     '_id'?: number;
@@ -49,6 +53,12 @@ export class SuccessResponse {
         {
             "name": "_index",
             "baseName": "_index",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "table",
+            "baseName": "table",
             "type": "string",
             "format": ""
         },

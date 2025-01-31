@@ -35,6 +35,10 @@ export class SearchResponse {
     */
     'profile'?: any;
     /**
+    * Scroll token to be used fo pagination
+    */
+    'scroll'?: string;
+    /**
     * Warnings encountered during the search operation
     */
     'warning'?: any;
@@ -72,6 +76,12 @@ export class SearchResponse {
             "name": "profile",
             "baseName": "profile",
             "type": "any",
+            "format": ""
+        },
+        {
+            "name": "scroll",
+            "baseName": "scroll",
+            "type": "string",
             "format": ""
         },
         {
