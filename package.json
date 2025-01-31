@@ -27,7 +27,7 @@
   ],
   "typings": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc || ./node_modules/typescript/bin/tsc",
     "test": "cross-env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/*.test.ts'",
     "prepare": "npm run build"
   },
