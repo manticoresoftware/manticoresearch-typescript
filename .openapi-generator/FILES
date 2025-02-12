@@ -21,6 +21,7 @@ models/AggCompositeSource.ts
 models/AggCompositeTerm.ts
 models/AggTerms.ts
 models/Aggregation.ts
+models/AutocompleteRequest.ts
 models/BoolFilter.ts
 models/BulkResponse.ts
 models/DeleteDocumentRequest.ts

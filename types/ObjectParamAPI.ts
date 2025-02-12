@@ -6,6 +6,7 @@ import { AggCompositeSource } from '../models/AggCompositeSource';
 import { AggCompositeTerm } from '../models/AggCompositeTerm';
 import { AggTerms } from '../models/AggTerms';
 import { Aggregation } from '../models/Aggregation';
+import { AutocompleteRequest } from '../models/AutocompleteRequest';
 import { BoolFilter } from '../models/BoolFilter';
 import { BulkResponse } from '../models/BulkResponse';
 import { DeleteDocumentRequest } from '../models/DeleteDocumentRequest';
@@ -72,12 +73,12 @@ export interface IndexApiInsertRequest {
 
 export interface IndexApiPartialReplaceRequest {
     /**
-     * Name of the percolate index
+     * Name of the percolate table
      * Defaults to: undefined
      * @type string
      * @memberof IndexApipartialReplace
      */
-    index: string
+    table: string
     /**
      * Id of the document to replace
      * Defaults to: undefined
@@ -119,8 +120,8 @@ export class ObjectIndexApi {
     }
 
     /**
-     * Sends multiple operatons like inserts, updates, replaces or deletes.  For each operation it\'s object must have same format as in their dedicated method.  The method expects a raw string as the batch in NDJSON.  Each operation object needs to be serialized to   JSON and separated by endline (\\n).      An example of raw input:      ```   {\"insert\": {\"index\": \"movies\", \"doc\": {\"plot\": \"A secret team goes to North Pole\", \"rating\": 9.5, \"language\": [2, 3], \"title\": \"This is an older movie\", \"lon\": 51.99, \"meta\": {\"keywords\":[\"travel\",\"ice\"],\"genre\":[\"adventure\"]}, \"year\": 1950, \"lat\": 60.4, \"advise\": \"PG-13\"}}}   \\n   {\"delete\": {\"index\": \"movies\",\"id\":700}}   ```      Responds with an object telling whenever any errors occured and an array with status for each operation:      ```   {     \'items\':     [       {         \'update\':{\'_index\':\'products\',\'_id\':1,\'result\':\'updated\'}       },       {         \'update\':{\'_index\':\'products\',\'_id\':2,\'result\':\'updated\'}       }     ],     \'errors\':false   }   ``` 
-     * Bulk index operations
+     * Sends multiple operatons like inserts, updates, replaces or deletes.  For each operation it\'s object must have same format as in their dedicated method.  The method expects a raw string as the batch in NDJSON.  Each operation object needs to be serialized to   JSON and separated by endline (\\n).      An example of raw input:      ```   {\"insert\": {\"table\": \"movies\", \"doc\": {\"plot\": \"A secret team goes to North Pole\", \"rating\": 9.5, \"language\": [2, 3], \"title\": \"This is an older movie\", \"lon\": 51.99, \"meta\": {\"keywords\":[\"travel\",\"ice\"],\"genre\":[\"adventure\"]}, \"year\": 1950, \"lat\": 60.4, \"advise\": \"PG-13\"}}}   \\n   {\"delete\": {\"table\": \"movies\",\"id\":700}}   ```      Responds with an object telling whenever any errors occured and an array with status for each operation:      ```   {     \'items\':     [       {         \'update\':{\'table\':\'products\',\'_id\':1,\'result\':\'updated\'}       },       {         \'update\':{\'table\':\'products\',\'_id\':2,\'result\':\'updated\'}       }     ],     \'errors\':false   }   ``` 
+     * Bulk table operations
      * @param param the request object
      */
     public bulkWithHttpInfo(param: IndexApiBulkRequest, options?: Configuration): Promise<HttpInfo<BulkResponse>> {
@@ -128,8 +129,8 @@ export class ObjectIndexApi {
     }
 
     /**
-     * Sends multiple operatons like inserts, updates, replaces or deletes.  For each operation it\'s object must have same format as in their dedicated method.  The method expects a raw string as the batch in NDJSON.  Each operation object needs to be serialized to   JSON and separated by endline (\\n).      An example of raw input:      ```   {\"insert\": {\"index\": \"movies\", \"doc\": {\"plot\": \"A secret team goes to North Pole\", \"rating\": 9.5, \"language\": [2, 3], \"title\": \"This is an older movie\", \"lon\": 51.99, \"meta\": {\"keywords\":[\"travel\",\"ice\"],\"genre\":[\"adventure\"]}, \"year\": 1950, \"lat\": 60.4, \"advise\": \"PG-13\"}}}   \\n   {\"delete\": {\"index\": \"movies\",\"id\":700}}   ```      Responds with an object telling whenever any errors occured and an array with status for each operation:      ```   {     \'items\':     [       {         \'update\':{\'_index\':\'products\',\'_id\':1,\'result\':\'updated\'}       },       {         \'update\':{\'_index\':\'products\',\'_id\':2,\'result\':\'updated\'}       }     ],     \'errors\':false   }   ``` 
-     * Bulk index operations
+     * Sends multiple operatons like inserts, updates, replaces or deletes.  For each operation it\'s object must have same format as in their dedicated method.  The method expects a raw string as the batch in NDJSON.  Each operation object needs to be serialized to   JSON and separated by endline (\\n).      An example of raw input:      ```   {\"insert\": {\"table\": \"movies\", \"doc\": {\"plot\": \"A secret team goes to North Pole\", \"rating\": 9.5, \"language\": [2, 3], \"title\": \"This is an older movie\", \"lon\": 51.99, \"meta\": {\"keywords\":[\"travel\",\"ice\"],\"genre\":[\"adventure\"]}, \"year\": 1950, \"lat\": 60.4, \"advise\": \"PG-13\"}}}   \\n   {\"delete\": {\"table\": \"movies\",\"id\":700}}   ```      Responds with an object telling whenever any errors occured and an array with status for each operation:      ```   {     \'items\':     [       {         \'update\':{\'table\':\'products\',\'_id\':1,\'result\':\'updated\'}       },       {         \'update\':{\'table\':\'products\',\'_id\':2,\'result\':\'updated\'}       }     ],     \'errors\':false   }   ``` 
+     * Bulk table operations
      * @param param the request object
      */
     public bulk(param: IndexApiBulkRequest, options?: Configuration): Promise<BulkResponse> {
@@ -137,8 +138,8 @@ export class ObjectIndexApi {
     }
 
     /**
-     * Delete one or several documents. The method has 2 ways of deleting: either by id, in case only one document is deleted or by using a  match query, in which case multiple documents can be delete . Example of input to delete by id:    ```   {\'index\':\'movies\',\'id\':100}   ```  Example of input to delete using a query:    ```   {     \'index\':\'movies\',     \'query\':     {       \'bool\':       {         \'must\':         [           {\'query_string\':\'new movie\'}         ]       }     }   }   ```  The match query has same syntax as in for searching. Responds with an object telling how many documents got deleted:     ```   {\'_index\':\'products\',\'updated\':1}   ``` 
-     * Delete a document in an index
+     * Delete one or several documents. The method has 2 ways of deleting: either by id, in case only one document is deleted or by using a  match query, in which case multiple documents can be delete . Example of input to delete by id:    ```   {\'table\':\'movies\',\'id\':100}   ```  Example of input to delete using a query:    ```   {     \'table\':\'movies\',     \'query\':     {       \'bool\':       {         \'must\':         [           {\'query_string\':\'new movie\'}         ]       }     }   }   ```  The match query has same syntax as in for searching. Responds with an object telling how many documents got deleted:     ```   {\'table\':\'products\',\'updated\':1}   ``` 
+     * Delete a document in a table
      * @param param the request object
      */
     public deleteWithHttpInfo(param: IndexApiDeleteRequest, options?: Configuration): Promise<HttpInfo<DeleteResponse>> {
@@ -146,8 +147,8 @@ export class ObjectIndexApi {
     }
 
     /**
-     * Delete one or several documents. The method has 2 ways of deleting: either by id, in case only one document is deleted or by using a  match query, in which case multiple documents can be delete . Example of input to delete by id:    ```   {\'index\':\'movies\',\'id\':100}   ```  Example of input to delete using a query:    ```   {     \'index\':\'movies\',     \'query\':     {       \'bool\':       {         \'must\':         [           {\'query_string\':\'new movie\'}         ]       }     }   }   ```  The match query has same syntax as in for searching. Responds with an object telling how many documents got deleted:     ```   {\'_index\':\'products\',\'updated\':1}   ``` 
-     * Delete a document in an index
+     * Delete one or several documents. The method has 2 ways of deleting: either by id, in case only one document is deleted or by using a  match query, in which case multiple documents can be delete . Example of input to delete by id:    ```   {\'table\':\'movies\',\'id\':100}   ```  Example of input to delete using a query:    ```   {     \'table\':\'movies\',     \'query\':     {       \'bool\':       {         \'must\':         [           {\'query_string\':\'new movie\'}         ]       }     }   }   ```  The match query has same syntax as in for searching. Responds with an object telling how many documents got deleted:     ```   {\'table\':\'products\',\'updated\':1}   ``` 
+     * Delete a document in a table
      * @param param the request object
      */
     public delete(param: IndexApiDeleteRequest, options?: Configuration): Promise<DeleteResponse> {
@@ -155,8 +156,8 @@ export class ObjectIndexApi {
     }
 
     /**
-     * Insert a document.  Expects an object like:     ```   {     \'index\':\'movies\',     \'id\':701,     \'doc\':     {       \'title\':\'This is an old movie\',       \'plot\':\'A secret team goes to North Pole\',       \'year\':1950,       \'rating\':9.5,       \'lat\':60.4,       \'lon\':51.99,       \'advise\':\'PG-13\',       \'meta\':\'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}\',       \'language\':[2,3]     }   }   ```   The document id can also be missing, in which case an autogenerated one will be used:             ```   {     \'index\':\'movies\',     \'doc\':     {       \'title\':\'This is a new movie\',       \'plot\':\'A secret team goes to North Pole\',       \'year\':2020,       \'rating\':9.5,       \'lat\':60.4,       \'lon\':51.99,       \'advise\':\'PG-13\',       \'meta\':\'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}\',       \'language\':[2,3]     }   }   ```   It responds with an object in format:      ```   {\'_index\':\'products\',\'_id\':701,\'created\':true,\'result\':\'created\',\'status\':201}   ``` 
-     * Create a new document in an index
+     * Insert a document.  Expects an object like:     ```   {     \'table\':\'movies\',     \'id\':701,     \'doc\':     {       \'title\':\'This is an old movie\',       \'plot\':\'A secret team goes to North Pole\',       \'year\':1950,       \'rating\':9.5,       \'lat\':60.4,       \'lon\':51.99,       \'advise\':\'PG-13\',       \'meta\':\'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}\',       \'language\':[2,3]     }   }   ```   The document id can also be missing, in which case an autogenerated one will be used:             ```   {     \'table\':\'movies\',     \'doc\':     {       \'title\':\'This is a new movie\',       \'plot\':\'A secret team goes to North Pole\',       \'year\':2020,       \'rating\':9.5,       \'lat\':60.4,       \'lon\':51.99,       \'advise\':\'PG-13\',       \'meta\':\'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}\',       \'language\':[2,3]     }   }   ```   It responds with an object in format:      ```   {\'table\':\'products\',\'_id\':701,\'created\':true,\'result\':\'created\',\'status\':201}   ``` 
+     * Create a new document in a table
      * @param param the request object
      */
     public insertWithHttpInfo(param: IndexApiInsertRequest, options?: Configuration): Promise<HttpInfo<SuccessResponse>> {
@@ -164,8 +165,8 @@ export class ObjectIndexApi {
     }
 
     /**
-     * Insert a document.  Expects an object like:     ```   {     \'index\':\'movies\',     \'id\':701,     \'doc\':     {       \'title\':\'This is an old movie\',       \'plot\':\'A secret team goes to North Pole\',       \'year\':1950,       \'rating\':9.5,       \'lat\':60.4,       \'lon\':51.99,       \'advise\':\'PG-13\',       \'meta\':\'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}\',       \'language\':[2,3]     }   }   ```   The document id can also be missing, in which case an autogenerated one will be used:             ```   {     \'index\':\'movies\',     \'doc\':     {       \'title\':\'This is a new movie\',       \'plot\':\'A secret team goes to North Pole\',       \'year\':2020,       \'rating\':9.5,       \'lat\':60.4,       \'lon\':51.99,       \'advise\':\'PG-13\',       \'meta\':\'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}\',       \'language\':[2,3]     }   }   ```   It responds with an object in format:      ```   {\'_index\':\'products\',\'_id\':701,\'created\':true,\'result\':\'created\',\'status\':201}   ``` 
-     * Create a new document in an index
+     * Insert a document.  Expects an object like:     ```   {     \'table\':\'movies\',     \'id\':701,     \'doc\':     {       \'title\':\'This is an old movie\',       \'plot\':\'A secret team goes to North Pole\',       \'year\':1950,       \'rating\':9.5,       \'lat\':60.4,       \'lon\':51.99,       \'advise\':\'PG-13\',       \'meta\':\'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}\',       \'language\':[2,3]     }   }   ```   The document id can also be missing, in which case an autogenerated one will be used:             ```   {     \'table\':\'movies\',     \'doc\':     {       \'title\':\'This is a new movie\',       \'plot\':\'A secret team goes to North Pole\',       \'year\':2020,       \'rating\':9.5,       \'lat\':60.4,       \'lon\':51.99,       \'advise\':\'PG-13\',       \'meta\':\'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}\',       \'language\':[2,3]     }   }   ```   It responds with an object in format:      ```   {\'table\':\'products\',\'_id\':701,\'created\':true,\'result\':\'created\',\'status\':201}   ``` 
+     * Create a new document in a table
      * @param param the request object
      */
     public insert(param: IndexApiInsertRequest, options?: Configuration): Promise<SuccessResponse> {
@@ -173,26 +174,26 @@ export class ObjectIndexApi {
     }
 
     /**
-     * Partially replaces a document with given id in an index Responds with an object of the following format:     ```   {\'_index\':\'products\',\'updated\':1}   ``` 
-     * Partially replaces a document in an index
+     * Partially replaces a document with given id in a table Responds with an object of the following format:     ```   {\'table\':\'products\',\'updated\':1}   ``` 
+     * Partially replaces a document in a table
      * @param param the request object
      */
     public partialReplaceWithHttpInfo(param: IndexApiPartialReplaceRequest, options?: Configuration): Promise<HttpInfo<UpdateResponse>> {
-        return this.api.partialReplaceWithHttpInfo(param.index, param.id, param.replaceDocumentRequest,  options).toPromise();
+        return this.api.partialReplaceWithHttpInfo(param.table, param.id, param.replaceDocumentRequest,  options).toPromise();
     }
 
     /**
-     * Partially replaces a document with given id in an index Responds with an object of the following format:     ```   {\'_index\':\'products\',\'updated\':1}   ``` 
-     * Partially replaces a document in an index
+     * Partially replaces a document with given id in a table Responds with an object of the following format:     ```   {\'table\':\'products\',\'updated\':1}   ``` 
+     * Partially replaces a document in a table
      * @param param the request object
      */
     public partialReplace(param: IndexApiPartialReplaceRequest, options?: Configuration): Promise<UpdateResponse> {
-        return this.api.partialReplace(param.index, param.id, param.replaceDocumentRequest,  options).toPromise();
+        return this.api.partialReplace(param.table, param.id, param.replaceDocumentRequest,  options).toPromise();
     }
 
     /**
-     * Replace an existing document. Input has same format as `insert` operation. <br/> Responds with an object in format: <br/>    ```   {\'_index\':\'products\',\'_id\':1,\'created\':false,\'result\':\'updated\',\'status\':200}   ``` 
-     * Replace new document in an index
+     * Replace an existing document. Input has same format as `insert` operation. Responds with an object in format:    ```   {\'table\':\'products\',\'_id\':1,\'created\':false,\'result\':\'updated\',\'status\':200}   ``` 
+     * Replace new document in a table
      * @param param the request object
      */
     public replaceWithHttpInfo(param: IndexApiReplaceRequest, options?: Configuration): Promise<HttpInfo<SuccessResponse>> {
@@ -200,8 +201,8 @@ export class ObjectIndexApi {
     }
 
     /**
-     * Replace an existing document. Input has same format as `insert` operation. <br/> Responds with an object in format: <br/>    ```   {\'_index\':\'products\',\'_id\':1,\'created\':false,\'result\':\'updated\',\'status\':200}   ``` 
-     * Replace new document in an index
+     * Replace an existing document. Input has same format as `insert` operation. Responds with an object in format:    ```   {\'table\':\'products\',\'_id\':1,\'created\':false,\'result\':\'updated\',\'status\':200}   ``` 
+     * Replace new document in a table
      * @param param the request object
      */
     public replace(param: IndexApiReplaceRequest, options?: Configuration): Promise<SuccessResponse> {
@@ -209,8 +210,8 @@ export class ObjectIndexApi {
     }
 
     /**
-     * Update one or several documents. The update can be made by passing the id or by using a match query in case multiple documents can be updated.  For example update a document using document id:    ```   {\'index\':\'movies\',\'doc\':{\'rating\':9.49},\'id\':100}   ```  And update by using a match query:    ```   {     \'index\':\'movies\',     \'doc\':{\'rating\':9.49},     \'query\':     {       \'bool\':       {         \'must\':         [           {\'query_string\':\'new movie\'}         ]       }     }   }   ```   The match query has same syntax as for searching. Responds with an object that tells how many documents where updated in format:     ```   {\'_index\':\'products\',\'updated\':1}   ``` 
-     * Update a document in an index
+     * Update one or several documents. The update can be made by passing the id or by using a match query in case multiple documents can be updated.  For example update a document using document id:    ```   {\'table\':\'movies\',\'doc\':{\'rating\':9.49},\'id\':100}   ```  And update by using a match query:    ```   {     \'table\':\'movies\',     \'doc\':{\'rating\':9.49},     \'query\':     {       \'bool\':       {         \'must\':         [           {\'query_string\':\'new movie\'}         ]       }     }   }   ```   The match query has same syntax as for searching. Responds with an object that tells how many documents where updated in format:     ```   {\'table\':\'products\',\'updated\':1}   ``` 
+     * Update a document in a table
      * @param param the request object
      */
     public updateWithHttpInfo(param: IndexApiUpdateRequest, options?: Configuration): Promise<HttpInfo<UpdateResponse>> {
@@ -218,8 +219,8 @@ export class ObjectIndexApi {
     }
 
     /**
-     * Update one or several documents. The update can be made by passing the id or by using a match query in case multiple documents can be updated.  For example update a document using document id:    ```   {\'index\':\'movies\',\'doc\':{\'rating\':9.49},\'id\':100}   ```  And update by using a match query:    ```   {     \'index\':\'movies\',     \'doc\':{\'rating\':9.49},     \'query\':     {       \'bool\':       {         \'must\':         [           {\'query_string\':\'new movie\'}         ]       }     }   }   ```   The match query has same syntax as for searching. Responds with an object that tells how many documents where updated in format:     ```   {\'_index\':\'products\',\'updated\':1}   ``` 
-     * Update a document in an index
+     * Update one or several documents. The update can be made by passing the id or by using a match query in case multiple documents can be updated.  For example update a document using document id:    ```   {\'table\':\'movies\',\'doc\':{\'rating\':9.49},\'id\':100}   ```  And update by using a match query:    ```   {     \'table\':\'movies\',     \'doc\':{\'rating\':9.49},     \'query\':     {       \'bool\':       {         \'must\':         [           {\'query_string\':\'new movie\'}         ]       }     }   }   ```   The match query has same syntax as for searching. Responds with an object that tells how many documents where updated in format:     ```   {\'table\':\'products\',\'updated\':1}   ``` 
+     * Update a document in a table
      * @param param the request object
      */
     public update(param: IndexApiUpdateRequest, options?: Configuration): Promise<UpdateResponse> {
@@ -231,14 +232,23 @@ export class ObjectIndexApi {
 import { ObservableSearchApi } from "./ObservableAPI";
 import { SearchApiRequestFactory, SearchApiResponseProcessor} from "../apis/SearchApi";
 
+export interface SearchApiAutocompleteRequest {
+    /**
+     * 
+     * @type AutocompleteRequest
+     * @memberof SearchApiautocomplete
+     */
+    autocompleteRequest: AutocompleteRequest
+}
+
 export interface SearchApiPercolateRequest {
     /**
-     * Name of the percolate index
+     * Name of the percolate table
      * Defaults to: undefined
      * @type string
      * @memberof SearchApipercolate
      */
-    index: string
+    table: string
     /**
      * 
      * @type PercolateRequest
@@ -264,26 +274,44 @@ export class ObjectSearchApi {
     }
 
     /**
-     * Performs a percolate search. <br><br> This method must be used only on percolate indexes. <br> Expects two parameters: the index name and an object with array of documents to be tested. <br> <br> An example of the documents object: <br>   { <br>   &nbsp;&nbsp;\"query\" {<br>   &nbsp;&nbsp;&nbsp;&nbsp;\"percolate\": {<br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"document\": { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"content\":\"sample content\" <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <br>   &nbsp;&nbsp;&nbsp;&nbsp;} <br>   &nbsp;&nbsp;} <br>   } <br> <br> Responds with an object with matched stored queries:  <br>   { <br>   &nbsp;&nbsp;\'timed_out\':false, <br>   &nbsp;&nbsp;\'hits\': { <br>   &nbsp;&nbsp;&nbsp;&nbsp;\'total\':2, <br>   &nbsp;&nbsp;&nbsp;&nbsp;\'max_score\':1, <br>   &nbsp;&nbsp;&nbsp;&nbsp;\'hits\': [ <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_index\':\'idx_pq_1\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_type\':\'doc\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_id\':\'2\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_score\':\'1\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_source\': { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'query\': { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'match\':{\'title\':\'some\'} <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }, <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_index\':\'idx_pq_1\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_type\':\'doc\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_id\':\'5\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_score\':\'1\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_source\': { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'query\': { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'ql\':\'some | none\' <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br>   &nbsp;&nbsp;&nbsp;&nbsp; ] <br>   &nbsp;&nbsp; } <br>   } <br> 
-     * Perform reverse search on a percolate index
+     *  The method expects an object with the following mandatory properties: * the name of the table to search * the query string to autocomplete For details, see the documentation on [**Autocomplete**](Autocomplete.md) An example: ``` {   \"table\":\"table_name\",   \"query\":\"query_beginning\" }         ``` An example of the method\'s response:   ```  [    {      \"total\": 3,      \"error\": \"\",      \"warning\": \"\",      \"columns\": [        {          \"query\": {            \"type\": \"string\"          }        }      ],      \"data\": [        {          \"query\": \"hello\"        },        {          \"query\": \"helio\"        },        {          \"query\": \"hell\"        }      ]    }  ]   ```  For more detailed information about the autocomplete queries, please refer to the documentation [here](https://manual.manticoresearch.com/Searching/Autocomplete). 
+     * Performs an autocomplete search on a table
+     * @param param the request object
+     */
+    public autocompleteWithHttpInfo(param: SearchApiAutocompleteRequest, options?: Configuration): Promise<HttpInfo<Array<any>>> {
+        return this.api.autocompleteWithHttpInfo(param.autocompleteRequest,  options).toPromise();
+    }
+
+    /**
+     *  The method expects an object with the following mandatory properties: * the name of the table to search * the query string to autocomplete For details, see the documentation on [**Autocomplete**](Autocomplete.md) An example: ``` {   \"table\":\"table_name\",   \"query\":\"query_beginning\" }         ``` An example of the method\'s response:   ```  [    {      \"total\": 3,      \"error\": \"\",      \"warning\": \"\",      \"columns\": [        {          \"query\": {            \"type\": \"string\"          }        }      ],      \"data\": [        {          \"query\": \"hello\"        },        {          \"query\": \"helio\"        },        {          \"query\": \"hell\"        }      ]    }  ]   ```  For more detailed information about the autocomplete queries, please refer to the documentation [here](https://manual.manticoresearch.com/Searching/Autocomplete). 
+     * Performs an autocomplete search on a table
+     * @param param the request object
+     */
+    public autocomplete(param: SearchApiAutocompleteRequest, options?: Configuration): Promise<Array<any>> {
+        return this.api.autocomplete(param.autocompleteRequest,  options).toPromise();
+    }
+
+    /**
+     * Performs a percolate search. This method must be used only on percolate tables. Expects two parameters: the table name and an object with array of documents to be tested. An example of the documents object: ```   {     \"query\" {       \"percolate\": {         \"document\": {           \"content\":\"sample content\"         }       }     }   } ``` Responds with an object with matched stored queries:  ```   {     \'timed_out\':false,     \'hits\': {       \'total\':2,       \'max_score\':1,       \'hits\': [         {           \'table\':\'idx_pq_1\',           \'_type\':\'doc\',           \'_id\':\'2\',           \'_score\':\'1\',           \'_source\': {             \'query\': {               \'match\':{\'title\':\'some\'}             }           }         },         {           \'table\':\'idx_pq_1\',           \'_type\':\'doc\',           \'_id\':\'5\',           \'_score\':\'1\',           \'_source\': {             \'query\': {               \'ql\':\'some | none\'             }           }         }       ]     }   } ``` 
+     * Perform reverse search on a percolate table
      * @param param the request object
      */
     public percolateWithHttpInfo(param: SearchApiPercolateRequest, options?: Configuration): Promise<HttpInfo<SearchResponse>> {
-        return this.api.percolateWithHttpInfo(param.index, param.percolateRequest,  options).toPromise();
+        return this.api.percolateWithHttpInfo(param.table, param.percolateRequest,  options).toPromise();
     }
 
     /**
-     * Performs a percolate search. <br><br> This method must be used only on percolate indexes. <br> Expects two parameters: the index name and an object with array of documents to be tested. <br> <br> An example of the documents object: <br>   { <br>   &nbsp;&nbsp;\"query\" {<br>   &nbsp;&nbsp;&nbsp;&nbsp;\"percolate\": {<br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"document\": { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"content\":\"sample content\" <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <br>   &nbsp;&nbsp;&nbsp;&nbsp;} <br>   &nbsp;&nbsp;} <br>   } <br> <br> Responds with an object with matched stored queries:  <br>   { <br>   &nbsp;&nbsp;\'timed_out\':false, <br>   &nbsp;&nbsp;\'hits\': { <br>   &nbsp;&nbsp;&nbsp;&nbsp;\'total\':2, <br>   &nbsp;&nbsp;&nbsp;&nbsp;\'max_score\':1, <br>   &nbsp;&nbsp;&nbsp;&nbsp;\'hits\': [ <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_index\':\'idx_pq_1\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_type\':\'doc\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_id\':\'2\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_score\':\'1\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_source\': { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'query\': { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'match\':{\'title\':\'some\'} <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }, <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_index\':\'idx_pq_1\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_type\':\'doc\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_id\':\'5\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_score\':\'1\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_source\': { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'query\': { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'ql\':\'some | none\' <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br>   &nbsp;&nbsp;&nbsp;&nbsp; ] <br>   &nbsp;&nbsp; } <br>   } <br> 
-     * Perform reverse search on a percolate index
+     * Performs a percolate search. This method must be used only on percolate tables. Expects two parameters: the table name and an object with array of documents to be tested. An example of the documents object: ```   {     \"query\" {       \"percolate\": {         \"document\": {           \"content\":\"sample content\"         }       }     }   } ``` Responds with an object with matched stored queries:  ```   {     \'timed_out\':false,     \'hits\': {       \'total\':2,       \'max_score\':1,       \'hits\': [         {           \'table\':\'idx_pq_1\',           \'_type\':\'doc\',           \'_id\':\'2\',           \'_score\':\'1\',           \'_source\': {             \'query\': {               \'match\':{\'title\':\'some\'}             }           }         },         {           \'table\':\'idx_pq_1\',           \'_type\':\'doc\',           \'_id\':\'5\',           \'_score\':\'1\',           \'_source\': {             \'query\': {               \'ql\':\'some | none\'             }           }         }       ]     }   } ``` 
+     * Perform reverse search on a percolate table
      * @param param the request object
      */
     public percolate(param: SearchApiPercolateRequest, options?: Configuration): Promise<SearchResponse> {
-        return this.api.percolate(param.index, param.percolateRequest,  options).toPromise();
+        return this.api.percolate(param.table, param.percolateRequest,  options).toPromise();
     }
 
     /**
-     *  The method expects an object with the following mandatory properties: * the name of the index to search * the match query object For details, see the documentation on [**SearchRequest**](SearchRequest.md) The method returns an object with the following properties: - took: the time taken to execute the search query. - timed_out: a boolean indicating whether the query timed out. - hits: an object with the following properties:    - total: the total number of hits found.    - hits: an array of hit objects, where each hit object represents a matched document. Each hit object has the following properties:      - _id: the ID of the matched document.      - _score: the score of the matched document.      - _source: the source data of the matched document.  In addition, if profiling is enabled, the response will include an additional array with profiling information attached. Also, if pagination is enabled, the response will include an additional \'scroll\' property with a scroll token to use for pagination Here is an example search response:    ```   {     \'took\':10,     \'timed_out\':false,     \'hits\':     {       \'total\':2,       \'hits\':       [         {\'_id\':\'1\',\'_score\':1,\'_source\':{\'gid\':11}},         {\'_id\':\'2\',\'_score\':1,\'_source\':{\'gid\':12}}       ]     }   }   ```  For more information about the match query syntax and additional parameters that can be added to request and response, please see the documentation [here](https://manual.manticoresearch.com/Searching/Full_text_matching/Basic_usage#HTTP-JSON). 
-     * Performs a search on an index
+     *  The method expects an object with the following mandatory properties: * the name of the table to search * the match query object For details, see the documentation on [**SearchRequest**](SearchRequest.md) The method returns an object with the following properties: - took: the time taken to execute the search query. - timed_out: a boolean indicating whether the query timed out. - hits: an object with the following properties:    - total: the total number of hits found.    - hits: an array of hit objects, where each hit object represents a matched document. Each hit object has the following properties:      - _id: the ID of the matched document.      - _score: the score of the matched document.      - _source: the source data of the matched document.  In addition, if profiling is enabled, the response will include an additional array with profiling information attached. Also, if pagination is enabled, the response will include an additional \'scroll\' property with a scroll token to use for pagination Here is an example search response:    ```   {     \'took\':10,     \'timed_out\':false,     \'hits\':     {       \'total\':2,       \'hits\':       [         {\'_id\':\'1\',\'_score\':1,\'_source\':{\'gid\':11}},         {\'_id\':\'2\',\'_score\':1,\'_source\':{\'gid\':12}}       ]     }   }   ```  For more information about the match query syntax and additional parameters that can be added to request and response, please see the documentation [here](https://manual.manticoresearch.com/Searching/Full_text_matching/Basic_usage#HTTP-JSON). 
+     * Performs a search on a table
      * @param param the request object
      */
     public searchWithHttpInfo(param: SearchApiSearchRequest, options?: Configuration): Promise<HttpInfo<SearchResponse>> {
@@ -291,8 +319,8 @@ export class ObjectSearchApi {
     }
 
     /**
-     *  The method expects an object with the following mandatory properties: * the name of the index to search * the match query object For details, see the documentation on [**SearchRequest**](SearchRequest.md) The method returns an object with the following properties: - took: the time taken to execute the search query. - timed_out: a boolean indicating whether the query timed out. - hits: an object with the following properties:    - total: the total number of hits found.    - hits: an array of hit objects, where each hit object represents a matched document. Each hit object has the following properties:      - _id: the ID of the matched document.      - _score: the score of the matched document.      - _source: the source data of the matched document.  In addition, if profiling is enabled, the response will include an additional array with profiling information attached. Also, if pagination is enabled, the response will include an additional \'scroll\' property with a scroll token to use for pagination Here is an example search response:    ```   {     \'took\':10,     \'timed_out\':false,     \'hits\':     {       \'total\':2,       \'hits\':       [         {\'_id\':\'1\',\'_score\':1,\'_source\':{\'gid\':11}},         {\'_id\':\'2\',\'_score\':1,\'_source\':{\'gid\':12}}       ]     }   }   ```  For more information about the match query syntax and additional parameters that can be added to request and response, please see the documentation [here](https://manual.manticoresearch.com/Searching/Full_text_matching/Basic_usage#HTTP-JSON). 
-     * Performs a search on an index
+     *  The method expects an object with the following mandatory properties: * the name of the table to search * the match query object For details, see the documentation on [**SearchRequest**](SearchRequest.md) The method returns an object with the following properties: - took: the time taken to execute the search query. - timed_out: a boolean indicating whether the query timed out. - hits: an object with the following properties:    - total: the total number of hits found.    - hits: an array of hit objects, where each hit object represents a matched document. Each hit object has the following properties:      - _id: the ID of the matched document.      - _score: the score of the matched document.      - _source: the source data of the matched document.  In addition, if profiling is enabled, the response will include an additional array with profiling information attached. Also, if pagination is enabled, the response will include an additional \'scroll\' property with a scroll token to use for pagination Here is an example search response:    ```   {     \'took\':10,     \'timed_out\':false,     \'hits\':     {       \'total\':2,       \'hits\':       [         {\'_id\':\'1\',\'_score\':1,\'_source\':{\'gid\':11}},         {\'_id\':\'2\',\'_score\':1,\'_source\':{\'gid\':12}}       ]     }   }   ```  For more information about the match query syntax and additional parameters that can be added to request and response, please see the documentation [here](https://manual.manticoresearch.com/Searching/Full_text_matching/Basic_usage#HTTP-JSON). 
+     * Performs a search on a table
      * @param param the request object
      */
     public search(param: SearchApiSearchRequest, options?: Configuration): Promise<SearchResponse> {
@@ -328,7 +356,7 @@ export class ObjectUtilsApi {
     }
 
     /**
-     * Run a query in SQL format. Expects a query string passed through `body` parameter and optional `raw_response` parameter that defines a format of response. `raw_response` can be set to `False` for Select queries only, e.g., `SELECT * FROM myindex` The query string must stay as it is, no URL encoding is needed. The response object depends on the query executed. In select mode the response has same format as `/search` operation. 
+     * Run a query in SQL format. Expects a query string passed through `body` parameter and optional `raw_response` parameter that defines a format of response. `raw_response` can be set to `False` for Select queries only, e.g., `SELECT * FROM mytable` The query string must stay as it is, no URL encoding is needed. The response object depends on the query executed. In select mode the response has same format as `/search` operation. 
      * Perform SQL requests
      * @param param the request object
      */
@@ -337,7 +365,7 @@ export class ObjectUtilsApi {
     }
 
     /**
-     * Run a query in SQL format. Expects a query string passed through `body` parameter and optional `raw_response` parameter that defines a format of response. `raw_response` can be set to `False` for Select queries only, e.g., `SELECT * FROM myindex` The query string must stay as it is, no URL encoding is needed. The response object depends on the query executed. In select mode the response has same format as `/search` operation. 
+     * Run a query in SQL format. Expects a query string passed through `body` parameter and optional `raw_response` parameter that defines a format of response. `raw_response` can be set to `False` for Select queries only, e.g., `SELECT * FROM mytable` The query string must stay as it is, no URL encoding is needed. The response object depends on the query executed. In select mode the response has same format as `/search` operation. 
      * Perform SQL requests
      * @param param the request object
      */

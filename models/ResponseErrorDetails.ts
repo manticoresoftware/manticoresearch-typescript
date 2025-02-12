@@ -25,9 +25,9 @@ export class ResponseErrorDetails {
     */
     'reason'?: string | null;
     /**
-    * The index related to the error, if applicable
+    * The table related to the error, if applicable
     */
-    'index'?: string | null;
+    'table'?: string | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -47,8 +47,8 @@ export class ResponseErrorDetails {
             "format": ""
         },
         {
-            "name": "index",
-            "baseName": "index",
+            "name": "table",
+            "baseName": "table",
             "type": "string",
             "format": ""
         }    ];

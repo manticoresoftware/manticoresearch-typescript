@@ -2,50 +2,97 @@
 
 All URIs are relative to *http://127.0.0.1:9308*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**percolate**](SearchApi.md#percolate) | **POST** /pq/{index}/search | Perform reverse search on a percolate index
-[**search**](SearchApi.md#search) | **POST** /search | Performs a search on an index
+| Method                                        | HTTP request                | Description                                   |
+| ----------------------------------------------| --------------------------- | --------------------------------------------- |
+| [**search**](SearchApi.md#search)             | **POST** /search            | Performs a search on a table.                 |
+| [**percolate**](SearchApi.md#percolate)       | **POST** /pq/{table}/search | Perform a reverse search on a percolate table |
+| [**autocomplete**](SearchApi.md#autocomplete) | **POST** /autocomplete      | Performs an autocomplete search on a table    |
 
+## search
 
-# **percolate**
-> SearchResponse percolate(percolateRequest)
+> SearchResponse search(searchRequest)
 
-Performs a percolate search. <br><br> This method must be used only on percolate indexes. <br> Expects two parameters: the index name and an object with array of documents to be tested. <br> <br> An example of the documents object: <br>   { <br>   &nbsp;&nbsp;\"query\" {<br>   &nbsp;&nbsp;&nbsp;&nbsp;\"percolate\": {<br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"document\": { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"content\":\"sample content\" <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <br>   &nbsp;&nbsp;&nbsp;&nbsp;} <br>   &nbsp;&nbsp;} <br>   } <br> <br> Responds with an object with matched stored queries:  <br>   { <br>   &nbsp;&nbsp;\'timed_out\':false, <br>   &nbsp;&nbsp;\'hits\': { <br>   &nbsp;&nbsp;&nbsp;&nbsp;\'total\':2, <br>   &nbsp;&nbsp;&nbsp;&nbsp;\'max_score\':1, <br>   &nbsp;&nbsp;&nbsp;&nbsp;\'hits\': [ <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_index\':\'idx_pq_1\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_type\':\'doc\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_id\':\'2\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_score\':\'1\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_source\': { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'query\': { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'match\':{\'title\':\'some\'} <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }, <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_index\':\'idx_pq_1\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_type\':\'doc\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_id\':\'5\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_score\':\'1\', <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'_source\': { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'query\': { <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \'ql\':\'some | none\' <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br>   &nbsp;&nbsp;&nbsp;&nbsp; ] <br>   &nbsp;&nbsp; } <br>   } <br> 
+Performs a search on a table.
+
+The method expects a SearchRequest object with the following mandatory properties:
+
+- the name of the table to search | string
+
+For details, see the documentation on [**SearchRequest**](SearchRequest.md)
+
+The method returns an object with the following properties:
+
+- hits: an object with the following properties:
+  - hits: an array of hit objects, where each hit object represents a matched document. Each hit object has the following properties:
+    - \_id: the ID of the matched document.
+    - \_score: the score of the matched document.
+    - \_source: the source data of the matched document.
+  - total: the total number of hits found.
+- timed_out: a boolean indicating whether the query timed out.
+- took: the time taken to execute the search query.
+
+In addition, if profiling is enabled, the response will include an additional array with profiling information attached.
+
+Here is an example search response:
+
+```
+{
+  "hits":
+  {
+    "hits":
+    [
+      {
+        "_id":"1",
+        "_score":1,
+        "_source":{"title":"first find me fast","gid":11}
+      },
+      {
+        "_id":"2",
+        "_score":1,
+        "_source":{"title":"second find me fast","gid":12}
+      }
+    ],
+    "total":2
+  },
+  "profile":None,
+  "timed_out":False,
+  "took":0
+}
+```
+
+For more information about the match query syntax and additional parameters that can be added to request and response, please check: https://manual.manticoresearch.com/Searching/Full_text_matching/Basic_usage#HTTP-JSON.
 
 ### Example
 
+```javascript
+import { searchApi } from "manticoresearch-ts";
 
-```typescript
-import { createConfiguration, SearchApi } from '';
-import type { SearchApiPercolateRequest } from '';
+const searchApi = new SearchApi();
 
-const configuration = createConfiguration();
-const apiInstance = new SearchApi(configuration);
+// Create SearchRequest
+var searchRequest = new Manticoresearch.SearchRequest();
+searchRequest.table = "test";
+var searchQuery = new Manticoresearch.SearchQuery()
+searchQuery.query_string = "find smth"
+searchRequest.query = searchQuery;
 
-const request: SearchApiPercolateRequest = {
-    // Name of the percolate index
-  index: "index_example",
-  
-  percolateRequest: null,
-};
+// or create SearchRequest in an alternative way as in the previous versions of the client. It uses a single complex JSON object.
+searchRequest = {"table":"test","query":{"query_string":"find smth"}};
 
-const data = await apiInstance.percolate(request);
-console.log('API called successfully. Returned data:', data);
+searchApi
+  .search(searchRequest)
+  .then((res) => console.log(JSON.stringify(res, null, 2)));
 ```
-
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **percolateRequest** | **PercolateRequest**|  |
- **index** | [**string**] | Name of the percolate index | defaults to undefined
-
+| Name              | Type                                  | Description | Notes |
+| ----------------- | ------------------------------------- | ----------- | ----- |
+| **searchRequest** | [**SearchRequest**](SearchRequest.md) |             |
 
 ### Return type
 
-**SearchResponse**
+[**SearchResponse**](SearchResponse.md)
 
 ### Authorization
 
@@ -53,39 +100,132 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
+## percolate
 
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | items found |  -  |
-**0** | error |  -  |
+> SearchResponse percolate(table, percolateRequest)
 
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+Performs a reverse search on a percolate table. [[More info on percolate tables in Manticore Search Manual]](https://manual.manticoresearch.com/Creating_a_table/Local_tables/Percolate_table#Percolate-table)
 
-# **search**
-> SearchResponse search(searchRequest)
+This method must be used only on percolate tables.
 
- The method expects an object with the following mandatory properties: * the name of the index to search * the match query object For details, see the documentation on [**SearchRequest**](SearchRequest.md) The method returns an object with the following properties: - took: the time taken to execute the search query. - timed_out: a boolean indicating whether the query timed out. - hits: an object with the following properties:    - total: the total number of hits found.    - hits: an array of hit objects, where each hit object represents a matched document. Each hit object has the following properties:      - _id: the ID of the matched document.      - _score: the score of the matched document.      - _source: the source data of the matched document.  In addition, if profiling is enabled, the response will include an additional array with profiling information attached. Also, if pagination is enabled, the response will include an additional \'scroll\' property with a scroll token to use for pagination Here is an example search response:    ```   {     \'took\':10,     \'timed_out\':false,     \'hits\':     {       \'total\':2,       \'hits\':       [         {\'_id\':\'1\',\'_score\':1,\'_source\':{\'gid\':11}},         {\'_id\':\'2\',\'_score\':1,\'_source\':{\'gid\':12}}       ]     }   }   ```  For more information about the match query syntax and additional parameters that can be added to request and response, please see the documentation [here](https://manual.manticoresearch.com/Searching/Full_text_matching/Basic_usage#HTTP-JSON). 
+Expects two parameters: the table name and an object with a document or an array of documents to search by.
+Here is an example of the object with a single document:
+
+```
+{
+  "query":
+  {
+    "percolate":
+    {
+      "document":
+      {
+        "content":"sample content"
+      }
+    }
+  }
+}
+```
+
+Responds with an object with matched stored queries:
+
+```
+{
+  "took":0,
+  "timed_out":false,
+  "hits":
+  {
+    "total":1,
+    "hits":
+    [
+      {
+        "table":"products",
+        "_type":"doc",
+        "_id":"2811045522851233808",
+        "_score":"1",
+        "_source":
+        {
+          "query":
+          {
+            "ql":"@title bag"
+          }
+        },
+        "fields":{"_percolator_document_slot":[1]}
+      }
+    ]
+  }
+}
+```
+
+And here is an example of the object with multiple documents:
+
+```
+{
+  "query":
+  {
+    "percolate":
+    {
+      "documents": [
+        {
+          "content":"sample content"
+        },
+        {
+          "content":"another sample content"
+        }
+      ]
+    }
+  }
+}
+```
+
+### Example
+
+```javascript
+import { searchApi } from "manticoresearch-ts";
+
+const searchApi = new SearchApi();
+searchApi
+  .percolate("products", {
+    query: { percolate: { document: { title: "What a nice bag" } } },
+  })
+  .then((res) => console.log(JSON.stringify(res, null, 2)));
+```
+
+### Parameters
+
+| Name                 | Type                                        | Description                 | Notes |
+| -------------------- | ------------------------------------------- | --------------------------- | ----- |
+| **table**            | **String**                                  | Name of the percolate table |
+| **percolateRequest** | [**PercolateRequest**](PercolateRequest.md) |                             |
+
+### Return type
+
+[**SearchResponse**](SearchResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+# **autocomplete**
+> Array<any> autocomplete(autocompleteRequest)
+
+ The method expects an object with the following mandatory properties: * the name of the table to search * the query string to autocomplete For details, see the documentation on [**Autocomplete**](Autocomplete.md) An example: ``` {   \"table\":\"table_name\",   \"query\":\"query_beginning\" }         ``` An example of the method\'s response:   ```  [    {      \"total\": 3,      \"error\": \"\",      \"warning\": \"\",      \"columns\": [        {          \"query\": {            \"type\": \"string\"          }        }      ],      \"data\": [        {          \"query\": \"hello\"        },        {          \"query\": \"helio\"        },        {          \"query\": \"hell\"        }      ]    }  ]   ```  For more detailed information about the autocomplete queries, please refer to the documentation [here](https://manual.manticoresearch.com/Searching/Autocomplete). 
 
 ### Example
 
 
 ```typescript
-import { createConfiguration, SearchApi } from '';
-import type { SearchApiSearchRequest } from '';
-
 const configuration = createConfiguration();
 const apiInstance = new SearchApi(configuration);
 
-const request: SearchApiSearchRequest = {
-  
-  searchRequest: null,
-};
-
-const data = await apiInstance.search(request);
+const data = await apiInstance.autocomplete(autocompleteRequest);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -94,12 +234,12 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **searchRequest** | **SearchRequest**|  |
+ **autocompleteRequest** | **AutocompleteRequest**|  |
 
 
 ### Return type
 
-**SearchResponse**
+**Array<any>**
 
 ### Authorization
 
@@ -116,7 +256,4 @@ No authorization required
 |-------------|-------------|------------------|
 **200** | Ok |  -  |
 **0** | error |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
 

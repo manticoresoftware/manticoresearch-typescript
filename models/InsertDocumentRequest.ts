@@ -13,13 +13,13 @@
 import { HttpFile } from '../http/http';
 
 /**
-* Object containing data for inserting a new document into the index 
+* Object containing data for inserting a new document into the table 
 */
 export class InsertDocumentRequest {
     /**
-    * Name of the index to insert the document into
+    * Name of the table to insert the document into
     */
-    'index': string;
+    'table': string;
     /**
     * Name of the cluster to insert the document into
     */
@@ -39,8 +39,8 @@ export class InsertDocumentRequest {
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
-            "name": "index",
-            "baseName": "index",
+            "name": "table",
+            "baseName": "table",
             "type": "string",
             "format": ""
         },

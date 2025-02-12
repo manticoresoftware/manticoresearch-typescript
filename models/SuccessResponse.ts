@@ -17,11 +17,7 @@ import { HttpFile } from '../http/http';
 */
 export class SuccessResponse {
     /**
-    * Name of the document index
-    */
-    '_index'?: string;
-    /**
-    * Name of the document table (alias of index)
+    * Name of the document table
     */
     'table'?: string;
     /**
@@ -37,7 +33,7 @@ export class SuccessResponse {
     */
     'result'?: string;
     /**
-    * Indicates whether the document was found in the index
+    * Indicates whether the document was found in the table
     */
     'found'?: boolean;
     /**
@@ -50,12 +46,6 @@ export class SuccessResponse {
     static readonly mapping: {[index: string]: string} | undefined = undefined;
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
-        {
-            "name": "_index",
-            "baseName": "_index",
-            "type": "string",
-            "format": ""
-        },
         {
             "name": "table",
             "baseName": "table",

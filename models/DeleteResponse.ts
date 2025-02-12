@@ -17,9 +17,9 @@ import { HttpFile } from '../http/http';
 */
 export class DeleteResponse {
     /**
-    * The name of the index from which the document was deleted
+    * The name of the table from which the document was deleted
     */
-    '_index'?: string;
+    'table'?: string;
     /**
     * Number of documents deleted
     */
@@ -43,8 +43,8 @@ export class DeleteResponse {
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
-            "name": "_index",
-            "baseName": "_index",
+            "name": "table",
+            "baseName": "table",
             "type": "string",
             "format": ""
         },

@@ -17,9 +17,9 @@ import { HttpFile } from '../http/http';
 */
 export class UpdateResponse {
     /**
-    * Name of the document index
+    * Name of the document table
     */
-    '_index'?: string;
+    'table'?: string;
     /**
     * Number of documents updated
     */
@@ -39,8 +39,8 @@ export class UpdateResponse {
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
-            "name": "_index",
-            "baseName": "_index",
+            "name": "table",
+            "baseName": "table",
             "type": "string",
             "format": ""
         },

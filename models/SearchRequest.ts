@@ -22,9 +22,9 @@ import { HttpFile } from '../http/http';
 */
 export class SearchRequest {
     /**
-    * The index to perform the search on
+    * The table to perform the search on
     */
-    'index': string;
+    'table': string;
     'query'?: SearchQuery;
     /**
     * Join clause to combine search data from multiple tables
@@ -73,8 +73,8 @@ export class SearchRequest {
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
-            "name": "index",
-            "baseName": "index",
+            "name": "table",
+            "baseName": "table",
             "type": "string",
             "format": ""
         },

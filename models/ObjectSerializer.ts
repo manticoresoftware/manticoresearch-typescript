@@ -3,6 +3,7 @@ export * from '../models/AggCompositeSource';
 export * from '../models/AggCompositeTerm';
 export * from '../models/AggTerms';
 export * from '../models/Aggregation';
+export * from '../models/AutocompleteRequest';
 export * from '../models/BoolFilter';
 export * from '../models/BulkResponse';
 export * from '../models/DeleteDocumentRequest';
@@ -42,6 +43,7 @@ import { AggCompositeSource } from '../models/AggCompositeSource';
 import { AggCompositeTerm } from '../models/AggCompositeTerm';
 import { AggTerms } from '../models/AggTerms';
 import { Aggregation } from '../models/Aggregation';
+import { AutocompleteRequest } from '../models/AutocompleteRequest';
 import { BoolFilter } from '../models/BoolFilter';
 import { BulkResponse } from '../models/BulkResponse';
 import { DeleteDocumentRequest } from '../models/DeleteDocumentRequest';
@@ -106,6 +108,7 @@ let typeMap: {[index: string]: any} = {
     "AggCompositeTerm": AggCompositeTerm,
     "AggTerms": AggTerms,
     "Aggregation": Aggregation,
+    "AutocompleteRequest": AutocompleteRequest,
     "BoolFilter": BoolFilter,
     "BulkResponse": BulkResponse,
     "DeleteDocumentRequest": DeleteDocumentRequest,
@@ -199,6 +202,8 @@ const arrayPrefix = "Array<";
 const arraySuffix = ">";
 const mapPrefix = "{ [key: string]: ";
 const mapSuffix = "; }";
+
+const JSONbig = require('json-bigint');
 
 export class ObjectSerializer {
     public static findCorrectType(data: any, expectedType: string) {
@@ -409,7 +414,7 @@ export class ObjectSerializer {
         }
 
         if (isJsonLikeMimeType(mediaType)) {
-            return JSON.stringify(data);
+            return JSONbig.stringify(data);
         }
 
         throw new Error("The mediaType " + mediaType + " is not supported by ObjectSerializer.stringify.");
@@ -428,7 +433,7 @@ export class ObjectSerializer {
         }
 
         if (isJsonLikeMimeType(mediaType)) {
-            return JSON.parse(rawData);
+            return JSONbig.parse(rawData);
         }
 
         throw new Error("The mediaType " + mediaType + " is not supported by ObjectSerializer.parse.");

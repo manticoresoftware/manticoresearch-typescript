@@ -17,9 +17,9 @@ import { HttpFile } from '../http/http';
 */
 export class DeleteDocumentRequest {
     /**
-    * Index name
+    * Table name
     */
-    'index': string;
+    'table': string;
     /**
     * Cluster name
     */
@@ -39,8 +39,8 @@ export class DeleteDocumentRequest {
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
-            "name": "index",
-            "baseName": "index",
+            "name": "table",
+            "baseName": "table",
             "type": "string",
             "format": ""
         },

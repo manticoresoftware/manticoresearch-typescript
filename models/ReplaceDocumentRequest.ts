@@ -13,7 +13,7 @@
 import { HttpFile } from '../http/http';
 
 /**
-* Object containing the document data for replacing an existing document in an index.
+* Object containing the document data for replacing an existing document in a table.
 */
 export class ReplaceDocumentRequest {
     /**

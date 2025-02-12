@@ -14,13 +14,13 @@ import { QueryFilter } from '../models/QueryFilter';
 import { HttpFile } from '../http/http';
 
 /**
-* Payload for updating a document or multiple documents in an index
+* Payload for updating a document or multiple documents in a table
 */
 export class UpdateDocumentRequest {
     /**
-    * Name of the document index
+    * Name of the document table
     */
-    'index': string;
+    'table': string;
     /**
     * Name of the document cluster
     */
@@ -41,8 +41,8 @@ export class UpdateDocumentRequest {
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
-            "name": "index",
-            "baseName": "index",
+            "name": "table",
+            "baseName": "table",
             "type": "string",
             "format": ""
         },
