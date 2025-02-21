@@ -18,7 +18,6 @@ The method expects a SearchRequest object with the following mandatory propertie
 
 - the name of the table to search | string
 
-For details, see the documentation on [**SearchRequest**](SearchRequest.md)
 
 The method returns an object with the following properties:
 
@@ -86,13 +85,13 @@ searchApi
 
 ### Parameters
 
-| Name              | Type                                  | Description | Notes |
-| ----------------- | ------------------------------------- | ----------- | ----- |
-| **searchRequest** | [**SearchRequest**](SearchRequest.md) |             |
+| Name              | Type                                  | Description            | Notes |
+| ----------------- | ------------------------------------- | ---------------------- | ----- |
+| **searchRequest** | **SearchRequest**                     | Search request object  |       |
 
 ### Return type
 
-[**SearchResponse**](SearchResponse.md)
+**SearchResponse**
 
 ### Authorization
 
@@ -197,12 +196,12 @@ searchApi
 
 | Name                 | Type                                        | Description                 | Notes |
 | -------------------- | ------------------------------------------- | --------------------------- | ----- |
-| **table**            | **String**                                  | Name of the percolate table |
-| **percolateRequest** | [**PercolateRequest**](PercolateRequest.md) |                             |
+| **table**            | **String**                                  | Name of the percolate table |       |
+| **percolateRequest** | **PercolateRequest**                        | Percolate request object    |       |
 
 ### Return type
 
-[**SearchResponse**](SearchResponse.md)
+**SearchResponse**
 
 ### Authorization
 
@@ -216,7 +215,50 @@ No authorization required
 # **autocomplete**
 > Array<any> autocomplete(autocompleteRequest)
 
- The method expects an object with the following mandatory properties: * the name of the table to search * the query string to autocomplete For details, see the documentation on [**Autocomplete**](Autocomplete.md) An example: ``` {   \"table\":\"table_name\",   \"query\":\"query_beginning\" }         ``` An example of the method\'s response:   ```  [    {      \"total\": 3,      \"error\": \"\",      \"warning\": \"\",      \"columns\": [        {          \"query\": {            \"type\": \"string\"          }        }      ],      \"data\": [        {          \"query\": \"hello\"        },        {          \"query\": \"helio\"        },        {          \"query\": \"hell\"        }      ]    }  ]   ```  For more detailed information about the autocomplete queries, please refer to the documentation [here](https://manual.manticoresearch.com/Searching/Autocomplete). 
+ The method expects an object with the following mandatory properties:
+  * the name of the table to search
+  * the query string to autocomplete. 
+
+ An example of the method's request:
+
+        ```
+        {
+          "table":"table_name",
+          "query":"query_beginning"
+        }        
+        ```
+
+ An example of the method's response:
+        
+         ```
+         [
+           {
+             "total": 3,
+             "error": "",
+             "warning": "",
+             "columns": [
+               {
+                 "query": {
+                   "type": "string"
+                 }
+               }
+             ],
+             "data": [
+               {
+                 "query": "hello"
+               },
+               {
+                 "query": "helio"
+               },
+               {
+                 "query": "hell"
+               }
+             ]
+           }
+         ] 
+         ```
+
+ For more detailed information about the autocomplete queries, please refer to the documentation [here](https://manual.manticoresearch.com/Searching/Autocomplete). 
 
 ### Example
 
@@ -234,7 +276,7 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **autocompleteRequest** | **AutocompleteRequest**|  |
+ **autocompleteRequest** | **AutocompleteRequest**| Autocomplete request object |
 
 
 ### Return type

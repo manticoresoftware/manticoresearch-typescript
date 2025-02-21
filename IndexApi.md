@@ -128,13 +128,13 @@ indexApi
 
 ### Parameters
 
-| Name                      | Type                                                  | Description | Notes |
-| ------------------------- | ----------------------------------------------------- | ----------- | ----- |
-| **deleteDocumentRequest** | [**DeleteDocumentRequest**](DeleteDocumentRequest.md) |             |       |
+| Name                      | Type                                   | Description | Notes |
+| ------------------------- | -------------------------------------- | ----------- | ----- |
+| **deleteDocumentRequest** | **DeleteDocumentRequest**              |             |       |
 
 ### Return type
 
-[**DeleteResponse**](DeleteResponse.md)
+**DeleteResponse**
 
 ### Authorization
 
@@ -187,13 +187,13 @@ indexApi
 
 ### Parameters
 
-| Name                      | Type                                                  | Description | Notes |
-| ------------------------- | ----------------------------------------------------- | ----------- | ----- |
-| **insertDocumentRequest** | [**InsertDocumentRequest**](InsertDocumentRequest.md) |             |       |
+| Name                      | Type                           | Description | Notes |
+| ------------------------- | ------------------------------ | ----------- | ----- |
+| **insertDocumentRequest** | **InsertDocumentRequest**      |             |       |
 
 ### Return type
 
-[**SuccessResponse**](SuccessResponse.md)
+**SuccessResponse**
 
 ### Authorization
 
@@ -234,13 +234,13 @@ indexApi
 
 ### Parameters
 
-| Name                      | Type                                                  | Description | Notes |
-| ------------------------- | ----------------------------------------------------- | ----------- | ----- |
-| **insertDocumentRequest** | [**InsertDocumentRequest**](InsertDocumentRequest.md) |             |       |
+| Name                      | Type                              | Description | Notes |
+| ------------------------- | --------------------------------- | ----------- | ----- |
+| **insertDocumentRequest** | **InsertDocumentRequest**         |             |       |
 
 ### Return type
 
-[**SuccessResponse**](SuccessResponse.md)
+**SuccessResponse**
 
 ### Authorization
 
@@ -290,13 +290,13 @@ indexApi
 
 ### Parameters
 
-| Name                      | Type                                                  | Description | Notes |
-| ------------------------- | ----------------------------------------------------- | ----------- | ----- |
-| **updateDocumentRequest** | [**UpdateDocumentRequest**](UpdateDocumentRequest.md) |             |       |
+| Name                      | Type                                | Description | Notes |
+| ------------------------- | ----------------------------------- | ----------- | ----- |
+| **updateDocumentRequest** | **UpdateDocumentRequest**           |             |       |
 
 ### Return type
 
-[**UpdateResponse**](UpdateResponse.md)
+**UpdateResponse**
 
 ### Authorization
 
