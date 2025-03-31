@@ -23,7 +23,7 @@ export class SuccessResponse {
     /**
     * ID of the document affected by the request operation
     */
-    '_id'?: number;
+    'id'?: number;
     /**
     * Indicates whether the document was created as a result of the operation
     */
@@ -53,8 +53,8 @@ export class SuccessResponse {
             "format": ""
         },
         {
-            "name": "_id",
-            "baseName": "_id",
+            "name": "id",
+            "baseName": "id",
             "type": "number",
             "format": "int64"
         },

@@ -10,27 +10,27 @@
  * Do not edit the class manually.
  */
 
-import { SqlObjResponse } from '../models/SqlObjResponse';
 import { HttpFile } from '../http/http';
 
-/**
-* List of responses from executed SQL queries
-*/
-/**
- * @type SqlResponse
- * Type
- * @export
- */
-export type SqlResponse = Array<any> | SqlObjResponse;
+export class SqlObjResponse {
+    'hits': any;
 
-/**
-* @type SqlResponseClass
-    * List of responses from executed SQL queries
-* @export
-*/
-export class SqlResponseClass {
     static readonly discriminator: string | undefined = undefined;
 
     static readonly mapping: {[index: string]: string} | undefined = undefined;
-}
 
+    static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
+        {
+            "name": "hits",
+            "baseName": "hits",
+            "type": "any",
+            "format": ""
+        }    ];
+
+    static getAttributeTypeMap() {
+        return SqlObjResponse.attributeTypeMap;
+    }
+
+    public constructor() {
+    }
+}

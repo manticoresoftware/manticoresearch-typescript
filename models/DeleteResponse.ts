@@ -27,7 +27,7 @@ export class DeleteResponse {
     /**
     * The ID of the deleted document. If multiple documents are deleted, the ID of the first deleted document is returned
     */
-    '_id'?: number;
+    'id'?: number;
     /**
     * Indicates whether any documents to be deleted were found
     */
@@ -55,8 +55,8 @@ export class DeleteResponse {
             "format": ""
         },
         {
-            "name": "_id",
-            "baseName": "_id",
+            "name": "id",
+            "baseName": "id",
             "type": "number",
             "format": "int64"
         },
