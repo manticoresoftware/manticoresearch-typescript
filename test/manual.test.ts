@@ -56,7 +56,7 @@ describe('Search Api Tests', () => {
         {"insert": {"table" : "movies", "id" : 3, "doc" : {"title" : "Star Trek 3: Nemesis", "plot": "The Enterprise is diverted to the Romulan homeworld Romulus, supposedly because they want to negotiate a peace treaty. Captain Picard and his crew discover a serious threat to the Federation once Praetor Shinzon plans to attack Earth.", "year": 2003, "rating": 6.6, "code": [11,2,3]}}},
         {"insert": {"table" : "movies", "id" : 4, "doc" : {"title" : "Star Trek 4: Nemesis", "plot": "The Enterprise is diverted to the Romulan homeworld Romulus, supposedly because they want to negotiate a peace treaty. Captain Picard and his crew discover a serious threat to the Federation once Praetor Shinzon plans to attack Earth.", "year": 100000000000, "rating": 6.5, "code": [1,2,4]}}}
       ];
-      le bulkRes =  await indexApi.bulk(docs.map(e=>JSON.stringify(e)).join('\n'));
+      let bulkRes =  await indexApi.bulk(docs.map(e=>JSON.stringify(e)).join('\n'));
       
       let search_request = {"table":"movies"};
       
