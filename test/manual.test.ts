@@ -29,7 +29,8 @@ describe('Utils Api Tests', () => {
 
       res = await utilsApi.sql('SHOW TABLES', true);
       console.log(res);
-      expect(res[0]).to.include({ total: 1 });
+      if (Array.isArray(res)) 
+        expect(res[0]).to.include({ total: 1 });
       res = await utilsApi.sql('SELECT * FROM test', false);
       console.log(res);
       expect(res).to.deep.nested.property('hits.total', 0);
@@ -55,12 +56,12 @@ describe('Search Api Tests', () => {
         {"insert": {"table" : "movies", "id" : 3, "doc" : {"title" : "Star Trek 3: Nemesis", "plot": "The Enterprise is diverted to the Romulan homeworld Romulus, supposedly because they want to negotiate a peace treaty. Captain Picard and his crew discover a serious threat to the Federation once Praetor Shinzon plans to attack Earth.", "year": 2003, "rating": 6.6, "code": [11,2,3]}}},
         {"insert": {"table" : "movies", "id" : 4, "doc" : {"title" : "Star Trek 4: Nemesis", "plot": "The Enterprise is diverted to the Romulan homeworld Romulus, supposedly because they want to negotiate a peace treaty. Captain Picard and his crew discover a serious threat to the Federation once Praetor Shinzon plans to attack Earth.", "year": 100000000000, "rating": 6.5, "code": [1,2,4]}}}
       ];
-      res =  await indexApi.bulk(docs.map(e=>JSON.stringify(e)).join('\n'));
+      let bulkRes =  await indexApi.bulk(docs.map(e=>JSON.stringify(e)).join('\n'));
       
       let search_request = {"table":"movies"};
       
-      res = await searchApi.search(search_request);
-      expect(res).to.deep.nested.property('hits.total', 4);
+      let searchRes = await searchApi.search(search_request);
+      expect(searchRes).to.deep.nested.property('hits.total', 4);
 
       let query_highlight = new Manticoresearch.Highlight()
       query_highlight.fields = {"title":{}}
@@ -74,16 +75,17 @@ describe('Search Api Tests', () => {
       search_request2.query = search_query
       
       search_request2.highlight = query_highlight
-      
+
+
       console.log("The response of SearchApi->search:\n")    
       let search_response = await searchApi.search(search_request2)    
       expect(search_response).to.deep.nested.property('hits.total', 1);
-      if (typeof search_response.hits !== 'undefined' && typeof search_response.hits.hits !== 'undefined')
+      if (typeof search_response.hits !== 'undefined' && typeof search_response.hits.hits !== 'undefined' && typeof search_response.hits.hits[0] !== 'undefined')
         console.log(search_response.hits.hits[0].highlight)
 
       search_response = await searchApi.search({"table": "movies", "query": {"query_string": "@title Trek 4"}, "highlight": {"fields": ["title"]}});
       expect(search_response).to.deep.nested.property('hits.total', 1);
-      if (typeof search_response.hits !== 'undefined' && typeof search_response.hits.hits !== 'undefined')
+      if (typeof search_response.hits !== 'undefined' && typeof search_response.hits.hits !== 'undefined' && typeof search_response.hits.hits[0] !== 'undefined')
         console.log(search_response.hits.hits[0].highlight)
     } catch (e) {
       const errorResponse = e && typeof e === 'object' && 'body' in e && e.body && typeof e.body === 'object' && 'error' in e.body ? e.body.error : e;

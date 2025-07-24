@@ -11,6 +11,7 @@
  */
 
 import { AggComposite } from '../models/AggComposite';
+import { AggHistogram } from '../models/AggHistogram';
 import { AggTerms } from '../models/AggTerms';
 import { HttpFile } from '../http/http';
 
@@ -18,6 +19,7 @@ export class Aggregation {
     'terms'?: AggTerms;
     'sort'?: Array<any>;
     'composite'?: AggComposite;
+    'histogram'?: AggHistogram;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -40,6 +42,12 @@ export class Aggregation {
             "name": "composite",
             "baseName": "composite",
             "type": "AggComposite",
+            "format": ""
+        },
+        {
+            "name": "histogram",
+            "baseName": "histogram",
+            "type": "AggHistogram",
             "format": ""
         }    ];
 

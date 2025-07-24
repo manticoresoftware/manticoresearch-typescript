@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 
+import { HighlightFields } from '../models/HighlightFields';
 import { QueryFilter } from '../models/QueryFilter';
 import { HttpFile } from '../http/http';
 
@@ -58,7 +59,7 @@ export class Highlight {
     * If set to \'html\', retains HTML markup when highlighting
     */
     'encoder'?: HighlightEncoderEnum;
-    'fields'?: any | null;
+    'fields'?: HighlightFields;
     /**
     * Ignores the length limit until the result includes all keywords
     */
@@ -175,7 +176,7 @@ export class Highlight {
         {
             "name": "fields",
             "baseName": "fields",
-            "type": "any",
+            "type": "HighlightFields",
             "format": ""
         },
         {

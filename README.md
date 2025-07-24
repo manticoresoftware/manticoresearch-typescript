@@ -7,9 +7,7 @@
 | **manticoresearch-typescript** | **Manticore Search**                | **Node**            | **Compatibility**      |
 | ------------------------------ | ----------------------------------- | ------------------- | -----------------------|
 | `manticoresearch-ts-dev`       | `dev` (latest development version)  | Node 18 or newer    | ✅ Fully Compatible    |
-| 8.0.0 or newer                 | 9.2.14 or newer                     | Node 18 or newer    | ✅ Fully Compatible    |
-| 6.0.0 to 8.0.0                 | 9.2.14 or newer                     | Node 18 or newer    | ⚠️ Partially Compatible|
-| 6.0.0 to 8.0.0                 | 7.0.0 to 9.2.14                     | Node 18 or newer    | ✅ Fully Compatible    |
+| 6.0.0 or newer                 | 7.0.0 or newer                      | Node 18 or newer    | ✅ Fully Compatible    |
 | 6.0.0 or newer                 | 4.2.1 to 7.0.0                      | Node 18 or newer    | ⚠️ Partially Compatible|
 | 3.3.1 to 6.0.0                 | 6.2.0 or newer                      | Node 18 or newer    | ✅ Fully Compatible    |
 | 3.3.1 to 6.0.0                 | 4.2.1 to 6.2.0                      | Node 18 or newer    | ⚠️ Partially Compatible|
@@ -66,7 +64,7 @@ import * as Manticoresearch from "manticoresearch-ts";
 
 ## Documentation
 
-Full documentation on the API Endpoints and Models used is available in [docs](https://github.com/manticoresoftware/manticoresearch-typescript/tree/7.0.0/docs) folder as listed below.
+Full documentation on the API Endpoints and Models used is available in [docs](https://github.com/manticoresoftware/manticoresearch-typescript/tree/8.0.0/docs) folder as listed below.
 
 Manticore Search server documentation: https://manual.manticoresearch.com.
 

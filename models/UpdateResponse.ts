@@ -27,7 +27,7 @@ export class UpdateResponse {
     /**
     * Document ID
     */
-    '_id'?: number;
+    'id'?: number;
     /**
     * Result of the update operation, typically \'updated\'
     */
@@ -51,10 +51,10 @@ export class UpdateResponse {
             "format": ""
         },
         {
-            "name": "_id",
-            "baseName": "_id",
+            "name": "id",
+            "baseName": "id",
             "type": "number",
-            "format": "int64"
+            "format": "uint64"
         },
         {
             "name": "result",

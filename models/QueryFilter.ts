@@ -25,21 +25,21 @@ export class QueryFilter {
     /**
     * Filter object defining a match keyword passed as a string or in a Match object
     */
-    'match'?: any | null;
+    'match'?: any;
     /**
     * Filter object defining a match phrase
     */
-    'match_phrase'?: any | null;
+    'match_phrase'?: any;
     /**
     * Filter object to select all documents
     */
-    'match_all'?: any | null;
+    'match_all'?: any;
     'bool'?: BoolFilter;
     'equals'?: any | null;
     /**
     * Filter to match a given set of attribute values.
     */
-    '_in'?: any;
+    'in'?: any;
     /**
     * Filter to match a given range of attribute values passed in Range objects
     */
@@ -88,7 +88,7 @@ export class QueryFilter {
             "format": ""
         },
         {
-            "name": "_in",
+            "name": "in",
             "baseName": "in",
             "type": "any",
             "format": ""

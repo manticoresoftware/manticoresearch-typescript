@@ -1,6 +1,8 @@
 export * from '../models/AggComposite';
 export * from '../models/AggCompositeSource';
 export * from '../models/AggCompositeTerm';
+export * from '../models/AggDateHistogram';
+export * from '../models/AggHistogram';
 export * from '../models/AggTerms';
 export * from '../models/Aggregation';
 export * from '../models/AutocompleteRequest';
@@ -14,6 +16,8 @@ export * from '../models/GeoDistance';
 export * from '../models/GeoDistanceLocationAnchor';
 export * from '../models/Highlight';
 export * from '../models/HighlightFieldOption';
+export * from '../models/HighlightFields';
+export * from '../models/HitsHits';
 export * from '../models/InsertDocumentRequest';
 export * from '../models/Join';
 export * from '../models/JoinCond';
@@ -33,6 +37,7 @@ export * from '../models/SearchRequest';
 export * from '../models/SearchResponse';
 export * from '../models/SearchResponseHits';
 export * from '../models/SourceRules';
+export * from '../models/SqlObjResponse';
 export * from '../models/SqlResponse';
 export * from '../models/SuccessResponse';
 export * from '../models/UpdateDocumentRequest';
@@ -41,6 +46,8 @@ export * from '../models/UpdateResponse';
 import { AggComposite } from '../models/AggComposite';
 import { AggCompositeSource } from '../models/AggCompositeSource';
 import { AggCompositeTerm } from '../models/AggCompositeTerm';
+import { AggDateHistogram } from '../models/AggDateHistogram';
+import { AggHistogram } from '../models/AggHistogram';
 import { AggTerms } from '../models/AggTerms';
 import { Aggregation } from '../models/Aggregation';
 import { AutocompleteRequest } from '../models/AutocompleteRequest';
@@ -54,6 +61,8 @@ import { GeoDistance  , GeoDistanceDistanceTypeEnum    } from '../models/GeoDist
 import { GeoDistanceLocationAnchor } from '../models/GeoDistanceLocationAnchor';
 import { Highlight          , HighlightEncoderEnum      , HighlightHtmlStripModeEnum   , HighlightNoMatchSizeEnum  , HighlightOrderEnum       } from '../models/Highlight';
 import { HighlightFieldOption } from '../models/HighlightFieldOption';
+import { HighlightFieldsClass } from '../models/HighlightFields';
+import { HitsHits } from '../models/HitsHits';
 import { InsertDocumentRequest } from '../models/InsertDocumentRequest';
 import { Join, JoinTypeEnum      } from '../models/Join';
 import { JoinCond } from '../models/JoinCond';
@@ -73,6 +82,7 @@ import { SearchRequest } from '../models/SearchRequest';
 import { SearchResponse } from '../models/SearchResponse';
 import { SearchResponseHits } from '../models/SearchResponseHits';
 import { SourceRules } from '../models/SourceRules';
+import { SqlObjResponse } from '../models/SqlObjResponse';
 import { SqlResponseClass } from '../models/SqlResponse';
 import { SuccessResponse } from '../models/SuccessResponse';
 import { UpdateDocumentRequest } from '../models/UpdateDocumentRequest';
@@ -106,6 +116,8 @@ let typeMap: {[index: string]: any} = {
     "AggComposite": AggComposite,
     "AggCompositeSource": AggCompositeSource,
     "AggCompositeTerm": AggCompositeTerm,
+    "AggDateHistogram": AggDateHistogram,
+    "AggHistogram": AggHistogram,
     "AggTerms": AggTerms,
     "Aggregation": Aggregation,
     "AutocompleteRequest": AutocompleteRequest,
@@ -119,6 +131,8 @@ let typeMap: {[index: string]: any} = {
     "GeoDistanceLocationAnchor": GeoDistanceLocationAnchor,
     "Highlight": Highlight,
     "HighlightFieldOption": HighlightFieldOption,
+    "HighlightFields": HighlightFieldsClass,
+    "HitsHits": HitsHits,
     "InsertDocumentRequest": InsertDocumentRequest,
     "Join": Join,
     "JoinCond": JoinCond,
@@ -138,6 +152,7 @@ let typeMap: {[index: string]: any} = {
     "SearchResponse": SearchResponse,
     "SearchResponseHits": SearchResponseHits,
     "SourceRules": SourceRules,
+    "SqlObjResponse": SqlObjResponse,
     "SqlResponse": SqlResponseClass,
     "SuccessResponse": SuccessResponse,
     "UpdateDocumentRequest": UpdateDocumentRequest,

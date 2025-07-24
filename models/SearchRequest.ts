@@ -39,11 +39,11 @@ export class SearchRequest {
     /**
     * Defines aggregation settings for grouping results
     */
-    'aggs'?: { [key: string]: Aggregation; } | null;
+    'aggs'?: { [key: string]: Aggregation; };
     /**
     * Expressions to calculate additional values for the result
     */
-    'expressions'?: { [key: string]: string; } | null;
+    'expressions'?: { [key: string]: string; };
     /**
     * Maximum number of matches allowed in the result
     */

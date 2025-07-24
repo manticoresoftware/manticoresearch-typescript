@@ -66,7 +66,7 @@ export class KnnQuery {
             "name": "doc_id",
             "baseName": "doc_id",
             "type": "number",
-            "format": "int64"
+            "format": "uint64"
         },
         {
             "name": "ef",

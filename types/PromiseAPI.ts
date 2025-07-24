@@ -4,6 +4,8 @@ import { Configuration} from '../configuration'
 import { AggComposite } from '../models/AggComposite';
 import { AggCompositeSource } from '../models/AggCompositeSource';
 import { AggCompositeTerm } from '../models/AggCompositeTerm';
+import { AggDateHistogram } from '../models/AggDateHistogram';
+import { AggHistogram } from '../models/AggHistogram';
 import { AggTerms } from '../models/AggTerms';
 import { Aggregation } from '../models/Aggregation';
 import { AutocompleteRequest } from '../models/AutocompleteRequest';
@@ -17,6 +19,8 @@ import { GeoDistance } from '../models/GeoDistance';
 import { GeoDistanceLocationAnchor } from '../models/GeoDistanceLocationAnchor';
 import { Highlight } from '../models/Highlight';
 import { HighlightFieldOption } from '../models/HighlightFieldOption';
+import { HighlightFields } from '../models/HighlightFields';
+import { HitsHits } from '../models/HitsHits';
 import { InsertDocumentRequest } from '../models/InsertDocumentRequest';
 import { Join } from '../models/Join';
 import { JoinCond } from '../models/JoinCond';
@@ -36,6 +40,7 @@ import { SearchRequest } from '../models/SearchRequest';
 import { SearchResponse } from '../models/SearchResponse';
 import { SearchResponseHits } from '../models/SearchResponseHits';
 import { SourceRules } from '../models/SourceRules';
+import { SqlObjResponse } from '../models/SqlObjResponse';
 import { SqlResponse } from '../models/SqlResponse';
 import { SuccessResponse } from '../models/SuccessResponse';
 import { UpdateDocumentRequest } from '../models/UpdateDocumentRequest';
@@ -55,7 +60,7 @@ export class PromiseIndexApi {
     }
 
     /**
-     * Sends multiple operatons like inserts, updates, replaces or deletes.  For each operation it\'s object must have same format as in their dedicated method.  The method expects a raw string as the batch in NDJSON.  Each operation object needs to be serialized to   JSON and separated by endline (\\n).      An example of raw input:      ```   {\"insert\": {\"table\": \"movies\", \"doc\": {\"plot\": \"A secret team goes to North Pole\", \"rating\": 9.5, \"language\": [2, 3], \"title\": \"This is an older movie\", \"lon\": 51.99, \"meta\": {\"keywords\":[\"travel\",\"ice\"],\"genre\":[\"adventure\"]}, \"year\": 1950, \"lat\": 60.4, \"advise\": \"PG-13\"}}}   \\n   {\"delete\": {\"table\": \"movies\",\"id\":700}}   ```      Responds with an object telling whenever any errors occured and an array with status for each operation:      ```   {     \'items\':     [       {         \'update\':{\'table\':\'products\',\'_id\':1,\'result\':\'updated\'}       },       {         \'update\':{\'table\':\'products\',\'_id\':2,\'result\':\'updated\'}       }     ],     \'errors\':false   }   ``` 
+     * Sends multiple operatons like inserts, updates, replaces or deletes.  For each operation it\'s object must have same format as in their dedicated method.  The method expects a raw string as the batch in NDJSON.  Each operation object needs to be serialized to   JSON and separated by endline (\\n).      An example of raw input:      ```   {\"insert\": {\"table\": \"movies\", \"doc\": {\"plot\": \"A secret team goes to North Pole\", \"rating\": 9.5, \"language\": [2, 3], \"title\": \"This is an older movie\", \"lon\": 51.99, \"meta\": {\"keywords\":[\"travel\",\"ice\"],\"genre\":[\"adventure\"]}, \"year\": 1950, \"lat\": 60.4, \"advise\": \"PG-13\"}}}   \\n   {\"delete\": {\"table\": \"movies\",\"id\":700}}   ```      Responds with an object telling whenever any errors occured and an array with status for each operation:      ```   {     \'items\':     [       {         \'update\':{\'table\':\'products\',\'id\':1,\'result\':\'updated\'}       },       {         \'update\':{\'table\':\'products\',\'id\':2,\'result\':\'updated\'}       }     ],     \'errors\':false   }   ``` 
      * Bulk table operations
      * @param body
      */
@@ -65,7 +70,7 @@ export class PromiseIndexApi {
     }
 
     /**
-     * Sends multiple operatons like inserts, updates, replaces or deletes.  For each operation it\'s object must have same format as in their dedicated method.  The method expects a raw string as the batch in NDJSON.  Each operation object needs to be serialized to   JSON and separated by endline (\\n).      An example of raw input:      ```   {\"insert\": {\"table\": \"movies\", \"doc\": {\"plot\": \"A secret team goes to North Pole\", \"rating\": 9.5, \"language\": [2, 3], \"title\": \"This is an older movie\", \"lon\": 51.99, \"meta\": {\"keywords\":[\"travel\",\"ice\"],\"genre\":[\"adventure\"]}, \"year\": 1950, \"lat\": 60.4, \"advise\": \"PG-13\"}}}   \\n   {\"delete\": {\"table\": \"movies\",\"id\":700}}   ```      Responds with an object telling whenever any errors occured and an array with status for each operation:      ```   {     \'items\':     [       {         \'update\':{\'table\':\'products\',\'_id\':1,\'result\':\'updated\'}       },       {         \'update\':{\'table\':\'products\',\'_id\':2,\'result\':\'updated\'}       }     ],     \'errors\':false   }   ``` 
+     * Sends multiple operatons like inserts, updates, replaces or deletes.  For each operation it\'s object must have same format as in their dedicated method.  The method expects a raw string as the batch in NDJSON.  Each operation object needs to be serialized to   JSON and separated by endline (\\n).      An example of raw input:      ```   {\"insert\": {\"table\": \"movies\", \"doc\": {\"plot\": \"A secret team goes to North Pole\", \"rating\": 9.5, \"language\": [2, 3], \"title\": \"This is an older movie\", \"lon\": 51.99, \"meta\": {\"keywords\":[\"travel\",\"ice\"],\"genre\":[\"adventure\"]}, \"year\": 1950, \"lat\": 60.4, \"advise\": \"PG-13\"}}}   \\n   {\"delete\": {\"table\": \"movies\",\"id\":700}}   ```      Responds with an object telling whenever any errors occured and an array with status for each operation:      ```   {     \'items\':     [       {         \'update\':{\'table\':\'products\',\'id\':1,\'result\':\'updated\'}       },       {         \'update\':{\'table\':\'products\',\'id\':2,\'result\':\'updated\'}       }     ],     \'errors\':false   }   ``` 
      * Bulk table operations
      * @param body
      */
@@ -95,7 +100,7 @@ export class PromiseIndexApi {
     }
 
     /**
-     * Insert a document.  Expects an object like:     ```   {     \'table\':\'movies\',     \'id\':701,     \'doc\':     {       \'title\':\'This is an old movie\',       \'plot\':\'A secret team goes to North Pole\',       \'year\':1950,       \'rating\':9.5,       \'lat\':60.4,       \'lon\':51.99,       \'advise\':\'PG-13\',       \'meta\':\'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}\',       \'language\':[2,3]     }   }   ```   The document id can also be missing, in which case an autogenerated one will be used:             ```   {     \'table\':\'movies\',     \'doc\':     {       \'title\':\'This is a new movie\',       \'plot\':\'A secret team goes to North Pole\',       \'year\':2020,       \'rating\':9.5,       \'lat\':60.4,       \'lon\':51.99,       \'advise\':\'PG-13\',       \'meta\':\'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}\',       \'language\':[2,3]     }   }   ```   It responds with an object in format:      ```   {\'table\':\'products\',\'_id\':701,\'created\':true,\'result\':\'created\',\'status\':201}   ``` 
+     * Insert a document.  Expects an object like:     ```   {     \'table\':\'movies\',     \'id\':701,     \'doc\':     {       \'title\':\'This is an old movie\',       \'plot\':\'A secret team goes to North Pole\',       \'year\':1950,       \'rating\':9.5,       \'lat\':60.4,       \'lon\':51.99,       \'advise\':\'PG-13\',       \'meta\':\'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}\',       \'language\':[2,3]     }   }   ```   The document id can also be missing, in which case an autogenerated one will be used:             ```   {     \'table\':\'movies\',     \'doc\':     {       \'title\':\'This is a new movie\',       \'plot\':\'A secret team goes to North Pole\',       \'year\':2020,       \'rating\':9.5,       \'lat\':60.4,       \'lon\':51.99,       \'advise\':\'PG-13\',       \'meta\':\'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}\',       \'language\':[2,3]     }   }   ```   It responds with an object in format:      ```   {\'table\':\'products\',\'id\':701,\'created\':true,\'result\':\'created\',\'status\':201}   ``` 
      * Create a new document in a table
      * @param insertDocumentRequest
      */
@@ -105,7 +110,7 @@ export class PromiseIndexApi {
     }
 
     /**
-     * Insert a document.  Expects an object like:     ```   {     \'table\':\'movies\',     \'id\':701,     \'doc\':     {       \'title\':\'This is an old movie\',       \'plot\':\'A secret team goes to North Pole\',       \'year\':1950,       \'rating\':9.5,       \'lat\':60.4,       \'lon\':51.99,       \'advise\':\'PG-13\',       \'meta\':\'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}\',       \'language\':[2,3]     }   }   ```   The document id can also be missing, in which case an autogenerated one will be used:             ```   {     \'table\':\'movies\',     \'doc\':     {       \'title\':\'This is a new movie\',       \'plot\':\'A secret team goes to North Pole\',       \'year\':2020,       \'rating\':9.5,       \'lat\':60.4,       \'lon\':51.99,       \'advise\':\'PG-13\',       \'meta\':\'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}\',       \'language\':[2,3]     }   }   ```   It responds with an object in format:      ```   {\'table\':\'products\',\'_id\':701,\'created\':true,\'result\':\'created\',\'status\':201}   ``` 
+     * Insert a document.  Expects an object like:     ```   {     \'table\':\'movies\',     \'id\':701,     \'doc\':     {       \'title\':\'This is an old movie\',       \'plot\':\'A secret team goes to North Pole\',       \'year\':1950,       \'rating\':9.5,       \'lat\':60.4,       \'lon\':51.99,       \'advise\':\'PG-13\',       \'meta\':\'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}\',       \'language\':[2,3]     }   }   ```   The document id can also be missing, in which case an autogenerated one will be used:             ```   {     \'table\':\'movies\',     \'doc\':     {       \'title\':\'This is a new movie\',       \'plot\':\'A secret team goes to North Pole\',       \'year\':2020,       \'rating\':9.5,       \'lat\':60.4,       \'lon\':51.99,       \'advise\':\'PG-13\',       \'meta\':\'{\"keywords\":{\"travel\",\"ice\"},\"genre\":{\"adventure\"}}\',       \'language\':[2,3]     }   }   ```   It responds with an object in format:      ```   {\'table\':\'products\',\'id\':701,\'created\':true,\'result\':\'created\',\'status\':201}   ``` 
      * Create a new document in a table
      * @param insertDocumentRequest
      */
@@ -139,7 +144,7 @@ export class PromiseIndexApi {
     }
 
     /**
-     * Replace an existing document. Input has same format as `insert` operation. Responds with an object in format:    ```   {\'table\':\'products\',\'_id\':1,\'created\':false,\'result\':\'updated\',\'status\':200}   ``` 
+     * Replace an existing document. Input has same format as `insert` operation. Responds with an object in format:    ```   {\'table\':\'products\',\'id\':1,\'created\':false,\'result\':\'updated\',\'status\':200}   ``` 
      * Replace new document in a table
      * @param insertDocumentRequest
      */
@@ -149,7 +154,7 @@ export class PromiseIndexApi {
     }
 
     /**
-     * Replace an existing document. Input has same format as `insert` operation. Responds with an object in format:    ```   {\'table\':\'products\',\'_id\':1,\'created\':false,\'result\':\'updated\',\'status\':200}   ``` 
+     * Replace an existing document. Input has same format as `insert` operation. Responds with an object in format:    ```   {\'table\':\'products\',\'id\':1,\'created\':false,\'result\':\'updated\',\'status\':200}   ``` 
      * Replace new document in a table
      * @param insertDocumentRequest
      */

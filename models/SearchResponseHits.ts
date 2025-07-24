@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 
+import { HitsHits } from '../models/HitsHits';
 import { HttpFile } from '../http/http';
 
 /**
@@ -31,7 +32,7 @@ export class SearchResponseHits {
     /**
     * Array of hit objects, each representing a matched document
     */
-    'hits'?: Array<any>;
+    'hits'?: Array<HitsHits>;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -59,7 +60,7 @@ export class SearchResponseHits {
         {
             "name": "hits",
             "baseName": "hits",
-            "type": "Array<any>",
+            "type": "Array<HitsHits>",
             "format": ""
         }    ];
 

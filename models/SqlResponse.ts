@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 
+import { SqlObjResponse } from '../models/SqlObjResponse';
 import { HttpFile } from '../http/http';
 
 /**
@@ -20,7 +21,7 @@ import { HttpFile } from '../http/http';
  * Type
  * @export
  */
-export type SqlResponse = Array<any> | any;
+export type SqlResponse = Array<any> | SqlObjResponse;
 
 /**
 * @type SqlResponseClass
