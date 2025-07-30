@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 
+import { FulltextFilter } from '../models/FulltextFilter';
 import { HttpFile } from '../http/http';
 
 /**
@@ -24,6 +25,7 @@ export class JoinCond {
     * Joined table
     */
     'table': string;
+    'query'?: FulltextFilter;
     'type'?: any | null;
 
     static readonly discriminator: string | undefined = undefined;
@@ -41,6 +43,12 @@ export class JoinCond {
             "name": "table",
             "baseName": "table",
             "type": "string",
+            "format": ""
+        },
+        {
+            "name": "query",
+            "baseName": "query",
+            "type": "FulltextFilter",
             "format": ""
         },
         {

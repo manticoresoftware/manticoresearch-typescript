@@ -1,6 +1,6 @@
 {
   "name": "manticoresearch-ts-dev",
-  "version": "8.0.0-dev",
+  "version": "8.1.0-dev",
   "description": "OpenAPI client for manticoresearch-ts",
   "author": "OpenAPI-Generator Contributors",
   "repository": {
