@@ -218,7 +218,9 @@ const arraySuffix = ">";
 const mapPrefix = "{ [key: string]: ";
 const mapSuffix = "; }";
 
-const JSONbig = require('json-bigint');
+const JSONbig = require('json-bigint')({
+	useNativeBigInt: true,
+});
 
 export class ObjectSerializer {
     public static findCorrectType(data: any, expectedType: string) {
