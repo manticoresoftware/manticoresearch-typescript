@@ -19,19 +19,19 @@ export class AggDateHistogram {
     /**
     * Field to group by
     */
-    'field': any | null;
+    'field': string;
     /**
     * Interval of the histogram values
     */
-    'interval': any | null;
+    'interval': number;
     /**
     * Offset of the histogram values. Default value is 0.
     */
-    'offset'?: any | null;
+    'offset'?: number;
     /**
     * Flag that defines if a search response will be a dictionary with the bucket keys. Default value is false.
     */
-    'keyed'?: any | null;
+    'keyed'?: boolean;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -41,25 +41,25 @@ export class AggDateHistogram {
         {
             "name": "field",
             "baseName": "field",
-            "type": "any",
+            "type": "string",
             "format": ""
         },
         {
             "name": "interval",
             "baseName": "interval",
-            "type": "any",
+            "type": "number",
             "format": ""
         },
         {
             "name": "offset",
             "baseName": "offset",
-            "type": "any",
+            "type": "number",
             "format": ""
         },
         {
             "name": "keyed",
             "baseName": "keyed",
-            "type": "any",
+            "type": "boolean",
             "format": ""
         }    ];
 

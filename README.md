@@ -1,6 +1,6 @@
 # Manticore TypeScript client
 
-❗ WARNING: this is a development version of the client. The latest release's readme is https://github.com/manticoresoftware/manticoresearch-typescript/tree/8.0.0
+❗ WARNING: this is a development version of the client. The latest release's readme is https://github.com/manticoresoftware/manticoresearch-typescript/tree/8.1.0
 
 ## Compatibility Table
 
@@ -74,16 +74,16 @@ All URIs are relative to *http://127.0.0.1:9308*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-_Manticoresearch.IndexApi_ | [**bulk**](./IndexApi.md#bulk) | **POST** /bulk | Bulk table operations
-_Manticoresearch.IndexApi_ | [**delete**](./IndexApi.md#delete) | **POST** /delete | Delete a document in a table
-_Manticoresearch.IndexApi_ | [**insert**](./IndexApi.md#insert) | **POST** /insert | Create a new document in a table
-_Manticoresearch.IndexApi_ | [**partialReplace**](./IndexApi.md#partialReplace) | **POST** /{table}/_update/{id} | Partially replaces a document in a table
-_Manticoresearch.IndexApi_ | [**replace**](./IndexApi.md#replace) | **POST** /replace | Replace new document in a table
-_Manticoresearch.IndexApi_ | [**update**](./IndexApi.md#update) | **POST** /update | Update a document in a table
-_Manticoresearch.SearchApi_ | [**autocomplete**](./SearchApi.md#autocomplete) | **POST** /autocomplete | Performs an autocomplete search on a table
-_Manticoresearch.SearchApi_ | [**percolate**](./SearchApi.md#percolate) | **POST** /pq/{table}/search | Perform reverse search on a percolate table
-_Manticoresearch.SearchApi_ | [**search**](./SearchApi.md#search) | **POST** /search | Performs a search on a table
-_Manticoresearch.UtilsApi_ | [**sql**](./UtilsApi.md#sql) | **POST** /sql | Perform SQL requests
+_Manticoresearch.IndexApi_ | [**bulk**](docs/IndexApi.md#bulk) | **POST** /bulk | Bulk table operations
+_Manticoresearch.IndexApi_ | [**delete**](docs/IndexApi.md#delete) | **POST** /delete | Delete a document in a table
+_Manticoresearch.IndexApi_ | [**insert**](docs/IndexApi.md#insert) | **POST** /insert | Create a new document in a table
+_Manticoresearch.IndexApi_ | [**partialReplace**](docs/IndexApi.md#partialReplace) | **POST** /{table}/_update/{id} | Partially replaces a document in a table
+_Manticoresearch.IndexApi_ | [**replace**](docs/IndexApi.md#replace) | **POST** /replace | Replace new document in a table
+_Manticoresearch.IndexApi_ | [**update**](docs/IndexApi.md#update) | **POST** /update | Update a document in a table
+_Manticoresearch.SearchApi_ | [**autocomplete**](docs/SearchApi.md#autocomplete) | **POST** /autocomplete | Performs an autocomplete search on a table
+_Manticoresearch.SearchApi_ | [**percolate**](docs/SearchApi.md#percolate) | **POST** /pq/{table}/search | Perform reverse search on a percolate table
+_Manticoresearch.SearchApi_ | [**search**](docs/SearchApi.md#search) | **POST** /search | Performs a search on a table
+_Manticoresearch.UtilsApi_ | [**sql**](docs/UtilsApi.md#sql) | **POST** /sql | Perform SQL requests
 
 
 ## Documentation for Authorization

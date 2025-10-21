@@ -19,11 +19,11 @@ export class GeoDistanceLocationAnchor {
     /**
     * Latitude of the anchor point
     */
-    'lat'?: any | null;
+    'lat'?: number;
     /**
     * Longitude of the anchor point
     */
-    'lon'?: any | null;
+    'lon'?: number;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -33,13 +33,13 @@ export class GeoDistanceLocationAnchor {
         {
             "name": "lat",
             "baseName": "lat",
-            "type": "any",
+            "type": "number",
             "format": ""
         },
         {
             "name": "lon",
             "baseName": "lon",
-            "type": "any",
+            "type": "number",
             "format": ""
         }    ];
 

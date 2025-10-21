@@ -27,6 +27,7 @@ import { Join } from '../models/Join';
 import { JoinCond } from '../models/JoinCond';
 import { JoinOn } from '../models/JoinOn';
 import { KnnQuery } from '../models/KnnQuery';
+import { KnnQueryQuery } from '../models/KnnQueryQuery';
 import { Match } from '../models/Match';
 import { MatchAll } from '../models/MatchAll';
 import { PercolateRequest } from '../models/PercolateRequest';

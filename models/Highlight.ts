@@ -18,23 +18,23 @@ export class Highlight {
     /**
     * Maximum size of the text fragments in highlighted snippets per field
     */
-    'fragment_size'?: any | null;
+    'fragment_size'?: number;
     /**
     * Maximum size of snippets per field
     */
-    'limit'?: any | null;
+    'limit'?: number;
     /**
     * Maximum number of snippets per field
     */
-    'limit_snippets'?: any | null;
+    'limit_snippets'?: number;
     /**
     * Maximum number of words per field
     */
-    'limit_words'?: any | null;
+    'limit_words'?: number;
     /**
     * Total number of highlighted fragments per field
     */
-    'number_of_fragments'?: any | null;
+    'number_of_fragments'?: number;
     /**
     * Text inserted after the matched term, typically used for HTML formatting
     */
@@ -110,31 +110,31 @@ export class Highlight {
         {
             "name": "fragment_size",
             "baseName": "fragment_size",
-            "type": "any",
+            "type": "number",
             "format": ""
         },
         {
             "name": "limit",
             "baseName": "limit",
-            "type": "any",
+            "type": "number",
             "format": ""
         },
         {
             "name": "limit_snippets",
             "baseName": "limit_snippets",
-            "type": "any",
+            "type": "number",
             "format": ""
         },
         {
             "name": "limit_words",
             "baseName": "limit_words",
-            "type": "any",
+            "type": "number",
             "format": ""
         },
         {
             "name": "number_of_fragments",
             "baseName": "number_of_fragments",
-            "type": "any",
+            "type": "number",
             "format": ""
         },
         {

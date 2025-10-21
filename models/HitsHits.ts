@@ -43,7 +43,7 @@ export class HitsHits {
     /**
     * The type of the matched document returned for percolate queries
     */
-    '_type'?: string;
+    '_type_'?: string;
     /**
     * The percolate-related fields of the matched document returned for percolate queries
     */
@@ -91,7 +91,7 @@ export class HitsHits {
             "format": ""
         },
         {
-            "name": "_type",
+            "name": "_type_",
             "baseName": "_type:",
             "type": "string",
             "format": ""

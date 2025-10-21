@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 
+import { KnnQueryQuery } from '../models/KnnQueryQuery';
 import { QueryFilter } from '../models/QueryFilter';
 import { HttpFile } from '../http/http';
 
@@ -25,6 +26,7 @@ export class KnnQuery {
     * The number of nearest neighbors to return
     */
     'k': number;
+    'query'?: KnnQueryQuery;
     /**
     * The vector used as input for the KNN search
     */
@@ -54,6 +56,12 @@ export class KnnQuery {
             "name": "k",
             "baseName": "k",
             "type": "number",
+            "format": ""
+        },
+        {
+            "name": "query",
+            "baseName": "query",
+            "type": "KnnQueryQuery",
             "format": ""
         },
         {

@@ -20,7 +20,7 @@ import { HttpFile } from '../http/http';
  * Type
  * @export
  */
-export type HighlightFields = any;
+export type HighlightFields = Array<string> | any;
 
 /**
 * @type HighlightFieldsClass
@@ -32,3 +32,4 @@ export class HighlightFieldsClass {
 
     static readonly mapping: {[index: string]: string} | undefined = undefined;
 }
+

@@ -1,9 +1,7 @@
+.gitattributes
 .gitignore
 .openapi-generator-ignore
-IndexApi.md
 README.md
-SearchApi.md
-UtilsApi.md
 apis/IndexApi.ts
 apis/SearchApi.ts
 apis/UtilsApi.ts
@@ -11,6 +9,9 @@ apis/baseapi.ts
 apis/exception.ts
 auth/auth.ts
 configuration.ts
+docs/IndexApi.md
+docs/SearchApi.md
+docs/UtilsApi.md
 git_push.sh
 http/http.ts
 http/isomorphic-fetch.ts
@@ -41,6 +42,7 @@ models/Join.ts
 models/JoinCond.ts
 models/JoinOn.ts
 models/KnnQuery.ts
+models/KnnQueryQuery.ts
 models/Match.ts
 models/MatchAll.ts
 models/ObjectSerializer.ts

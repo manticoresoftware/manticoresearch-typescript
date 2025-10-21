@@ -21,7 +21,7 @@ export class QueryFilter {
     /**
     * Filter object defining a query string
     */
-    'query_string'?: any | null;
+    'query_string'?: string;
     /**
     * Filter object defining a match keyword passed as a string or in a Match object
     */
@@ -54,7 +54,7 @@ export class QueryFilter {
         {
             "name": "query_string",
             "baseName": "query_string",
-            "type": "any",
+            "type": "string",
             "format": ""
         },
         {

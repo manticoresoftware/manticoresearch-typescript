@@ -39,6 +39,6 @@ export class MatchAll {
 }
 
 export enum MatchAllAllEnum {
-     all = '{}'
+    STRING = '{}'
 }
 

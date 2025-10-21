@@ -21,15 +21,15 @@ export class GeoDistance {
     /**
     * Field name in the document that contains location data
     */
-    'location_source'?: any | null;
+    'location_source'?: string;
     /**
     * Algorithm used to calculate the distance
     */
-    'distance_type'?: GeoDistanceDistanceTypeEnum | null;
+    'distance_type'?: GeoDistanceDistanceTypeEnum;
     /**
     * The distance from the anchor point to filter results by
     */
-    'distance'?: any | null;
+    'distance'?: string;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -45,7 +45,7 @@ export class GeoDistance {
         {
             "name": "location_source",
             "baseName": "location_source",
-            "type": "any",
+            "type": "string",
             "format": ""
         },
         {
@@ -57,7 +57,7 @@ export class GeoDistance {
         {
             "name": "distance",
             "baseName": "distance",
-            "type": "any",
+            "type": "string",
             "format": ""
         }    ];
 

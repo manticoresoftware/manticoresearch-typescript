@@ -10,25 +10,20 @@
  * Do not edit the class manually.
  */
 
-import { SqlObjResponse } from '../models/SqlObjResponse';
 import { HttpFile } from '../http/http';
 
 /**
-* List of responses from executed SQL queries
-*/
-/**
- * @type SqlResponse
+ * @type KnnQueryQuery
  * Type
  * @export
  */
-export type SqlResponse = Array<any> | SqlObjResponse;
+export type KnnQueryQuery = Array<number> | string;
 
 /**
-* @type SqlResponseClass
-    * List of responses from executed SQL queries
+* @type KnnQueryQueryClass
 * @export
 */
-export class SqlResponseClass {
+export class KnnQueryQueryClass {
     static readonly discriminator: string | undefined = undefined;
 
     static readonly mapping: {[index: string]: string} | undefined = undefined;

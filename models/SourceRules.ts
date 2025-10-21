@@ -19,11 +19,11 @@ export class SourceRules {
     /**
     * List of fields to include in the response
     */
-    'includes'?: any | null;
+    'includes'?: Array<string>;
     /**
     * List of fields to exclude from the response
     */
-    'excludes'?: any | null;
+    'excludes'?: Array<string>;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -33,13 +33,13 @@ export class SourceRules {
         {
             "name": "includes",
             "baseName": "includes",
-            "type": "any",
+            "type": "Array<string>",
             "format": ""
         },
         {
             "name": "excludes",
             "baseName": "excludes",
-            "type": "any",
+            "type": "Array<string>",
             "format": ""
         }    ];
 
