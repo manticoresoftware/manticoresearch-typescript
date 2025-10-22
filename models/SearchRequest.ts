@@ -13,7 +13,7 @@
 import { Aggregation } from '../models/Aggregation';
 import { Highlight } from '../models/Highlight';
 import { Join } from '../models/Join';
-import { KnnQuery } from '../models/KnnQuery';
+import { Knn } from '../models/Knn';
 import { SearchQuery } from '../models/SearchQuery';
 import { HttpFile } from '../http/http';
 
@@ -35,7 +35,7 @@ export class SearchRequest {
     * Maximum number of results to return
     */
     'limit'?: number;
-    'knn'?: KnnQuery;
+    'knn'?: Knn;
     /**
     * Defines aggregation settings for grouping results
     */
@@ -105,7 +105,7 @@ export class SearchRequest {
         {
             "name": "knn",
             "baseName": "knn",
-            "type": "KnnQuery",
+            "type": "Knn",
             "format": ""
         },
         {

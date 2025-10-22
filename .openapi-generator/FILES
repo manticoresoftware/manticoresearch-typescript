@@ -41,8 +41,8 @@ models/InsertDocumentRequest.ts
 models/Join.ts
 models/JoinCond.ts
 models/JoinOn.ts
+models/Knn.ts
 models/KnnQuery.ts
-models/KnnQueryQuery.ts
 models/Match.ts
 models/MatchAll.ts
 models/ObjectSerializer.ts

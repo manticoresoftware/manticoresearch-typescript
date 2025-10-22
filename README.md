@@ -1,6 +1,6 @@
 # Manticore TypeScript client
 
-❗ WARNING: this is a development version of the client. The latest release's readme is https://github.com/manticoresoftware/manticoresearch-typescript/tree/8.1.0
+❗ WARNING: this is a development version of the client. The latest release's readme is https://github.com/manticoresoftware/manticoresearch-typescript/tree/9.0.0
 
 ## Compatibility Table
 
@@ -64,7 +64,7 @@ import * as Manticoresearch from "manticoresearch-ts";
 
 ## Documentation
 
-Full documentation on the API Endpoints and Models used is available in [docs](https://github.com/manticoresoftware/manticoresearch-typescript/tree/8.1.0/docs) folder as listed below.
+Full documentation on the API Endpoints and Models used is available in [docs](https://github.com/manticoresoftware/manticoresearch-typescript/tree/9.0.0/docs) folder as listed below.
 
 Manticore Search server documentation: https://manual.manticoresearch.com.
 

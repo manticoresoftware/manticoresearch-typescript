@@ -10,89 +10,22 @@
  * Do not edit the class manually.
  */
 
-import { KnnQueryQuery } from '../models/KnnQueryQuery';
-import { QueryFilter } from '../models/QueryFilter';
 import { HttpFile } from '../http/http';
 
 /**
-* Object representing a k-nearest neighbor search query
-*/
-export class KnnQuery {
-    /**
-    * Field to perform the k-nearest neighbor search on
-    */
-    'field': string;
-    /**
-    * The number of nearest neighbors to return
-    */
-    'k': number;
-    'query'?: KnnQueryQuery;
-    /**
-    * The vector used as input for the KNN search
-    */
-    'query_vector'?: Array<number>;
-    /**
-    * The docuemnt ID used as input for the KNN search
-    */
-    'doc_id'?: number;
-    /**
-    * Optional parameter controlling the accuracy of the search
-    */
-    'ef'?: number;
-    'filter'?: QueryFilter;
+ * @type KnnQuery
+ * Type
+ * @export
+ */
+export type KnnQuery = Array<number> | string;
 
+/**
+* @type KnnQueryClass
+* @export
+*/
+export class KnnQueryClass {
     static readonly discriminator: string | undefined = undefined;
 
     static readonly mapping: {[index: string]: string} | undefined = undefined;
-
-    static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
-        {
-            "name": "field",
-            "baseName": "field",
-            "type": "string",
-            "format": ""
-        },
-        {
-            "name": "k",
-            "baseName": "k",
-            "type": "number",
-            "format": ""
-        },
-        {
-            "name": "query",
-            "baseName": "query",
-            "type": "KnnQueryQuery",
-            "format": ""
-        },
-        {
-            "name": "query_vector",
-            "baseName": "query_vector",
-            "type": "Array<number>",
-            "format": ""
-        },
-        {
-            "name": "doc_id",
-            "baseName": "doc_id",
-            "type": "number",
-            "format": "uint64"
-        },
-        {
-            "name": "ef",
-            "baseName": "ef",
-            "type": "number",
-            "format": ""
-        },
-        {
-            "name": "filter",
-            "baseName": "filter",
-            "type": "QueryFilter",
-            "format": ""
-        }    ];
-
-    static getAttributeTypeMap() {
-        return KnnQuery.attributeTypeMap;
-    }
-
-    public constructor() {
-    }
 }
+
