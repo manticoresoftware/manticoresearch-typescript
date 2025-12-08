@@ -1,6 +1,6 @@
 {
   "name": "manticoresearch-ts-dev",
-  "version": "9.0.0-dev",
+  "version": "9.0.1-dev",
   "description": "OpenAPI client for manticoresearch-ts",
   "author": "OpenAPI-Generator Contributors",
   "repository": {
@@ -18,8 +18,9 @@
   "type": "commonjs",
   "exports": {
     ".": {
+      "import": "./dist/index.js",
       "require": "./dist/index.js",
-      "types": "./dist/index.d.js"
+      "types": "./dist/index.d.ts"
     }
   },
   "files": [

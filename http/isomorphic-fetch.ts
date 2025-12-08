@@ -1,6 +1,8 @@
 import {HttpLibrary, RequestContext, ResponseContext} from './http';
 import { from, Observable } from '../rxjsStub';
-import "whatwg-fetch";
+if (typeof fetch === "undefined") {
+  require("whatwg-fetch");
+}
 
 export class IsomorphicFetchHttpLibrary implements HttpLibrary {
 
