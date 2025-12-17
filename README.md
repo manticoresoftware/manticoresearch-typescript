@@ -1,17 +1,6 @@
 # Manticore TypeScript client
 
-❗ WARNING: this is a development version of the client. The latest release's readme is https://github.com/manticoresoftware/manticoresearch-typescript/tree/9.0.0
 
-## Compatibility Table
-
-| **manticoresearch-typescript** | **Manticore Search**                | **Node**            | **Compatibility**      |
-| ------------------------------ | ----------------------------------- | ------------------- | -----------------------|
-| `manticoresearch-ts-dev`       | `dev` (latest development version)  | Node 18 or newer    | ✅ Fully Compatible    |
-| 6.0.0 or newer                 | 7.0.0 or newer                      | Node 18 or newer    | ✅ Fully Compatible    |
-| 6.0.0 or newer                 | 4.2.1 to 7.0.0                      | Node 18 or newer    | ⚠️ Partially Compatible|
-| 3.3.1 to 6.0.0                 | 6.2.0 or newer                      | Node 18 or newer    | ✅ Fully Compatible    |
-| 3.3.1 to 6.0.0                 | 4.2.1 to 6.2.0                      | Node 18 or newer    | ⚠️ Partially Compatible|
-| 1.0.x to 3.3.1                 | 4.2.1 to 6.2.0                      | Node 18 or newer    | ✅ Fully Compatible    |
 
 ## Installation
 
