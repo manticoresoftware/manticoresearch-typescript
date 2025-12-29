@@ -39,6 +39,14 @@ export class Knn {
     * Optional parameter controlling the accuracy of the search
     */
     'ef'?: number;
+    /**
+    * Optional parameter enabling KNN rescoring (disabled by default)
+    */
+    'rescore'?: boolean;
+    /**
+    * Optional parameter setting a factor by which k is multiplied when executing the KNN search
+    */
+    'oversampling'?: number;
     'filter'?: QueryFilter;
 
     static readonly discriminator: string | undefined = undefined;
@@ -79,6 +87,18 @@ export class Knn {
         {
             "name": "ef",
             "baseName": "ef",
+            "type": "number",
+            "format": ""
+        },
+        {
+            "name": "rescore",
+            "baseName": "rescore",
+            "type": "boolean",
+            "format": ""
+        },
+        {
+            "name": "oversampling",
+            "baseName": "oversampling",
             "type": "number",
             "format": ""
         },
