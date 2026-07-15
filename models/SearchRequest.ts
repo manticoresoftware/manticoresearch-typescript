@@ -11,20 +11,25 @@
  */
 
 import { Aggregation } from '../models/Aggregation';
+import { Chat } from '../models/Chat';
+import { FacetFilterMode } from '../models/FacetFilterMode';
 import { Highlight } from '../models/Highlight';
+import { Hybrid } from '../models/Hybrid';
 import { Join } from '../models/Join';
 import { Knn } from '../models/Knn';
+import { ScriptField } from '../models/ScriptField';
 import { SearchQuery } from '../models/SearchQuery';
 import { HttpFile } from '../http/http';
 
 /**
-* Request object for search operation
+* Request object for search operation. Either `table` (regular search) or `chat` (conversational search) must be provided. 
 */
 export class SearchRequest {
     /**
     * The table to perform the search on
     */
-    'table': string;
+    'table'?: string;
+    'chat'?: Chat;
     'query'?: SearchQuery;
     /**
     * Join clause to combine search data from multiple tables
@@ -35,15 +40,24 @@ export class SearchRequest {
     * Maximum number of results to return
     */
     'limit'?: number;
+    /**
+    * K-nearest neighbor search settings. Pass a single `knn` object or an array of objects for multi-vector search. 
+    */
     'knn'?: Knn;
+    'hybrid'?: Hybrid;
+    'facet_filter_mode'?: FacetFilterMode;
     /**
     * Defines aggregation settings for grouping results
     */
     'aggs'?: { [key: string]: Aggregation; };
     /**
-    * Expressions to calculate additional values for the result
+    * Expressions to calculate additional values for the result. Simpler alternative to `script_fields`; expression names must be lowercase. 
     */
     'expressions'?: { [key: string]: string; };
+    /**
+    * Named expressions computed at search time. Each value defines an inline script whose result is stored under the field name. For more information see [Expressions](https://manual.manticoresearch.com/Searching/Expressions#script_fields) 
+    */
+    'script_fields'?: { [key: string]: ScriptField; };
     /**
     * Maximum number of matches allowed in the result
     */
@@ -79,6 +93,12 @@ export class SearchRequest {
             "format": ""
         },
         {
+            "name": "chat",
+            "baseName": "chat",
+            "type": "Chat",
+            "format": ""
+        },
+        {
             "name": "query",
             "baseName": "query",
             "type": "SearchQuery",
@@ -109,6 +129,18 @@ export class SearchRequest {
             "format": ""
         },
         {
+            "name": "hybrid",
+            "baseName": "hybrid",
+            "type": "Hybrid",
+            "format": ""
+        },
+        {
+            "name": "facet_filter_mode",
+            "baseName": "facet_filter_mode",
+            "type": "FacetFilterMode",
+            "format": ""
+        },
+        {
             "name": "aggs",
             "baseName": "aggs",
             "type": "{ [key: string]: Aggregation; }",
@@ -118,6 +150,12 @@ export class SearchRequest {
             "name": "expressions",
             "baseName": "expressions",
             "type": "{ [key: string]: string; }",
+            "format": ""
+        },
+        {
+            "name": "script_fields",
+            "baseName": "script_fields",
+            "type": "{ [key: string]: ScriptField; }",
             "format": ""
         },
         {
@@ -170,3 +208,5 @@ export class SearchRequest {
     public constructor() {
     }
 }
+
+

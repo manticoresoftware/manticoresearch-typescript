@@ -13,13 +13,11 @@
 import { HttpFile } from '../http/http';
 
 /**
-* Filter helper object defining the \'range\' condition
+* An aggregation range. 
 */
 export class Range {
-    'lt'?: any | null;
-    'lte'?: any | null;
-    'gt'?: any | null;
-    'gte'?: any | null;
+    '_from'?: any | null;
+    'to'?: any | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -27,26 +25,14 @@ export class Range {
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
-            "name": "lt",
-            "baseName": "lt",
+            "name": "_from",
+            "baseName": "from",
             "type": "any",
             "format": ""
         },
         {
-            "name": "lte",
-            "baseName": "lte",
-            "type": "any",
-            "format": ""
-        },
-        {
-            "name": "gt",
-            "baseName": "gt",
-            "type": "any",
-            "format": ""
-        },
-        {
-            "name": "gte",
-            "baseName": "gte",
+            "name": "to",
+            "baseName": "to",
             "type": "any",
             "format": ""
         }    ];

@@ -10,11 +10,12 @@
  * Do not edit the class manually.
  */
 
+import { AggBucketsResult } from '../models/AggBucketsResult';
 import { SearchResponseHits } from '../models/SearchResponseHits';
 import { HttpFile } from '../http/http';
 
 /**
-* Response object containing the results of a search request
+* Response object containing search results. For conversational search requests that include a `chat` object, the optional chat fields below are also populated. For conversational search response fields see [Conversational search](https://manual.manticoresearch.com/Searching/Conversational_search#Response) 
 */
 export class SearchResponse {
     /**
@@ -26,9 +27,9 @@ export class SearchResponse {
     */
     'timed_out'?: boolean;
     /**
-    * Aggregated search results grouped by the specified criteria
+    * Aggregated search results grouped by the specified criteria. Each named aggregation typically contains a `buckets` array (or keyed map) of bucket objects with `key`, `doc_count`, and optional `status`. 
     */
-    'aggregations'?: any;
+    'aggregations'?: { [key: string]: AggBucketsResult; };
     'hits'?: SearchResponseHits;
     /**
     * Profile information about the search execution, if profiling is enabled
@@ -42,6 +43,26 @@ export class SearchResponse {
     * Warnings encountered during the search operation
     */
     'warning'?: any;
+    /**
+    * Existing or generated conversation id (conversational search)
+    */
+    'conversation_uuid'?: string;
+    /**
+    * Original user query (conversational search)
+    */
+    'user_query'?: string;
+    /**
+    * Standalone search query used for KNN retrieval (conversational search)
+    */
+    'search_query'?: string;
+    /**
+    * LLM answer as generated (conversational search)
+    */
+    'response'?: string;
+    /**
+    * JSON string containing retrieved source rows used as LLM context (conversational search). 
+    */
+    'sources'?: string;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -63,7 +84,7 @@ export class SearchResponse {
         {
             "name": "aggregations",
             "baseName": "aggregations",
-            "type": "any",
+            "type": "{ [key: string]: AggBucketsResult; }",
             "format": ""
         },
         {
@@ -88,6 +109,36 @@ export class SearchResponse {
             "name": "warning",
             "baseName": "warning",
             "type": "any",
+            "format": ""
+        },
+        {
+            "name": "conversation_uuid",
+            "baseName": "conversation_uuid",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "user_query",
+            "baseName": "user_query",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "search_query",
+            "baseName": "search_query",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "response",
+            "baseName": "response",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "sources",
+            "baseName": "sources",
+            "type": "string",
             "format": ""
         }    ];
 

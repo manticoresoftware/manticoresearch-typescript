@@ -42,7 +42,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[basicAuth](README.md#basicAuth), [bearerAuth](README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -88,7 +88,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[basicAuth](README.md#basicAuth), [bearerAuth](README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -134,7 +134,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[basicAuth](README.md#basicAuth), [bearerAuth](README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -182,7 +182,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[basicAuth](README.md#basicAuth), [bearerAuth](README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -228,7 +228,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[basicAuth](README.md#basicAuth), [bearerAuth](README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -274,7 +274,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[basicAuth](README.md#basicAuth), [bearerAuth](README.md#bearerAuth)
 
 ### HTTP request headers
 

@@ -1,16 +1,27 @@
+export * from '../models/AggBucket';
+export * from '../models/AggBucketsResult';
 export * from '../models/AggComposite';
 export * from '../models/AggCompositeSource';
 export * from '../models/AggCompositeTerm';
 export * from '../models/AggDateHistogram';
 export * from '../models/AggHistogram';
+export * from '../models/AggMedianAbsoluteDeviation';
+export * from '../models/AggMetric';
+export * from '../models/AggPercentileRanks';
+export * from '../models/AggPercentiles';
+export * from '../models/AggRange';
+export * from '../models/AggTDigest';
 export * from '../models/AggTerms';
 export * from '../models/Aggregation';
 export * from '../models/AutocompleteRequest';
 export * from '../models/BoolFilter';
 export * from '../models/BulkResponse';
+export * from '../models/Chat';
 export * from '../models/DeleteDocumentRequest';
 export * from '../models/DeleteResponse';
 export * from '../models/ErrorResponse';
+export * from '../models/FacetBucketStatus';
+export * from '../models/FacetFilterMode';
 export * from '../models/FulltextFilter';
 export * from '../models/GeoDistance';
 export * from '../models/GeoDistanceLocationAnchor';
@@ -18,6 +29,7 @@ export * from '../models/Highlight';
 export * from '../models/HighlightFieldOption';
 export * from '../models/HighlightFields';
 export * from '../models/HitsHits';
+export * from '../models/Hybrid';
 export * from '../models/InsertDocumentRequest';
 export * from '../models/Join';
 export * from '../models/JoinCond';
@@ -30,9 +42,12 @@ export * from '../models/PercolateRequest';
 export * from '../models/PercolateRequestQuery';
 export * from '../models/QueryFilter';
 export * from '../models/Range';
+export * from '../models/RangeFilter';
 export * from '../models/ReplaceDocumentRequest';
 export * from '../models/ResponseError';
 export * from '../models/ResponseErrorDetails';
+export * from '../models/ScriptField';
+export * from '../models/ScriptFieldScript';
 export * from '../models/SearchQuery';
 export * from '../models/SearchRequest';
 export * from '../models/SearchResponse';
@@ -44,19 +59,30 @@ export * from '../models/SuccessResponse';
 export * from '../models/UpdateDocumentRequest';
 export * from '../models/UpdateResponse';
 
+import { AggBucket    } from '../models/AggBucket';
+import { AggBucketsResult } from '../models/AggBucketsResult';
 import { AggComposite } from '../models/AggComposite';
 import { AggCompositeSource } from '../models/AggCompositeSource';
 import { AggCompositeTerm } from '../models/AggCompositeTerm';
 import { AggDateHistogram } from '../models/AggDateHistogram';
 import { AggHistogram } from '../models/AggHistogram';
+import { AggMedianAbsoluteDeviation } from '../models/AggMedianAbsoluteDeviation';
+import { AggMetric } from '../models/AggMetric';
+import { AggPercentileRanks } from '../models/AggPercentileRanks';
+import { AggPercentiles } from '../models/AggPercentiles';
+import { AggRange } from '../models/AggRange';
+import { AggTDigest } from '../models/AggTDigest';
 import { AggTerms } from '../models/AggTerms';
 import { Aggregation } from '../models/Aggregation';
 import { AutocompleteRequest } from '../models/AutocompleteRequest';
 import { BoolFilter } from '../models/BoolFilter';
 import { BulkResponse } from '../models/BulkResponse';
+import { Chat } from '../models/Chat';
 import { DeleteDocumentRequest } from '../models/DeleteDocumentRequest';
 import { DeleteResponse } from '../models/DeleteResponse';
 import { ErrorResponse } from '../models/ErrorResponse';
+import { FacetBucketStatus } from '../models/FacetBucketStatus';
+import { FacetFilterMode } from '../models/FacetFilterMode';
 import { FulltextFilter } from '../models/FulltextFilter';
 import { GeoDistance  , GeoDistanceDistanceTypeEnum    } from '../models/GeoDistance';
 import { GeoDistanceLocationAnchor } from '../models/GeoDistanceLocationAnchor';
@@ -64,6 +90,7 @@ import { Highlight          , HighlightEncoderEnum      , HighlightHtmlStripMode
 import { HighlightFieldOption } from '../models/HighlightFieldOption';
 import { HighlightFieldsClass } from '../models/HighlightFields';
 import { HitsHits } from '../models/HitsHits';
+import { Hybrid } from '../models/Hybrid';
 import { InsertDocumentRequest } from '../models/InsertDocumentRequest';
 import { Join, JoinTypeEnum      } from '../models/Join';
 import { JoinCond } from '../models/JoinCond';
@@ -76,11 +103,14 @@ import { PercolateRequest } from '../models/PercolateRequest';
 import { PercolateRequestQuery } from '../models/PercolateRequestQuery';
 import { QueryFilter } from '../models/QueryFilter';
 import { Range } from '../models/Range';
+import { RangeFilter } from '../models/RangeFilter';
 import { ReplaceDocumentRequest } from '../models/ReplaceDocumentRequest';
 import { ResponseErrorClass } from '../models/ResponseError';
 import { ResponseErrorDetails } from '../models/ResponseErrorDetails';
+import { ScriptField } from '../models/ScriptField';
+import { ScriptFieldScript } from '../models/ScriptFieldScript';
 import { SearchQuery } from '../models/SearchQuery';
-import { SearchRequest } from '../models/SearchRequest';
+import { SearchRequest                    } from '../models/SearchRequest';
 import { SearchResponse } from '../models/SearchResponse';
 import { SearchResponseHits } from '../models/SearchResponseHits';
 import { SourceRules } from '../models/SourceRules';
@@ -103,6 +133,8 @@ let primitives = [
                  ];
 
 let enumsMap: Set<string> = new Set<string>([
+    "FacetBucketStatus",
+    "FacetFilterMode",
     "GeoDistanceDistanceTypeEnum",
     "HighlightEncoderEnum",
     "HighlightHtmlStripModeEnum",
@@ -115,16 +147,25 @@ let enumsMap: Set<string> = new Set<string>([
 ]);
 
 let typeMap: {[index: string]: any} = {
+    "AggBucket": AggBucket,
+    "AggBucketsResult": AggBucketsResult,
     "AggComposite": AggComposite,
     "AggCompositeSource": AggCompositeSource,
     "AggCompositeTerm": AggCompositeTerm,
     "AggDateHistogram": AggDateHistogram,
     "AggHistogram": AggHistogram,
+    "AggMedianAbsoluteDeviation": AggMedianAbsoluteDeviation,
+    "AggMetric": AggMetric,
+    "AggPercentileRanks": AggPercentileRanks,
+    "AggPercentiles": AggPercentiles,
+    "AggRange": AggRange,
+    "AggTDigest": AggTDigest,
     "AggTerms": AggTerms,
     "Aggregation": Aggregation,
     "AutocompleteRequest": AutocompleteRequest,
     "BoolFilter": BoolFilter,
     "BulkResponse": BulkResponse,
+    "Chat": Chat,
     "DeleteDocumentRequest": DeleteDocumentRequest,
     "DeleteResponse": DeleteResponse,
     "ErrorResponse": ErrorResponse,
@@ -135,6 +176,7 @@ let typeMap: {[index: string]: any} = {
     "HighlightFieldOption": HighlightFieldOption,
     "HighlightFields": HighlightFieldsClass,
     "HitsHits": HitsHits,
+    "Hybrid": Hybrid,
     "InsertDocumentRequest": InsertDocumentRequest,
     "Join": Join,
     "JoinCond": JoinCond,
@@ -147,9 +189,12 @@ let typeMap: {[index: string]: any} = {
     "PercolateRequestQuery": PercolateRequestQuery,
     "QueryFilter": QueryFilter,
     "Range": Range,
+    "RangeFilter": RangeFilter,
     "ReplaceDocumentRequest": ReplaceDocumentRequest,
     "ResponseError": ResponseErrorClass,
     "ResponseErrorDetails": ResponseErrorDetails,
+    "ScriptField": ScriptField,
+    "ScriptFieldScript": ScriptFieldScript,
     "SearchQuery": SearchQuery,
     "SearchRequest": SearchRequest,
     "SearchResponse": SearchResponse,

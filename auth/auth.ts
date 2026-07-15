@@ -21,9 +21,56 @@ export interface TokenProvider {
   getToken(): Promise<string> | string;
 }
 
+/**
+ * Applies http authentication to the request context.
+ */
+export class BasicAuthAuthentication implements SecurityAuthentication {
+    /**
+     * Configures the http authentication with the required details.
+     *
+     * @param username username for http basic authentication
+     * @param password password for http basic authentication
+     */
+    public constructor(
+        private username: string,
+        private password: string
+    ) {}
+
+    public getName(): string {
+        return "basicAuth";
+    }
+
+    public applySecurityAuthentication(context: RequestContext) {
+        let comb = Buffer.from(this.username + ":" + this.password, 'binary').toString('base64');
+        context.setHeaderParam("Authorization", "Basic " + comb);
+    }
+}
+
+/**
+ * Applies http authentication to the request context.
+ */
+export class BearerAuthAuthentication implements SecurityAuthentication {
+    /**
+     * Configures the http authentication with the required details.
+     *
+     * @param tokenProvider service that can provide the up-to-date token when needed
+     */
+    public constructor(private tokenProvider: TokenProvider) {}
+
+    public getName(): string {
+        return "bearerAuth";
+    }
+
+    public async applySecurityAuthentication(context: RequestContext) {
+        context.setHeaderParam("Authorization", "Bearer " + await this.tokenProvider.getToken());
+    }
+}
+
 
 export type AuthMethods = {
     "default"?: SecurityAuthentication,
+    "basicAuth"?: SecurityAuthentication,
+    "bearerAuth"?: SecurityAuthentication
 }
 
 export type ApiKeyConfiguration = string;
@@ -34,6 +81,8 @@ export type HttpSignatureConfiguration = unknown; // TODO: Implement
 
 export type AuthMethodsConfiguration = {
     "default"?: SecurityAuthentication,
+    "basicAuth"?: HttpBasicConfiguration,
+    "bearerAuth"?: HttpBearerConfiguration
 }
 
 /**
@@ -47,6 +96,19 @@ export function configureAuthMethods(config: AuthMethodsConfiguration | undefine
         return authMethods;
     }
     authMethods["default"] = config["default"]
+
+    if (config["basicAuth"]) {
+        authMethods["basicAuth"] = new BasicAuthAuthentication(
+            config["basicAuth"]["username"],
+            config["basicAuth"]["password"]
+        );
+    }
+
+    if (config["bearerAuth"]) {
+        authMethods["bearerAuth"] = new BearerAuthAuthentication(
+            config["bearerAuth"]["tokenProvider"]
+        );
+    }
 
     return authMethods;
 }

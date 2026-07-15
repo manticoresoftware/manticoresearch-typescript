@@ -29,7 +29,7 @@ describe('Utils Api Tests', () => {
 
       res = await utilsApi.sql('SHOW TABLES', true);
       console.log(res);
-      if (Array.isArray(res)) 
+      if (Array.isArray(res))
         expect(res[0]).to.include({ total: 1 });
       res = await utilsApi.sql('SELECT * FROM test', false);
       console.log(res);

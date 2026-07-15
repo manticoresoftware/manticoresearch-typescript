@@ -23,7 +23,7 @@ export class AggDateHistogram {
     /**
     * Interval of the histogram values
     */
-    'interval': number;
+    'calendar_interval': number;
     /**
     * Offset of the histogram values. Default value is 0.
     */
@@ -45,8 +45,8 @@ export class AggDateHistogram {
             "format": ""
         },
         {
-            "name": "interval",
-            "baseName": "interval",
+            "name": "calendar_interval",
+            "baseName": "calendar_interval",
             "type": "number",
             "format": ""
         },

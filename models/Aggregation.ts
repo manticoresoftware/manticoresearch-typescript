@@ -11,7 +11,13 @@
  */
 
 import { AggComposite } from '../models/AggComposite';
+import { AggDateHistogram } from '../models/AggDateHistogram';
 import { AggHistogram } from '../models/AggHistogram';
+import { AggMedianAbsoluteDeviation } from '../models/AggMedianAbsoluteDeviation';
+import { AggMetric } from '../models/AggMetric';
+import { AggPercentileRanks } from '../models/AggPercentileRanks';
+import { AggPercentiles } from '../models/AggPercentiles';
+import { AggRange } from '../models/AggRange';
 import { AggTerms } from '../models/AggTerms';
 import { HttpFile } from '../http/http';
 
@@ -20,6 +26,16 @@ export class Aggregation {
     'sort'?: Array<any>;
     'composite'?: AggComposite;
     'histogram'?: AggHistogram;
+    'date_histogram'?: AggDateHistogram;
+    'range'?: AggRange;
+    'date_range'?: AggRange;
+    'percentiles'?: AggPercentiles;
+    'percentile_ranks'?: AggPercentileRanks;
+    'median_absolute_deviation'?: AggMedianAbsoluteDeviation;
+    'min'?: AggMetric;
+    'max'?: AggMetric;
+    'sum'?: AggMetric;
+    'avg'?: AggMetric;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -48,6 +64,66 @@ export class Aggregation {
             "name": "histogram",
             "baseName": "histogram",
             "type": "AggHistogram",
+            "format": ""
+        },
+        {
+            "name": "date_histogram",
+            "baseName": "date_histogram",
+            "type": "AggDateHistogram",
+            "format": ""
+        },
+        {
+            "name": "range",
+            "baseName": "range",
+            "type": "AggRange",
+            "format": ""
+        },
+        {
+            "name": "date_range",
+            "baseName": "date_range",
+            "type": "AggRange",
+            "format": ""
+        },
+        {
+            "name": "percentiles",
+            "baseName": "percentiles",
+            "type": "AggPercentiles",
+            "format": ""
+        },
+        {
+            "name": "percentile_ranks",
+            "baseName": "percentile_ranks",
+            "type": "AggPercentileRanks",
+            "format": ""
+        },
+        {
+            "name": "median_absolute_deviation",
+            "baseName": "median_absolute_deviation",
+            "type": "AggMedianAbsoluteDeviation",
+            "format": ""
+        },
+        {
+            "name": "min",
+            "baseName": "min",
+            "type": "AggMetric",
+            "format": ""
+        },
+        {
+            "name": "max",
+            "baseName": "max",
+            "type": "AggMetric",
+            "format": ""
+        },
+        {
+            "name": "sum",
+            "baseName": "sum",
+            "type": "AggMetric",
+            "format": ""
+        },
+        {
+            "name": "avg",
+            "baseName": "avg",
+            "type": "AggMetric",
             "format": ""
         }    ];
 

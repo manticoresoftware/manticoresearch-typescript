@@ -1,19 +1,30 @@
 import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/http';
 import { Configuration} from '../configuration'
 
+import { AggBucket } from '../models/AggBucket';
+import { AggBucketsResult } from '../models/AggBucketsResult';
 import { AggComposite } from '../models/AggComposite';
 import { AggCompositeSource } from '../models/AggCompositeSource';
 import { AggCompositeTerm } from '../models/AggCompositeTerm';
 import { AggDateHistogram } from '../models/AggDateHistogram';
 import { AggHistogram } from '../models/AggHistogram';
+import { AggMedianAbsoluteDeviation } from '../models/AggMedianAbsoluteDeviation';
+import { AggMetric } from '../models/AggMetric';
+import { AggPercentileRanks } from '../models/AggPercentileRanks';
+import { AggPercentiles } from '../models/AggPercentiles';
+import { AggRange } from '../models/AggRange';
+import { AggTDigest } from '../models/AggTDigest';
 import { AggTerms } from '../models/AggTerms';
 import { Aggregation } from '../models/Aggregation';
 import { AutocompleteRequest } from '../models/AutocompleteRequest';
 import { BoolFilter } from '../models/BoolFilter';
 import { BulkResponse } from '../models/BulkResponse';
+import { Chat } from '../models/Chat';
 import { DeleteDocumentRequest } from '../models/DeleteDocumentRequest';
 import { DeleteResponse } from '../models/DeleteResponse';
 import { ErrorResponse } from '../models/ErrorResponse';
+import { FacetBucketStatus } from '../models/FacetBucketStatus';
+import { FacetFilterMode } from '../models/FacetFilterMode';
 import { FulltextFilter } from '../models/FulltextFilter';
 import { GeoDistance } from '../models/GeoDistance';
 import { GeoDistanceLocationAnchor } from '../models/GeoDistanceLocationAnchor';
@@ -21,6 +32,7 @@ import { Highlight } from '../models/Highlight';
 import { HighlightFieldOption } from '../models/HighlightFieldOption';
 import { HighlightFields } from '../models/HighlightFields';
 import { HitsHits } from '../models/HitsHits';
+import { Hybrid } from '../models/Hybrid';
 import { InsertDocumentRequest } from '../models/InsertDocumentRequest';
 import { Join } from '../models/Join';
 import { JoinCond } from '../models/JoinCond';
@@ -33,9 +45,12 @@ import { PercolateRequest } from '../models/PercolateRequest';
 import { PercolateRequestQuery } from '../models/PercolateRequestQuery';
 import { QueryFilter } from '../models/QueryFilter';
 import { Range } from '../models/Range';
+import { RangeFilter } from '../models/RangeFilter';
 import { ReplaceDocumentRequest } from '../models/ReplaceDocumentRequest';
 import { ResponseError } from '../models/ResponseError';
 import { ResponseErrorDetails } from '../models/ResponseErrorDetails';
+import { ScriptField } from '../models/ScriptField';
+import { ScriptFieldScript } from '../models/ScriptFieldScript';
 import { SearchQuery } from '../models/SearchQuery';
 import { SearchRequest } from '../models/SearchRequest';
 import { SearchResponse } from '../models/SearchResponse';
@@ -316,7 +331,7 @@ export class ObjectSearchApi {
     }
 
     /**
-     *  The method expects an object with the following mandatory properties: * the name of the table to search * the match query object For details, see the documentation on [**SearchRequest**](SearchRequest.md) The method returns an object with the following properties: - took: the time taken to execute the search query. - timed_out: a boolean indicating whether the query timed out. - hits: an object with the following properties:    - total: the total number of hits found.    - hits: an array of hit objects, where each hit object represents a matched document. Each hit object has the following properties:      - _id: the ID of the matched document.      - _score: the score of the matched document.      - _source: the source data of the matched document.  In addition, if profiling is enabled, the response will include an additional array with profiling information attached. Also, if pagination is enabled, the response will include an additional \'scroll\' property with a scroll token to use for pagination Here is an example search response:    ```   {     \'took\':10,     \'timed_out\':false,     \'hits\':     {       \'total\':2,       \'hits\':       [         {\'_id\':\'1\',\'_score\':1,\'_source\':{\'gid\':11}},         {\'_id\':\'2\',\'_score\':1,\'_source\':{\'gid\':12}}       ]     }   }   ```  For more information about the match query syntax and additional parameters that can be added to request and response, please see the documentation [here](https://manual.manticoresearch.com/Searching/Full_text_matching/Basic_usage#HTTP-JSON). 
+     *  The method expects an object with the following mandatory properties: * the name of the table to search * the match query object For details, see the documentation on [**SearchRequest**](SearchRequest.md) The method returns an object with the following properties: - took: the time taken to execute the search query. - timed_out: a boolean indicating whether the query timed out. - hits: an object with the following properties:    - total: the total number of hits found.    - hits: an array of hit objects, where each hit object represents a matched document. Each hit object has the following properties:      - _id: the ID of the matched document.      - _score: the score of the matched document.      - _source: the source data of the matched document.  In addition, if profiling is enabled, the response will include an additional array with profiling information attached. Also, if pagination is enabled, the response will include an additional \'scroll\' property with a scroll token to use for pagination Here is an example search response:    ```   {     \'took\':10,     \'timed_out\':false,     \'hits\':     {       \'total\':2,       \'hits\':       [         {\'_id\':\'1\',\'_score\':1,\'_source\':{\'gid\':11}},         {\'_id\':\'2\',\'_score\':1,\'_source\':{\'gid\':12}}       ]     }   }   ```  For conversational search, include a `chat` object instead of `table` and `query`. The response then includes the optional conversational fields on `searchResponse` (`conversation_uuid`, `user_query`, `search_query`, `response`, `sources`). For more information about the match query syntax and additional parameters that can be added to request and response, please see the documentation [here](https://manual.manticoresearch.com/Searching/Full_text_matching/Basic_usage#HTTP-JSON). 
      * Performs a search on a table
      * @param param the request object
      */
@@ -325,7 +340,7 @@ export class ObjectSearchApi {
     }
 
     /**
-     *  The method expects an object with the following mandatory properties: * the name of the table to search * the match query object For details, see the documentation on [**SearchRequest**](SearchRequest.md) The method returns an object with the following properties: - took: the time taken to execute the search query. - timed_out: a boolean indicating whether the query timed out. - hits: an object with the following properties:    - total: the total number of hits found.    - hits: an array of hit objects, where each hit object represents a matched document. Each hit object has the following properties:      - _id: the ID of the matched document.      - _score: the score of the matched document.      - _source: the source data of the matched document.  In addition, if profiling is enabled, the response will include an additional array with profiling information attached. Also, if pagination is enabled, the response will include an additional \'scroll\' property with a scroll token to use for pagination Here is an example search response:    ```   {     \'took\':10,     \'timed_out\':false,     \'hits\':     {       \'total\':2,       \'hits\':       [         {\'_id\':\'1\',\'_score\':1,\'_source\':{\'gid\':11}},         {\'_id\':\'2\',\'_score\':1,\'_source\':{\'gid\':12}}       ]     }   }   ```  For more information about the match query syntax and additional parameters that can be added to request and response, please see the documentation [here](https://manual.manticoresearch.com/Searching/Full_text_matching/Basic_usage#HTTP-JSON). 
+     *  The method expects an object with the following mandatory properties: * the name of the table to search * the match query object For details, see the documentation on [**SearchRequest**](SearchRequest.md) The method returns an object with the following properties: - took: the time taken to execute the search query. - timed_out: a boolean indicating whether the query timed out. - hits: an object with the following properties:    - total: the total number of hits found.    - hits: an array of hit objects, where each hit object represents a matched document. Each hit object has the following properties:      - _id: the ID of the matched document.      - _score: the score of the matched document.      - _source: the source data of the matched document.  In addition, if profiling is enabled, the response will include an additional array with profiling information attached. Also, if pagination is enabled, the response will include an additional \'scroll\' property with a scroll token to use for pagination Here is an example search response:    ```   {     \'took\':10,     \'timed_out\':false,     \'hits\':     {       \'total\':2,       \'hits\':       [         {\'_id\':\'1\',\'_score\':1,\'_source\':{\'gid\':11}},         {\'_id\':\'2\',\'_score\':1,\'_source\':{\'gid\':12}}       ]     }   }   ```  For conversational search, include a `chat` object instead of `table` and `query`. The response then includes the optional conversational fields on `searchResponse` (`conversation_uuid`, `user_query`, `search_query`, `response`, `sources`). For more information about the match query syntax and additional parameters that can be added to request and response, please see the documentation [here](https://manual.manticoresearch.com/Searching/Full_text_matching/Basic_usage#HTTP-JSON). 
      * Performs a search on a table
      * @param param the request object
      */
@@ -354,6 +369,15 @@ export interface UtilsApiSqlRequest {
     rawResponse?: boolean
 }
 
+export interface UtilsApiTokenRequest {
+    /**
+     * 
+     * @type any
+     * @memberof UtilsApitoken
+     */
+    body: any
+}
+
 export class ObjectUtilsApi {
     private api: ObservableUtilsApi
 
@@ -377,6 +401,24 @@ export class ObjectUtilsApi {
      */
     public sql(param: UtilsApiSqlRequest, options?: Configuration): Promise<SqlResponse> {
         return this.api.sql(param.body, param.rawResponse,  options).toPromise();
+    }
+
+    /**
+     * Create or rotate a bearer token for the authenticated HTTP user. Requires HTTP Basic authentication with a Manticore user name and password. The endpoint returns the raw token. Example:    ```   curl -u admin:password -X POST http://127.0.0.1:9308/token -d \"{}\"   ``` 
+     * Create or rotate a bearer token
+     * @param param the request object
+     */
+    public tokenWithHttpInfo(param: UtilsApiTokenRequest, options?: Configuration): Promise<HttpInfo<string>> {
+        return this.api.tokenWithHttpInfo(param.body,  options).toPromise();
+    }
+
+    /**
+     * Create or rotate a bearer token for the authenticated HTTP user. Requires HTTP Basic authentication with a Manticore user name and password. The endpoint returns the raw token. Example:    ```   curl -u admin:password -X POST http://127.0.0.1:9308/token -d \"{}\"   ``` 
+     * Create or rotate a bearer token
+     * @param param the request object
+     */
+    public token(param: UtilsApiTokenRequest, options?: Configuration): Promise<string> {
+        return this.api.token(param.body,  options).toPromise();
     }
 
 }
