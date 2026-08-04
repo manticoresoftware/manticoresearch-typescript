@@ -27,7 +27,11 @@ export class DeleteDocumentRequest {
     /**
     * The ID of document for deletion
     */
-    'id'?: number;
+    'id'?: number | null;
+    /**
+    * UUID document ID when the wire ID field is a string.
+    */
+    'uuid'?: string | null;
     /**
     * Defines the criteria to match documents for deletion
     */
@@ -55,6 +59,12 @@ export class DeleteDocumentRequest {
             "baseName": "id",
             "type": "number",
             "format": "uint64"
+        },
+        {
+            "name": "uuid",
+            "baseName": "uuid",
+            "type": "string",
+            "format": ""
         },
         {
             "name": "query",

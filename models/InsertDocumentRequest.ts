@@ -27,7 +27,11 @@ export class InsertDocumentRequest {
     /**
     * Document ID. If not provided, an ID will be auto-generated 
     */
-    'id'?: number;
+    'id'?: number | null;
+    /**
+    * UUID document ID when the wire ID field is a string.
+    */
+    'uuid'?: string | null;
     /**
     * Object containing document data 
     */
@@ -55,6 +59,12 @@ export class InsertDocumentRequest {
             "baseName": "id",
             "type": "number",
             "format": "uint64"
+        },
+        {
+            "name": "uuid",
+            "baseName": "uuid",
+            "type": "string",
+            "format": ""
         },
         {
             "name": "doc",

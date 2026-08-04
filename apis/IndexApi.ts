@@ -185,6 +185,11 @@ export class IndexApiRequestFactory extends BaseAPIRequestFactory {
      * @param id Id of the document to replace
      * @param replaceDocumentRequest 
      */
+    /** Partially replaces a document by UUID string id. */
+    public async partialReplaceUuid(table: string, uuid: string, replaceDocumentRequest: ReplaceDocumentRequest, _options?: Configuration): Promise<RequestContext> {
+        return this.partialReplace(table, uuid as unknown as number, replaceDocumentRequest, _options);
+    }
+
     public async partialReplace(table: string, id: number, replaceDocumentRequest: ReplaceDocumentRequest, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 

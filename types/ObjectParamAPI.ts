@@ -115,6 +115,12 @@ export interface IndexApiPartialReplaceRequest {
     replaceDocumentRequest: ReplaceDocumentRequest
 }
 
+export interface IndexApiPartialReplaceUuidRequest {
+    table: string
+    uuid: string
+    replaceDocumentRequest: ReplaceDocumentRequest
+}
+
 export interface IndexApiReplaceRequest {
     /**
      * 
@@ -199,6 +205,15 @@ export class ObjectIndexApi {
      * Partially replaces a document in a table
      * @param param the request object
      */
+    /** Partially replaces a document by UUID string id. */
+    public partialReplaceUuidWithHttpInfo(param: IndexApiPartialReplaceUuidRequest, options?: Configuration): Promise<HttpInfo<UpdateResponse>> {
+        return this.api.partialReplaceUuidWithHttpInfo(param.table, param.uuid, param.replaceDocumentRequest, options).toPromise();
+    }
+
+    public partialReplaceUuid(param: IndexApiPartialReplaceUuidRequest, options?: Configuration): Promise<UpdateResponse> {
+        return this.api.partialReplaceUuid(param.table, param.uuid, param.replaceDocumentRequest, options).toPromise();
+    }
+
     public partialReplaceWithHttpInfo(param: IndexApiPartialReplaceRequest, options?: Configuration): Promise<HttpInfo<UpdateResponse>> {
         return this.api.partialReplaceWithHttpInfo(param.table, param.id, param.replaceDocumentRequest,  options).toPromise();
     }

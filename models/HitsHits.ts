@@ -19,7 +19,11 @@ export class HitsHits {
     /**
     * The ID of the matched document
     */
-    '_id'?: number;
+    '_id'?: number | null;
+    /**
+    * UUID document ID when the wire ID field is a string.
+    */
+    '_uuid'?: string | null;
     /**
     * The score of the matched document
     */
@@ -59,6 +63,12 @@ export class HitsHits {
             "baseName": "_id",
             "type": "number",
             "format": "uint64"
+        },
+        {
+            "name": "_uuid",
+            "baseName": "_uuid",
+            "type": "string",
+            "format": ""
         },
         {
             "name": "_score",

@@ -7,6 +7,8 @@ All URIs are relative to *http://127.0.0.1:9308*
 | [**bulk**](IndexApi.md#bulk)       | **POST** /bulk    | Bulk index operations             |
 | [**delete**](IndexApi.md#delete)   | **POST** /delete  | Delete a document in a table      |
 | [**insert**](IndexApi.md#insert)   | **POST** /insert  | Create a new document in a table  |
+| [**partialReplace**](IndexApi.md#partialReplace) | **POST** /{table}/_update/{id} | Partially replaces a document in a table |
+| [**partialReplaceUuid**](IndexApi.md#partialReplaceUuid) | **POST** /{table}/_update/{id} | Partially replaces a document in a table by UUID |
 | [**replace**](IndexApi.md#replace) | **POST** /replace | Replace new document in a table   |
 | [**update**](IndexApi.md#update)   | **POST** /update  | Update a document in a table      |
 
@@ -203,6 +205,85 @@ No authorization required
 
 - **Content-Type**: application/json
 - **Accept**: application/json
+
+## partialReplace
+
+> UpdateResponse partialReplace(table, id, replaceDocumentRequest)
+
+Partially replaces a document with given numeric id in a table.
+
+### Example
+
+```typescript
+import { IndexApi } from "manticoresearch-ts";
+
+const indexApi = new IndexApi();
+indexApi
+  .partialReplace("movies", 1, { doc: { title: "updated" } })
+  .then((res) => console.log(JSON.stringify(res, null, 2)));
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **table** | **string** | Name of the table | |
+| **id** | **number** | Numeric id of the document to replace | |
+| **replaceDocumentRequest** | [**ReplaceDocumentRequest**](ReplaceDocumentRequest.md) | | |
+
+### Return type
+
+[**UpdateResponse**](UpdateResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+## partialReplaceUuid
+
+> UpdateResponse partialReplaceUuid(table, uuid, replaceDocumentRequest)
+
+Partially replaces a document in a table by UUID string id (tables created with `id uuid`). Prefer this over passing a UUID into `partialReplace`.
+
+### Example
+
+```typescript
+import { IndexApi } from "manticoresearch-ts";
+
+const indexApi = new IndexApi();
+indexApi
+  .partialReplaceUuid("movies_uuid", "550e8400-e29b-41d4-a716-446655440000", {
+    doc: { title: "updated" },
+  })
+  .then((res) => console.log(JSON.stringify(res, null, 2)));
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **table** | **string** | Name of the table | |
+| **uuid** | **string** | UUID of the document to replace | |
+| **replaceDocumentRequest** | [**ReplaceDocumentRequest**](ReplaceDocumentRequest.md) | | |
+
+### Return type
+
+[**UpdateResponse**](UpdateResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
 
 ## replace
 

@@ -27,7 +27,11 @@ export class UpdateResponse {
     /**
     * Document ID
     */
-    'id'?: number;
+    'id'?: number | null;
+    /**
+    * UUID document ID when the wire ID field is a string.
+    */
+    'uuid'?: string | null;
     /**
     * Result of the update operation, typically \'updated\'
     */
@@ -55,6 +59,12 @@ export class UpdateResponse {
             "baseName": "id",
             "type": "number",
             "format": "uint64"
+        },
+        {
+            "name": "uuid",
+            "baseName": "uuid",
+            "type": "string",
+            "format": ""
         },
         {
             "name": "result",

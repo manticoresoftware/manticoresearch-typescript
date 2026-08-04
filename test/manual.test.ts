@@ -48,13 +48,16 @@ describe('Search Api Tests', () => {
     try {
       
       let res =  await utilsApi.sql('DROP TABLE IF EXISTS movies');
+      res = await utilsApi.sql('DROP TABLE IF EXISTS movies_uuid');
       res =  await utilsApi.sql('CREATE TABLE IF NOT EXISTS movies (title text, plot text, year bigint, rating float, code multi)');
+      res = await utilsApi.sql('CREATE TABLE IF NOT EXISTS movies_uuid (id uuid, title text)');
 
       let docs = [ 
         {"insert": {"table" : "movies", "id" : 1, "doc" : {"title" : "Star Trek 2: Nemesis", "plot": "The Enterprise is diverted to the Romulan homeworld Romulus, supposedly because they want to negotiate a peace treaty. Captain Picard and his crew discover a serious threat to the Federation once Praetor Shinzon plans to attack Earth.", "year": 2002, "rating": 6.4, "code": [1,2,3]}}},
         {"insert": {"table" : "movies", "id" : 2, "doc" : {"title" : "Star Trek 1: Nemesis", "plot": "The Enterprise is diverted to the Romulan homeworld Romulus, supposedly because they want to negotiate a peace treaty. Captain Picard and his crew discover a serious threat to the Federation once Praetor Shinzon plans to attack Earth.", "year": 2001, "rating": 6.5, "code": [1,12,3]}}},
         {"insert": {"table" : "movies", "id" : 3, "doc" : {"title" : "Star Trek 3: Nemesis", "plot": "The Enterprise is diverted to the Romulan homeworld Romulus, supposedly because they want to negotiate a peace treaty. Captain Picard and his crew discover a serious threat to the Federation once Praetor Shinzon plans to attack Earth.", "year": 2003, "rating": 6.6, "code": [11,2,3]}}},
-        {"insert": {"table" : "movies", "id" : 4, "doc" : {"title" : "Star Trek 4: Nemesis", "plot": "The Enterprise is diverted to the Romulan homeworld Romulus, supposedly because they want to negotiate a peace treaty. Captain Picard and his crew discover a serious threat to the Federation once Praetor Shinzon plans to attack Earth.", "year": 100000000000, "rating": 6.5, "code": [1,2,4]}}}
+        {"insert": {"table" : "movies", "id" : 4, "doc" : {"title" : "Star Trek 4: Nemesis", "plot": "The Enterprise is diverted to the Romulan homeworld Romulus, supposedly because they want to negotiate a peace treaty. Captain Picard and his crew discover a serious threat to the Federation once Praetor Shinzon plans to attack Earth.", "year": 100000000000, "rating": 6.5, "code": [1,2,4]}}},
+        {"insert": {"table": "movies_uuid", "id": "550e8400-e29b-41d4-a716-446655440000", "doc": {"title": "UUID document"}}}
       ];
       let bulkRes =  await indexApi.bulk(docs.map(e=>JSON.stringify(e)).join('\n'));
       
@@ -62,6 +65,12 @@ describe('Search Api Tests', () => {
       
       let searchRes = await searchApi.search(search_request);
       expect(searchRes).to.deep.nested.property('hits.total', 4);
+      expect(searchRes.hits!.hits![0]!._id).to.not.be.null;
+      expect(searchRes.hits!.hits![0]!._uuid).to.be.null;
+
+      const uuidSearchRes = await searchApi.search({"table": "movies_uuid"});
+      expect(uuidSearchRes.hits!.hits![0]!._id).to.be.null;
+      expect(uuidSearchRes.hits!.hits![0]!._uuid).to.equal('550e8400-e29b-41d4-a716-446655440000');
 
       let query_highlight = new Manticoresearch.Highlight()
       query_highlight.fields = {"title":{}}

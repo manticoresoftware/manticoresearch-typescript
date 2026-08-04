@@ -25,9 +25,13 @@ export class DeleteResponse {
     */
     'deleted'?: number;
     /**
-    * The ID of the deleted document. If multiple documents are deleted, the ID of the first deleted document is returned
+    * The ID of the deleted document. If multiple documents are deleted, the ID of the first deleted document is returned 
     */
-    'id'?: number;
+    'id'?: number | null;
+    /**
+    * UUID document ID when the wire ID field is a string.
+    */
+    'uuid'?: string | null;
     /**
     * Indicates whether any documents to be deleted were found
     */
@@ -59,6 +63,12 @@ export class DeleteResponse {
             "baseName": "id",
             "type": "number",
             "format": "uint64"
+        },
+        {
+            "name": "uuid",
+            "baseName": "uuid",
+            "type": "string",
+            "format": ""
         },
         {
             "name": "found",

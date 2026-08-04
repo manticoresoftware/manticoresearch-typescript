@@ -32,7 +32,11 @@ export class UpdateDocumentRequest {
     /**
     * Document ID
     */
-    'id'?: number;
+    'id'?: number | null;
+    /**
+    * UUID document ID when the wire ID field is a string.
+    */
+    'uuid'?: string | null;
     'query'?: QueryFilter | null;
 
     static readonly discriminator: string | undefined = undefined;
@@ -63,6 +67,12 @@ export class UpdateDocumentRequest {
             "baseName": "id",
             "type": "number",
             "format": "uint64"
+        },
+        {
+            "name": "uuid",
+            "baseName": "uuid",
+            "type": "string",
+            "format": ""
         },
         {
             "name": "query",

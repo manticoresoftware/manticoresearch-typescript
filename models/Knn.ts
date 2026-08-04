@@ -23,18 +23,22 @@ export class Knn {
     */
     'field': string;
     /**
-    * The number of nearest neighbors to return
+    * Deprecated. Use the top-level `limit` parameter instead.
     */
-    'k': number;
+    'k'?: number;
     'query'?: KnnQuery;
     /**
     * The vector used as input for the KNN search
     */
     'query_vector'?: Array<number>;
     /**
-    * The docuemnt ID used as input for the KNN search
+    * The document ID used as input for the KNN search
     */
-    'doc_id'?: number;
+    'doc_id'?: number | null;
+    /**
+    * UUID document ID when the wire ID field is a string.
+    */
+    'uuid'?: string | null;
     /**
     * Optional parameter controlling the accuracy of the search
     */
@@ -83,6 +87,12 @@ export class Knn {
             "baseName": "doc_id",
             "type": "number",
             "format": "uint64"
+        },
+        {
+            "name": "uuid",
+            "baseName": "uuid",
+            "type": "string",
+            "format": ""
         },
         {
             "name": "ef",

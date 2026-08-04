@@ -142,6 +142,15 @@ export class PromiseIndexApi {
      * @param id Id of the document to replace
      * @param replaceDocumentRequest
      */
+    /** Partially replaces a document by UUID string id. */
+    public partialReplaceUuidWithHttpInfo(table: string, uuid: string, replaceDocumentRequest: ReplaceDocumentRequest, _options?: Configuration): Promise<HttpInfo<UpdateResponse>> {
+        return this.api.partialReplaceUuidWithHttpInfo(table, uuid, replaceDocumentRequest, _options).toPromise();
+    }
+
+    public partialReplaceUuid(table: string, uuid: string, replaceDocumentRequest: ReplaceDocumentRequest, _options?: Configuration): Promise<UpdateResponse> {
+        return this.api.partialReplaceUuid(table, uuid, replaceDocumentRequest, _options).toPromise();
+    }
+
     public partialReplaceWithHttpInfo(table: string, id: number, replaceDocumentRequest: ReplaceDocumentRequest, _options?: Configuration): Promise<HttpInfo<UpdateResponse>> {
         const result = this.api.partialReplaceWithHttpInfo(table, id, replaceDocumentRequest, _options);
         return result.toPromise();

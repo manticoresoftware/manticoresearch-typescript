@@ -270,6 +270,17 @@ const JSONbig = require('json-bigint')({
 	useNativeBigInt: true,
 });
 
+const documentIdCompanions: {[index: string]: {wire: string, id: string, uuid: string}} = {
+    HitsHits: {wire: "_id", id: "_id", uuid: "_uuid"},
+    InsertDocumentRequest: {wire: "id", id: "id", uuid: "uuid"},
+    DeleteDocumentRequest: {wire: "id", id: "id", uuid: "uuid"},
+    DeleteResponse: {wire: "id", id: "id", uuid: "uuid"},
+    SuccessResponse: {wire: "id", id: "id", uuid: "uuid"},
+    UpdateDocumentRequest: {wire: "id", id: "id", uuid: "uuid"},
+    UpdateResponse: {wire: "id", id: "id", uuid: "uuid"},
+    Knn: {wire: "doc_id", id: "doc_id", uuid: "uuid"},
+};
+
 export class ObjectSerializer {
     public static findCorrectType(data: any, expectedType: string) {
         if (data == undefined) {
@@ -367,6 +378,13 @@ export class ObjectSerializer {
 	            for (let attributeType of attributeTypes) {
 	                instance[attributeType.baseName] = ObjectSerializer.serialize(data[attributeType.name], attributeType.type, attributeType.format);
 	            }
+	            const companion = documentIdCompanions[type];
+                if (companion) {
+                    delete instance[companion.uuid];
+                    if (data[companion.uuid] !== undefined && data[companion.uuid] !== null) {
+                        instance[companion.wire] = data[companion.uuid];
+                    }
+                }
 	            return instance;
 	        } catch (e) {
                 return data;
@@ -422,6 +440,15 @@ export class ObjectSerializer {
                     let value = ObjectSerializer.deserialize(data[attributeType.baseName], attributeType.type, attributeType.format);
                     if (value !== undefined) {
                         instance[attributeType.name] = value;
+                    }
+                }
+                const companion = documentIdCompanions[type];
+                if (companion && data[companion.wire] !== undefined) {
+                    if (typeof data[companion.wire] === "string") {
+                        instance[companion.id] = null;
+                        instance[companion.uuid] = data[companion.wire];
+                    } else {
+                        instance[companion.uuid] = null;
                     }
                 }
                 return instance;
